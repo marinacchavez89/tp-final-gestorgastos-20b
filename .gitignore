@@ -1,0 +1,13 @@
+# Ignorar archivos y carpetas generados por Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignorar binarios y archivos temporales
+bin/
+obj/
+*.dll
+*.exe
+*.pdb

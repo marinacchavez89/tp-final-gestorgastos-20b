@@ -1,0 +1,40 @@
+
+CREATE DATABASE GestorGastosAmigos;
+GO
+
+USE GestorGastosAmigos;
+GO
+
+CREATE TABLE Amigos (
+    IdAmigo INT IDENTITY(1,1) PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    Telefono VARCHAR(20) NULL,
+    Estado BIT DEFAULT 1
+);
+GO
+
+CREATE TABLE Gastos (
+    IdGasto INT IDENTITY(1,1) PRIMARY KEY,
+    Fecha DATE NOT NULL,
+    Concepto VARCHAR(255) NOT NULL,
+    Monto DECIMAL(10, 2) NOT NULL
+);
+GO
+
+CREATE TABLE DivisionGastos (
+    IdDivision INT IDENTITY(1,1) PRIMARY KEY,
+    IdGasto INT FOREIGN KEY REFERENCES Gastos(IdGasto) ON DELETE CASCADE,
+    IdAmigo INT FOREIGN KEY REFERENCES Amigos(IdAmigo) ON DELETE CASCADE,
+    MontoAPagar DECIMAL(10, 2) NOT NULL
+);
+GO
+
+CREATE TABLE Usuarios (
+    IdUsuario INT IDENTITY(1,1) PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    Pass VARCHAR(255) NOT NULL,
+    Rol VARCHAR(20) NOT NULL CHECK (Rol IN ('Tesorero', 'Amigo')),
+	Estado BIT DEFAULT 1
+);
+GO
