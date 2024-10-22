@@ -11,16 +11,25 @@ namespace TpFinal_WebForms_20B_GestorGastos
 {
 
 
-    public partial class Home
+    public partial class Login
     {
 
         /// <summary>
-        /// repRepetidor control.
+        /// btnIngresar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repRepetidor;
+        protected global::System.Web.UI.WebControls.Button btnIngresar;
+
+        /// <summary>
+        /// btnOlvidePass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnOlvidePass;
     }
 }

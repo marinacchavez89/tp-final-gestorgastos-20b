@@ -13,5 +13,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
 
         }
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

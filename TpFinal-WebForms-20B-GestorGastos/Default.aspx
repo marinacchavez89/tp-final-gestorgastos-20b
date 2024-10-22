@@ -1,8 +1,30 @@
-﻿<%@ Page Title="MAJUMA" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TpFinal_WebForms_20B_GestorGastos.Home" %>
+﻿<%@ Page Title="Listado de Gastos" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="TpFinal_WebForms_20B_GestorGastos.Home" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
     <div class="container">
-        <h2>Bienvenido al Gestor de Amigos y Gastos</h2>
-        <p>Gestiona tus amigos y sus gastos compartidos de la mejor manera con MAJUMA.</p>
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 text-center">
+                <h1>Listado de Gastos</h1>
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <asp:Repeater runat="server" ID="repRepetidor">
+                        <ItemTemplate>
+                            <div class="col">
+                                <div class="card">
+                                    <img src="https://cdn-icons-png.flaticon.com/128/11989/11989322.png" class="card-img-top d-block mx-auto" alt="img-gasto" style="height: 100px; width: 100px;">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%#Eval("Concepto")%></h5>
+                                        <p class="card-text"><%#Eval("Fecha")%></p>
+                                        <p class="card-text">$<%#Eval("Monto")%></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
+                </div>
+            </div>
+        </div>
     </div>
+
 </asp:Content>
