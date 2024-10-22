@@ -11,7 +11,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 {
 
 
-    public partial class Default
+    public partial class Reportes
     {
 
         /// <summary>

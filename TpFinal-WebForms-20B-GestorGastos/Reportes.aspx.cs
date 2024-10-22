@@ -9,7 +9,7 @@ using dominio;
 
 namespace TpFinal_WebForms_20B_GestorGastos
 {
-    public partial class Default : System.Web.UI.Page
+    public partial class Reportes : System.Web.UI.Page
     {
         public List<Gasto> ListaGastos {  get; set; }
         protected void Page_Load(object sender, EventArgs e)
