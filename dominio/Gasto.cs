@@ -11,6 +11,6 @@ namespace dominio
         public int IdGasto {  get; set; }
         public DateTime Fecha { get; set; }
         public string Concepto { get; set; }
-        public float Monto { get; set; }
+        public decimal Monto { get; set; }
     }
 }

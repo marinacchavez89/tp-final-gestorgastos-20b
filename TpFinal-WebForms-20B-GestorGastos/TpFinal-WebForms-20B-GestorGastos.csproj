@@ -102,6 +102,10 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\dominio\dominio.csproj">
+      <Project>{73b7050a-732d-46d3-a9f2-114e659d3b96}</Project>
+      <Name>dominio</Name>
+    </ProjectReference>
     <ProjectReference Include="..\negocio\negocio.csproj">
       <Project>{e34a6ef2-7dc3-476b-a005-193c265ea321}</Project>
       <Name>negocio</Name>
