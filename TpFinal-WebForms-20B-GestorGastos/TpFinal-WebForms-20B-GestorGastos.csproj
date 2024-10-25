@@ -68,6 +68,7 @@
     <Content Include="Exito.aspx" />
     <Content Include="Gastos.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Registrarse.aspx" />
     <Content Include="Reportes.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Default.aspx" />
@@ -101,6 +102,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Registrarse.aspx.cs">
+      <DependentUpon>Registrarse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Registrarse.aspx.designer.cs">
+      <DependentUpon>Registrarse.aspx</DependentUpon>
     </Compile>
     <Compile Include="Reportes.aspx.cs">
       <DependentUpon>Reportes.aspx</DependentUpon>

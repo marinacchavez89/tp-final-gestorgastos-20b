@@ -39,8 +39,16 @@
                         <a class="nav-link" href="Reportes.aspx">Reportes</a>
                     </div>
                     <div class="navbar-nav ms-auto">
+                        <% if (Session["UsuarioEmail"] != null)
+                            { %>
+                        <span class="nav-link">Bienvenido, <%= Session["UsuarioNombre"] %></span>                       
+                        <img src="/Images/logoLogin.png" alt="Logo" style="height: 40px;" />
+                        <% }
+                        else
+                        { %>
                         <a class="nav-link" href="Login.aspx">Iniciar Sesión</a>
-                        <a class="nav-link" href="Login.aspx">Registrarse</a>
+                        <a class="nav-link" href="Registrarse.aspx">Registrarse</a>
+                        <% } %>
                     </div>
                 </div>
             </div>

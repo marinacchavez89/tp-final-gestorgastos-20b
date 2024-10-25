@@ -11,8 +11,17 @@ namespace TpFinal_WebForms_20B_GestorGastos
 {
 
 
-    public partial class Login
+    public partial class Registrarse
     {
+
+        /// <summary>
+        /// txtNombre control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtNombre;
 
         /// <summary>
         /// txtEmail control.
@@ -42,21 +51,12 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.Label lblError;
 
         /// <summary>
-        /// btnIngresar control.
+        /// btnAceptar control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnIngresar;
-
-        /// <summary>
-        /// btnOlvidePass control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOlvidePass;
+        protected global::System.Web.UI.WebControls.Button btnAceptar;
     }
 }
