@@ -41,9 +41,6 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                             <p class="card-text"><%# Eval("Email") %></p>
-                                            <button class="btn btn-danger" onclick="quitarParticipante(<%# Eval("IdUsuario") %>)" style="border: none; background: none; padding: 0;">
-                                                <img src="/Images/logoEliminar.png" alt="Eliminar" style="width: 50px; height: 45px;" />
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
