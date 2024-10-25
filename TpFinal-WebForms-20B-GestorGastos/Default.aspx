@@ -13,10 +13,10 @@
                             <div class="col">
                                 <div class="card">
                                     <img src="/Images/logoGasto.png" class="card-img-top d-block mx-auto" alt="img-gasto" style="height: 100px; width: 100px;">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%#Eval("Concepto")%></h5>
-                                        <p class="card-text"><%# ((DateTime)Eval("Fecha")).ToString("dd/MM/yyyy") %></p>
-                                        <p class="card-text">$<%#Eval("Monto")%></p>
+                                     <div class="card-body">
+                                        <h5 class="card-title"><%# Eval("Descripcion") %></h5>
+                                        <p class="card-text"><%# ((DateTime)Eval("FechaGasto")).ToString("dd/MM/yyyy") %></p>
+                                        <p class="card-text">$<%# Eval("MontoTotal") %></p>
                                     </div>
                                 </div>
                             </div>

@@ -5,31 +5,30 @@
     <div class="container">
         <h2>Gestión de Gastos</h2>
         <p>Comenzá a gestionar tus cuentas ingresando un nuevo gasto</p>
+
         <div class="mb-3">
             <label for="fechaGasto" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="fechaGasto" />
+            <asp:TextBox ID="txtFechaGasto" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
         </div>
+
         <div class="mb-3">
-            <label for="conceptoGasto" class="form-label">Concepto del Gasto</label>
-            <input type="text" class="form-control" id="conceptoGasto" />
+            <label for="conceptoGasto" class="form-label">Descripción del Gasto</label>
+            <asp:TextBox ID="txtConceptoGasto" runat="server" CssClass="form-control"></asp:TextBox>
         </div>
+
         <div class="mb-3">
-            <label for="montoGasto" class="form-label">Monto</label>
-            <input type="number" class="form-control" id="montoGasto" />
+            <label for="montoGasto" class="form-label">Monto Total</label>
+            <asp:TextBox ID="txtMontoGasto" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
         </div>
-        <div class="mb-3">
-            <label for="participantesGasto" class="form-label">Participantes</label>
-            <select multiple class="form-control" id="participantesGasto">
-                <option>Marina</option>
-                <option>Juan</option>
-                <option>Martin</option>
-            </select>
-        </div>
+
+        <label for="idGrupo" class="form-label">Grupo</label>
+        <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control">
+        </asp:DropDownList>
+
+        <asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
+        </asp:ListBox>
+
     </div>
 
-
-       
-
-
-        <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
+    <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
 </asp:Content>

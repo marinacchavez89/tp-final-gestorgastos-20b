@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace dominio
 {
-    public class Gasto
+    public class Grupo
     {
-        public int IdGasto { get; set; }
         public int IdGrupo { get; set; }
-        public string Descripcion { get; set; } 
-        public decimal MontoTotal { get; set; }
-        public DateTime FechaGasto { get; set; } = DateTime.Now;
+        public string NombreGrupo { get; set; }
+        public DateTime FechaCreacion { get; set; } = DateTime.Now;
         public int CreadoPor { get; set; }
+        public string CodigoInvitacion { get; set; }
+        
     }
 }

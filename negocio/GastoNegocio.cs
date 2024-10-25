@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,21 +18,144 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT IdGasto, Fecha, Concepto, Monto FROM Gastos");
+                datos.setearConsulta("SELECT IdGasto, FechaGasto, Descripcion, MontoTotal FROM Gastos");
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Gasto aux = new Gasto();
                     aux.IdGasto = (int)datos.Lector["IdGasto"];
-                    aux.Fecha = (DateTime)datos.Lector["Fecha"];
-                    aux.Concepto = (string)datos.Lector["Concepto"];
-                    aux.Monto = (decimal)datos.Lector["Monto"];
+                    aux.FechaGasto = (DateTime)datos.Lector["FechaGasto"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.MontoTotal = (decimal)datos.Lector["MontoTotal"];
 
                     lista.Add(aux);
                 }
 
                 return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void AgregarGasto(Gasto nuevoGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("INSERT INTO Gastos (IdGrupo, Descripcion, MontoTotal, FechaGasto, CreadoPor) VALUES (@IdGrupo, @Descripcion, @MontoTotal, @FechaGasto, @CreadoPor)");
+
+                datos.setearParametro("@IdGrupo", nuevoGasto.IdGrupo);
+                datos.setearParametro("@Descripcion", nuevoGasto.Descripcion);
+                datos.setearParametro("@MontoTotal", nuevoGasto.MontoTotal);
+                datos.setearParametro("@FechaGasto", nuevoGasto.FechaGasto);
+                datos.setearParametro("@CreadoPor", nuevoGasto.CreadoPor);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public string ObtenerNombreUsuario(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT nombre FROM Usuarios WHERE idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (string)datos.Lector["nombre"];
+                }
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<ParticipanteGasto> ListarParticipantesPorGrupo(int idGrupo)
+        {
+            List<ParticipanteGasto> participantesGasto = new List<ParticipanteGasto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                // Consulta para obtener los participantes del grupo
+                datos.setearConsulta(@"SELECT mg.idUsuario, u.nombre 
+                               FROM MiembrosGrupos mg 
+                               JOIN Usuarios u ON mg.idUsuario = u.idUsuario 
+                               WHERE mg.idGrupo = @idGrupo");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    ParticipanteGasto participante = new ParticipanteGasto
+                    {
+                        IdUsuario = (int)datos.Lector["idUsuario"],
+                        // No puedes almacenar el nombre en ParticipanteGasto a menos que modifiques la clase
+                        // Si quieres mostrar el nombre, puedes crear otra clase o incluir una propiedad en ParticipanteGasto
+                    };
+
+                    participantesGasto.Add(participante);
+                }
+
+                return participantesGasto;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public List<Grupo> ListarGrupos()
+        {
+            List<Grupo> listaGrupos = new List<Grupo>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdGrupo, NombreGrupo FROM Grupos");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Grupo grupo = new Grupo
+                    {
+                        IdGrupo = (int)datos.Lector["IdGrupo"],
+                        NombreGrupo = (string)datos.Lector["NombreGrupo"]
+                    };
+                    listaGrupos.Add(grupo);
+                }
+
+                return listaGrupos;
             }
             catch (Exception ex)
             {

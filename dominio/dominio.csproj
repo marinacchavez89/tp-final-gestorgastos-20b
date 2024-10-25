@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Amigo.cs" />
-    <Compile Include="DivisionGasto.cs" />
+    <Compile Include="Pago.cs" />
     <Compile Include="Gasto.cs" />
+    <Compile Include="Grupo.cs" />
+    <Compile Include="MiembroGrupo.cs" />
+    <Compile Include="ParticipanteGasto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
