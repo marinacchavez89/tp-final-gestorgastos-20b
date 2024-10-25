@@ -10,6 +10,6 @@ namespace dominio
     {
         public int IdGasto { get; set; }
         public int IdUsuario { get; set; }
-        public decimal MontoIndividual { get; set; }
+        public decimal MontoIndividual { get; set; }        
     }
 }

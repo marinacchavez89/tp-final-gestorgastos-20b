@@ -58,17 +58,18 @@ namespace TpFinal_WebForms_20B_GestorGastos
                             IdUsuario = Convert.ToInt32(item.Value),
                             MontoIndividual = montoIndividual
                         };
-
-                        // Agregar el participante al negocio
+                       
                         ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
                         participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
                     }
-                }
+                }               
             }
             else
             {
-                //Arrogar algun error o algo...
+                //Arrojar algun error o redirigir a pagina en especial.
             }
+
+            Response.Redirect("Exito.aspx", false);
         }
 
         private void CargarGrupos()
@@ -109,6 +110,23 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Text = nombreUsuario
                 });
             }
+        }
+
+        protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+            GastoNegocio gastoNegocio = new GastoNegocio();
+            List<ParticipanteGasto> participantes = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
+
+            var participantesConDatos = participantes.Select(p => new
+            {
+                p.IdUsuario,
+                Nombre = gastoNegocio.ObtenerNombreUsuario(p.IdUsuario),
+                Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario)
+            }).ToList();
+
+            repParticipantes.DataSource = participantesConDatos;
+            repParticipantes.DataBind();
         }
     }
 }

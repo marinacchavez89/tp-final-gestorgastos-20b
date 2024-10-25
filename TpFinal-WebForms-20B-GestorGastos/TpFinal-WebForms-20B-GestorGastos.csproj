@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Amigos.aspx" />
+    <Content Include="Exito.aspx" />
     <Content Include="Gastos.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Reportes.aspx" />
@@ -79,6 +80,13 @@
     </Compile>
     <Compile Include="Amigos.aspx.designer.cs">
       <DependentUpon>Amigos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Exito.aspx.cs">
+      <DependentUpon>Exito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Exito.aspx.designer.cs">
+      <DependentUpon>Exito.aspx</DependentUpon>
     </Compile>
     <Compile Include="Gastos.aspx.cs">
       <DependentUpon>Gastos.aspx</DependentUpon>

@@ -96,6 +96,32 @@ namespace negocio
             }
         }
 
+        public string ObtenerEmailUsuario(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT email FROM Usuarios WHERE idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return (string)datos.Lector["email"];
+                }
+                return string.Empty;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
         public List<ParticipanteGasto> ListarParticipantesPorGrupo(int idGrupo)
         {
             List<ParticipanteGasto> participantesGasto = new List<ParticipanteGasto>();
@@ -103,11 +129,10 @@ namespace negocio
 
             try
             {
-                // Consulta para obtener los participantes del grupo
-                datos.setearConsulta(@"SELECT mg.idUsuario, u.nombre 
-                               FROM MiembrosGrupos mg 
-                               JOIN Usuarios u ON mg.idUsuario = u.idUsuario 
-                               WHERE mg.idGrupo = @idGrupo");
+                datos.setearConsulta(@"
+            SELECT mg.idUsuario 
+            FROM MiembrosGrupos mg 
+            WHERE mg.idGrupo = @idGrupo");
                 datos.setearParametro("@idGrupo", idGrupo);
                 datos.ejecutarLectura();
 
@@ -115,9 +140,7 @@ namespace negocio
                 {
                     ParticipanteGasto participante = new ParticipanteGasto
                     {
-                        IdUsuario = (int)datos.Lector["idUsuario"],
-                        // No puedes almacenar el nombre en ParticipanteGasto a menos que modifiques la clase
-                        // Si quieres mostrar el nombre, puedes crear otra clase o incluir una propiedad en ParticipanteGasto
+                        IdUsuario = (int)datos.Lector["idUsuario"]
                     };
 
                     participantesGasto.Add(participante);
