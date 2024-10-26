@@ -13,6 +13,12 @@
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->
 
+        <asp:LinkButton ID="btnAgregarParticipante" runat="server" Visible="false"
+            style="background-color : white; color: #000;">
+            <img src="/Images/plus-solid.svg" alt="Agregar" style="height: 20px; width: 20px; margin-right: 8px;" />
+           
+        </asp:LinkButton>
+
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">

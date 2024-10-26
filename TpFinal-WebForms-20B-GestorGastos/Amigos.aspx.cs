@@ -23,6 +23,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+            if(idGrupo !=0) // si se selecciona un grupoi mostramos el boton
+            {
+                btnAgregarParticipante.Visible = true;
+            }
+            else
+            {
+                btnAgregarParticipante.Visible = false;
+            }
             GastoNegocio gastoNegocio = new GastoNegocio();
             List<ParticipanteGasto> participantes = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
 
@@ -76,5 +84,6 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 });
             }
         }
+       
     }
 }
