@@ -43,6 +43,7 @@
                             { %>
                         <span class="nav-link">Bienvenido, <%= Session["UsuarioNombre"] %></span>                       
                         <img src="/Images/logoLogin.png" alt="Logo" style="height: 40px;" />
+                        <a class="nav-link" href="Perfil.aspx">Ver Perfil</a>
                         <% }
                         else
                         { %>
