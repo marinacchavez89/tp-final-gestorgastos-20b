@@ -27,6 +27,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 // Verificamos las credenciales del usuario
                 Usuario usuario = usuarioNegocio.ValidarUsuario(email, HashPassword(password));
+                Session.Add("Usuario", usuario);
 
                 if (usuario != null && usuario.Activo)
                 {

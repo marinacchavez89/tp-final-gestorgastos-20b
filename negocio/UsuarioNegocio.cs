@@ -100,5 +100,27 @@ namespace negocio
             return usuario;
         }
 
+        public void actualizar(Usuario user)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Update Usuarios SET email = @email, nombre = @nombre WHERE idUsuario = @id");
+                datos.setearParametro("@email", user.Email);
+                datos.setearParametro("@nombre", user.Nombre);
+                datos.setearParametro("@id", user.IdUsuario);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
