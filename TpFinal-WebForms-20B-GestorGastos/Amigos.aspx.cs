@@ -84,6 +84,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 });
             }
         }
+        protected void btnUnirseGrupo_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UnirseGrupo.aspx");
+        }
+        protected void btnCrearGrupo_Click(Object sender, EventArgs e) 
+            {
+            Response.Redirect("CrearGrupo.aspx");
+            }
        
     }
 }

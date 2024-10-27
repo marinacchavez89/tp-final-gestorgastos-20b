@@ -45,6 +45,15 @@
                 </div>
             </div>
         </div>
+        <div class="row mt-3 text-start">
+
+            <div class="col">
+        <asp:Button ID="btnUnirseGrupo" runat="server" CssClass="btn btn-primary" Text="Unirse a un Grupo" OnClick="btnUnirseGrupo_Click" style="margin-top: 10px;" />
+            </div>
+            <div class="col">
+        <asp:Button ID="btnCrearGrupo" runat="server" CssClass="btn btn-primary" Text="Agregar Grupo" OnClick="btnCrearGrupo_Click" style="margin-top: 10px; margin-left: 10px;" />
+            </div>
+        </div>
         <!-- logica para gestionar los amigos -->
     </div>
 </asp:Content>
