@@ -46,6 +46,7 @@
     <Compile Include="GastoNegocio.cs" />
     <Compile Include="ParticipanteGastoNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Seguridad.cs" />
     <Compile Include="UsuarioNegocio.cs" />
   </ItemGroup>
   <ItemGroup>

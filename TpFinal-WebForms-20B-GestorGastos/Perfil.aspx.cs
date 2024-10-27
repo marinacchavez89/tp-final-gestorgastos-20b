@@ -15,8 +15,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             if (!IsPostBack)
             {
-                txtEmail.Text = Session["UsuarioEmail"].ToString();
-                txtNombre.Text = Session["UsuarioNombre"].ToString();
+                if (!Seguridad.sesionActiva(Session["Usuario"]))
+                {
+                    Response.Redirect("Login.aspx", false);
+                }
+                else
+                {
+                    txtEmail.Text = Session["UsuarioEmail"].ToString();
+                    txtNombre.Text = Session["UsuarioNombre"].ToString();
+                }
             }
             txtEmail.Enabled = false;
             txtNombre.Enabled = false;
