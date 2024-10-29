@@ -23,29 +23,37 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 {
                     txtEmail.Text = Session["UsuarioEmail"].ToString();
                     txtNombre.Text = Session["UsuarioNombre"].ToString();
+                    txtEmail.Enabled = true; 
+                    txtNombre.Enabled = true;
+                    btnAceptar.Enabled = true;
                 }
             }
-            txtEmail.Enabled = false;
-            txtNombre.Enabled = false;
-            btnGuardar.Enabled = false;
-        }
+           
+        }        
+        
 
-        protected void btnModificar_Click(object sender, EventArgs e)
-        {
-            txtEmail.Enabled = true;
-            txtNombre.Enabled = true;
-            btnGuardar.Enabled = true;
-        }
-
-        protected void btnGuardar_Click(object sender, EventArgs e)
+        protected void btnAceptar_Click(object sender, EventArgs e)
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
             Usuario usuario = (Usuario)Session["Usuario"];
             usuario.Email = txtEmail.Text;
             usuario.Nombre = txtNombre.Text;
             negocio.actualizar(usuario);
+            // Actualizar la sesión con los nuevos valores
             Session["UsuarioEmail"] = txtEmail.Text;
             Session["UsuarioNombre"] = txtNombre.Text;
+
+            // Deshabilitar los campos después de guardar
+            txtEmail.Enabled = false;
+            txtNombre.Enabled = false;
+            btnAceptar.Enabled = false;
+
+            Response.Redirect("Exito.aspx", false);
+        }
+
+        protected void btnCancelar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx", false);
         }
     }
 }

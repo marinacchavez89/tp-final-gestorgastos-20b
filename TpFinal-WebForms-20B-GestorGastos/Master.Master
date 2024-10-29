@@ -36,6 +36,7 @@
                         <a class="nav-link active" aria-current="page" href="Default.aspx">Listado de Gastos</a>
                         <a class="nav-link" href="Gastos.aspx">Nuevo Gasto</a>
                         <a class="nav-link" href="Amigos.aspx">Amigos</a>
+                        <a class="nav-link" href="Grupos.aspx">Grupos</a>
                         <a class="nav-link" href="Reportes.aspx">Reportes</a>
                     </div>
                     <div class="navbar-nav ms-auto">

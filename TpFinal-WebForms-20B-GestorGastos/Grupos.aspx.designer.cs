@@ -11,17 +11,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
 {
 
 
-    public partial class UnirseGrupo
+    public partial class Grupos
     {
-
-        /// <summary>
-        /// txtCodigoInvitacion control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCodigoInvitacion;
 
         /// <summary>
         /// btnUnirseGrupo control.
@@ -33,12 +24,12 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.Button btnUnirseGrupo;
 
         /// <summary>
-        /// btnVolver control.
+        /// btnCrearGrupo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnVolver;
+        protected global::System.Web.UI.WebControls.Button btnCrearGrupo;
     }
 }

@@ -68,6 +68,7 @@
     <Content Include="CrearGrupo.aspx" />
     <Content Include="Exito.aspx" />
     <Content Include="Gastos.aspx" />
+    <Content Include="Grupos.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Registrarse.aspx" />
@@ -105,6 +106,13 @@
     </Compile>
     <Compile Include="Gastos.aspx.designer.cs">
       <DependentUpon>Gastos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Grupos.aspx.cs">
+      <DependentUpon>Grupos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Grupos.aspx.designer.cs">
+      <DependentUpon>Grupos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

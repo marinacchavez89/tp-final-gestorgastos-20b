@@ -23,7 +23,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
-            if(idGrupo !=0) // si se selecciona un grupoi mostramos el boton
+            if(idGrupo !=0)
             {
                 btnAgregarParticipante.Visible = true;
             }
@@ -83,15 +83,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Text = nombreUsuario
                 });
             }
-        }
-        protected void btnUnirseGrupo_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("UnirseGrupo.aspx");
-        }
-        protected void btnCrearGrupo_Click(Object sender, EventArgs e) 
-            {
-            Response.Redirect("CrearGrupo.aspx");
-            }
+        }       
        
     }
 }

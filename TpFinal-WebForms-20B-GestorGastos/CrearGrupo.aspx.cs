@@ -13,5 +13,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
 
         }
+
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Grupos.aspx", false);
+        }
     }
 }

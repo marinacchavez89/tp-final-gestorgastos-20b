@@ -3,8 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <h2>Gestión de Amigos</h2>
-        <h5>Listado de grupos</h5>
+        <h2>Gestión de Amigos</h2>      
 
         <label for="idGrupo" class="form-label">Seleccionar grupo</label>
         <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
@@ -13,16 +12,15 @@
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->
 
-        <asp:LinkButton ID="btnAgregarParticipante" runat="server" Visible="false"
-            style="background-color : white; color: #000;">
-            <img src="/Images/plus-solid.svg" alt="Agregar" style="height: 20px; width: 20px; margin-right: 8px;" />
-           
-        </asp:LinkButton>
-
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h5 style="margin-top: 20px;">Participantes</h5>
+                    <h5 style="margin-top: 20px;">Participantes 
+                        <asp:LinkButton ID="btnAgregarParticipante" runat="server" Visible="false"
+                            Style="background-color: white; color: #000;">
+                        <img src="/Images/plus-solid.svg" alt="Agregar" title="Agregar Participante"  style="height: 20px; width: 20px; margin-right: 8px;" />   
+                        </asp:LinkButton>
+                    </h5>
                     <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
                         <asp:Repeater runat="server" ID="repParticipantes">
                             <ItemTemplate>
@@ -34,7 +32,6 @@
                                             <p class="card-text"><%# Eval("Email") %></p>
                                             <button class="btn btn-danger" onclick="quitarParticipante(<%# Eval("IdUsuario") %>)" style="border: none; background: none; padding: 0;">
                                                 <img src="/Images/logoEliminar.png" alt="Eliminar" style="width: 50px; height: 45px;" />
-                                                <img src="https://cdn-icons-png.flaticon.com/128/5646/5646186.png" alt="Modificar" style="width: 30px; height: 30px;" />
                                             </button>
                                         </div>
                                     </div>
@@ -44,16 +41,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row mt-3 text-start">
+        </div>      
 
-            <div class="col">
-        <asp:Button ID="btnUnirseGrupo" runat="server" CssClass="btn btn-primary" Text="Unirse a un Grupo" OnClick="btnUnirseGrupo_Click" style="margin-top: 10px;" />
-            </div>
-            <div class="col">
-        <asp:Button ID="btnCrearGrupo" runat="server" CssClass="btn btn-primary" Text="Agregar Grupo" OnClick="btnCrearGrupo_Click" style="margin-top: 10px; margin-left: 10px;" />
-            </div>
-        </div>
-        <!-- logica para gestionar los amigos -->
     </div>
 </asp:Content>
