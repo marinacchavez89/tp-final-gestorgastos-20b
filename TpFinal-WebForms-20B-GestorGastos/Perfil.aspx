@@ -20,18 +20,19 @@
                 <asp:Label ID="lblError" CssClass="text-danger" runat="server" Visible="false"></asp:Label>
             </div>
 
+            <div class="mb-4"></div>
+
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label class="form-label">Imagen Perfil</label>
+                    <input type="file" id="txtImagen" runat="server" class="form-control" />
+                </div>
+                <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
+                    runat="server" CssClass="img-fluid mb-3" Style="width: 50%; max-width: 200px; height: auto;" />
+            </div>
+            <asp:Button ID="btnModificar" Text="Modificar" CssClass="btn btn-secondary" OnClick="btnModificar_Click" runat="server" />
+            <asp:Button ID="btnGuardar" Text="Guardar" CssClass="btn btn-secondary" OnClick="btnGuardar_Click" runat="server" />
+            <asp:Button ID="btnCancelar" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
-    <div class="mb-4"></div>
-
-    <div class="col-md-4">
-        <div class="mb-3">
-            <label class="form-label">Imagen Perfil</label>
-            <input type="file" id="txtImagen" runat="server" class="form-control" />
-        </div>
-        <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
-            runat="server" CssClass="img-fluid mb-3"  style="width: 50%; max-width: 200px; height: auto;"/>
-    </div>    
-<asp:Button ID="btnAceptar" Text="Aceptar" CssClass="btn btn-secondary" OnClick="btnAceptar_Click" runat="server" />
-<asp:Button ID="btnCancelar" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" runat="server" />
 </asp:Content>
