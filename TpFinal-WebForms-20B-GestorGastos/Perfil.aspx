@@ -6,27 +6,24 @@
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <h2>Perfil de <%=Session["UsuarioNombre"]%></h2>
-            
-            <div class="mb-3">
-                <label for="txtNombre" class="form-label" style="margin-top: 15px;">Nombre</label>
-                <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
-            </div>
+            <div class="d-flex flex-row justify-content-between" style="width: 100%;">
+                <div class="d-flex flex-column justify-content-around" style="width: 600px">
+                    <div class="mb-3">
+                        <label for="txtNombre" class="form-label" style="margin-top: 15px;">Nombre</label>
+                        <asp:TextBox ID="txtNombre" CssClass="form-control" runat="server" />
+                    </div>
 
-            <div class="mb-3">
-                <label for="txtEmail" class="form-label" style="margin-top: 15px;">Email</label>
-                <asp:TextBox ID="txtEmail" CssClass="form-control" runat="server" placeholder="name@example.com" TextMode="Email" />
-            </div>
-
-            <div class="mb-3">
-                <asp:Label ID="Label1" CssClass="text-danger" runat="server" Visible="false"></asp:Label>
-            </div>
-
-            <div class="col-md-4">
-                <div class="mb-3">
-                    <label class="form-label">Imagen Perfil</label>                    
+                    <div class="mb-3">
+                        <label for="txtEmail" class="form-label" style="margin-top: 15px;">Email</label>
+                        <asp:TextBox ID="txtEmail" CssClass="form-control" runat="server" placeholder="name@example.com" TextMode="Email" />
+                    </div>
                 </div>
-                <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
-                    runat="server" CssClass="img-fluid mb-3" Style="width: 50%; max-width: 200px; height: auto;" />
+                <div class="d-flex flex-column" style="width: 350px">
+                    <label class="form-label" style="margin-top: 15px;">Imagen Perfil</label>
+                    <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
+                        runat="server" CssClass="img-fluid mb-3" Style="max-width: 200px; height: auto;" />
+
+                </div>
             </div>
 
             <div class="mb-3">
