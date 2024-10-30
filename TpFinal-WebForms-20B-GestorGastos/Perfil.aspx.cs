@@ -23,14 +23,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 {
                     txtEmail.Text = Session["UsuarioEmail"].ToString();
                     txtNombre.Text = Session["UsuarioNombre"].ToString();
-                    txtEmail.Enabled = false; 
+                    txtEmail.Enabled = false;
                     txtNombre.Enabled = false;
                     btnGuardar.Visible = false;
-                    txtImagen.Visible = false;
+                    //txtImagen.Visible = false;
                 }
             }
-           
-        }        
+
+        }
 
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -42,8 +42,22 @@ namespace TpFinal_WebForms_20B_GestorGastos
             txtEmail.Enabled = true;
             txtNombre.Enabled = true;
             btnGuardar.Visible = true;
-            txtImagen.Visible = true;
+            //txtImagen.Visible = true;
+            rptImagenesPerfil.Visible = true;
+
+            var imagenes = new List<string>
+            {
+                "/Images/perfil1.png",
+                "/Images/perfil2.png",
+                "/Images/perfil3.png",
+                "/Images/perfil4.png"
+            };
+
+            rptImagenesPerfil.DataSource = imagenes.Select(img => new { ImageUrl = img });
+            rptImagenesPerfil.DataBind();
         }
+
+
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
@@ -63,5 +77,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             Response.Redirect("Exito.aspx", false);
         }
+
+        protected void btnSeleccionar_Command(object sender, CommandEventArgs e)
+        {
+            // Obtener la URL de la imagen seleccionada
+            string imageUrl = e.CommandArgument.ToString();
+
+            // Asignar la URL al control de imagen de perfil
+            imgNuevoPerfil.ImageUrl = imageUrl;
+        }
+       
     }
 }
