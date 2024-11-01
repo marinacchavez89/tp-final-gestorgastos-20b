@@ -83,7 +83,81 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Text = nombreUsuario
                 });
             }
-        }       
-       
+        }
+
+        protected void btnAgregarParticipante_Click(object sender, EventArgs e)
+        {   
+            txtEmailParticipante.Visible = true;
+            btnGuardar.Visible = true;
+        }
+
+        protected void btnGuardar_Click(object sender, EventArgs e)
+        {
+            string email = txtEmailParticipante.Text;
+            int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                lblMensaje.Text = "Por favor, ingrese un email.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
+            GastoNegocio gastoNegocio = new GastoNegocio();
+
+            // Buscar el usuario por email
+            int? idUsuario = gastoNegocio.ObtenerIdUsuarioPorEmail(email);
+
+            if (idUsuario == null)
+            {
+                lblMensaje.Text = "El usuario con el email especificado no existe.";
+                lblMensaje.Visible = true;
+                return;
+            }
+
+            // Intentar agregar al usuario al grupo
+            bool agregado = gastoNegocio.AgregarParticipanteAGrupo(idGrupo, idUsuario.Value);
+
+            if (agregado)
+            {
+                lblMensaje.Text = "";
+                lblMensaje.Visible = false;
+            }
+            else
+            {
+                lblMensaje.Text = "El participante ya es miembro del grupo.";
+                lblMensaje.Visible = true;
+            }
+
+            CargarParticipantes();
+            ddlGrupos_SelectedIndexChanged(null, null);
+            txtEmailParticipante.Text = string.Empty;
+        }
+
+        protected void btnEliminarParticianteGrupo_Click(object sender, EventArgs e)
+        {
+            // Obtener el id del usuario a eliminar desde CommandArgument
+            LinkButton btnEliminar = (LinkButton)sender;
+            int idUsuario = int.Parse(btnEliminar.CommandArgument);
+            int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+
+            GastoNegocio gastoNegocio = new GastoNegocio();
+            bool eliminado = gastoNegocio.EliminarParticipanteDeGrupo(idGrupo, idUsuario);
+           
+            if (eliminado)
+            {
+                lblMensaje.Text = "";
+                lblMensaje.Visible = false;
+            }
+            else
+            {
+                lblMensaje.Text = "No se pudo eliminar al participante.";
+                lblMensaje.Visible = true;
+            }
+
+            // Refrescar la lista de participantes
+            CargarParticipantes();
+            ddlGrupos_SelectedIndexChanged(null, null);
+        }
     }
 }

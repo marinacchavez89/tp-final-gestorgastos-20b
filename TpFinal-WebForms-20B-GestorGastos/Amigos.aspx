@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container">
-        <h2>Gestión de Amigos</h2>      
+        <h2>Gestión de Amigos</h2>
 
         <label for="idGrupo" class="form-label">Seleccionar grupo</label>
         <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
@@ -16,7 +16,7 @@
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <h5 style="margin-top: 20px;">Participantes 
-                        <asp:LinkButton ID="btnAgregarParticipante" runat="server" Visible="false"
+                        <asp:LinkButton ID="btnAgregarParticipante" runat="server" OnClick="btnAgregarParticipante_Click" Visible="false"
                             Style="background-color: white; color: #000;">
                         <img src="/Images/plus-solid.svg" alt="Agregar" title="Agregar Participante"  style="height: 20px; width: 20px; margin-right: 8px;" />   
                         </asp:LinkButton>
@@ -30,18 +30,28 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                             <p class="card-text"><%# Eval("Email") %></p>
-                                            <button class="btn btn-danger" onclick="quitarParticipante(<%# Eval("IdUsuario") %>)" style="border: none; background: none; padding: 0;">
+                                           <asp:LinkButton ID="btnEliminarParticianteGrupo" runat="server" CssClass="btn btn-danger" CommandArgument='<%# Eval("IdUsuario") %>' OnClick="btnEliminarParticianteGrupo_Click" style="border: none; background: none; padding: 0;">
                                                 <img src="/Images/logoEliminar.png" alt="Eliminar" style="width: 50px; height: 45px;" />
-                                            </button>
+                                            </asp:LinkButton>
                                         </div>
                                     </div>
                                 </div>
                             </ItemTemplate>
                         </asp:Repeater>
                     </div>
+
+                    <div Style="margin-top: 20px;">
+                        <asp:TextBox ID="txtEmailParticipante" CssClass="form-control" runat="server" Visible="false" Placeholder="Ingrese el email del participante"></asp:TextBox>
+                        <asp:Label ID="lblMensaje" runat="server" Visible="false" ForeColor="Red"></asp:Label>
+                    </div>
+
+                    <div Style="margin-top: 20px;">
+                        <asp:Button ID="btnGuardar" Text="Guardar" CssClass="btn btn-secondary" runat="server" Visible="false" OnClick="btnGuardar_Click"></asp:Button>
+                    </div>
+
                 </div>
             </div>
-        </div>      
+        </div>
 
     </div>
 </asp:Content>

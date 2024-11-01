@@ -189,5 +189,87 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public int? ObtenerIdUsuarioPorEmail(string email)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT idUsuario FROM Usuarios WHERE email = @Email AND Activo = 1");
+                datos.setearParametro("@Email", email);
+                object resultado = datos.ejecutarScalar();
+
+                if (resultado != null)
+                    return (int)resultado;
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool AgregarParticipanteAGrupo(int idGrupo, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Verificar si el usuario ya es miembro del grupo
+                datos.setearConsulta("SELECT COUNT(*) FROM MiembrosGrupos WHERE idGrupo = @idGrupo AND idUsuario = @idUsuario");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.setearParametro("@idUsuario", idUsuario);
+                int miembroExiste = (int)datos.ejecutarScalar();
+
+                if (miembroExiste > 0)
+                {
+                    return false;
+                }
+
+                // Insertar al usuario en el grupo
+                datos.setearConsulta("INSERT INTO MiembrosGrupos (idGrupo, idUsuario, fechaUnion, rol) VALUES (@idGrupo, @idUsuario, @fechaUnion, @rol)");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.setearParametro("@fechaUnion", DateTime.Now);
+                datos.setearParametro("@rol", "miembro");
+                datos.ejecutarAccion();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool EliminarParticipanteDeGrupo(int idGrupo, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM MiembrosGrupos WHERE idGrupo = @idGrupo AND idUsuario = @idUsuario");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.setearParametro("@idUsuario", idUsuario);                
+                datos.ejecutarAccion();
+                return true;                
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }
