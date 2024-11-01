@@ -122,5 +122,63 @@ namespace negocio
             }
         }
 
+        public void guardarImagen(Usuario usuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Eliminar la imagen anterior
+                datos.setearConsulta("DELETE FROM UsuarioImagenes WHERE idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", usuario.IdUsuario);
+                datos.ejecutarAccion();
+
+                // Cerramos la conexión después de la acción DELETE
+                datos.cerrarConexion();
+
+                // Insertar la nueva imagen
+                datos.setearConsulta("INSERT INTO UsuarioImagenes (idUsuario, urlImagen, fechaCarga) VALUES (@idUsuarioImg, @urlImagen, @fechaCarga)");
+                datos.setearParametro("@idUsuarioImg", usuario.IdUsuario);
+                datos.setearParametro("@urlImagen", usuario.UrlImagen);
+                datos.setearParametro("@fechaCarga", DateTime.Now);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {              
+                datos.cerrarConexion();
+            }
+        }
+
+        public string obtenerImagenPerfil(int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT TOP 1 urlImagen FROM UsuarioImagenes WHERE idUsuario = @idUsuario ORDER BY fechaCarga DESC");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return datos.Lector["urlImagen"].ToString();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
     }
 }

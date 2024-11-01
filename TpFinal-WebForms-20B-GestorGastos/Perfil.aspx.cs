@@ -28,6 +28,16 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     btnGuardar.Visible = false;
                     //txtImagen.Visible = false;
                 }
+
+                if (Session["Usuario"] != null)
+                {
+                    Usuario usuario = (Usuario)Session["Usuario"];
+                    UsuarioNegocio negocio = new UsuarioNegocio();
+                    string imagenPerfil = negocio.obtenerImagenPerfil(usuario.IdUsuario);
+
+                    // Asignar la URL de la imagen al control de imagen o usar la imagen predeterminada
+                    imgNuevoPerfil.ImageUrl = !string.IsNullOrEmpty(imagenPerfil) ? imagenPerfil : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
+                }
             }
 
         }
@@ -65,7 +75,12 @@ namespace TpFinal_WebForms_20B_GestorGastos
             Usuario usuario = (Usuario)Session["Usuario"];
             usuario.Email = txtEmail.Text;
             usuario.Nombre = txtNombre.Text;
+
+            usuario.UrlImagen = imgNuevoPerfil.ImageUrl;
+
             negocio.actualizar(usuario);
+            negocio.guardarImagen(usuario);
+
             // Actualizar la sesión con los nuevos valores
             Session["UsuarioEmail"] = txtEmail.Text;
             Session["UsuarioNombre"] = txtNombre.Text;
@@ -85,6 +100,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             // Asignar la URL al control de imagen de perfil
             imgNuevoPerfil.ImageUrl = imageUrl;
+
+            Usuario usuario = (Usuario)Session["Usuario"];
+            usuario.UrlImagen = imageUrl;
         }
        
     }

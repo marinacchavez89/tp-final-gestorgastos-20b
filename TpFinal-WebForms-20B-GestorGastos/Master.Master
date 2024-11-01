@@ -42,11 +42,13 @@
                     <div class="navbar-nav ms-auto">
                         <% if (Session["UsuarioEmail"] != null)
                             { %>
-                        <span class="nav-link">Bienvenido, <%= Session["UsuarioNombre"] %></span>                       
-                        <img src="/Images/logoLogin.png" alt="Logo" style="height: 40px;" />
-                        <a class="nav-link" href="Perfil.aspx">Ver Perfil</a>
-                        <asp:LinkButton ID="btnLogout" runat="server" CssClass="nav-link" Onclick="btnLogout_Click">Salir</asp:LinkButton>
+                        <span class="nav-link">Bienvenido, <%= Session["UsuarioNombre"] %></span>
 
+                        <!-- Mostrar imagen de perfil del usuario si existe, sino mostrar la imagen predeterminada -->
+                        <img src='<%= Session["ImagenPerfil"] ?? "/Images/logoLogin.png" %>' alt="Imagen de Perfil" style="height: 40px; border-radius: 20px;" />
+
+                        <a class="nav-link" href="Perfil.aspx">Ver Perfil</a>
+                        <asp:LinkButton ID="btnLogout" runat="server" CssClass="nav-link" OnClick="btnLogout_Click">Salir</asp:LinkButton>
                         <% }
                         else
                         { %>

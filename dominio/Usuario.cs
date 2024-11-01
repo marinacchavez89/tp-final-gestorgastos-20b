@@ -14,7 +14,8 @@ namespace dominio
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public DateTime FechaRegistro { get; set; } = DateTime.Now;
-        public bool Activo { get; set; } = true;        
+        public bool Activo { get; set; } = true;
+        public string UrlImagen { get; set; }
        
     }
 }

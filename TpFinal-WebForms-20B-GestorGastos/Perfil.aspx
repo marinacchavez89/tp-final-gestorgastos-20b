@@ -20,9 +20,10 @@
                 </div>
                 <div class="d-flex flex-column" style="width: 350px">
                     <label class="form-label" style="margin-top: 15px;">Imagen Perfil</label>
-                    <asp:Image ID="imgNuevoPerfil" ImageUrl="https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg"
-                        runat="server" CssClass="img-fluid mb-3" Style="max-width: 200px; height: auto;" />
-
+                    <!-- Deja el ImageUrl vacío aquí -->
+                    <asp:Image ID="imgNuevoPerfil" runat="server" CssClass="img-fluid mb-3"
+                        Style="max-width: 200px; border-radius: 20px;"
+                        AlternateText="Imagen de Perfil" />
                 </div>
             </div>
 

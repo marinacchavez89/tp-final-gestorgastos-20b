@@ -21,6 +21,16 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Response.Redirect("Login.aspx", false);
                 }
             }
+
+            if (Session["Usuario"] != null)
+            {
+                Usuario usuario = (Usuario)Session["Usuario"];
+                UsuarioNegocio negocio = new UsuarioNegocio();
+                string imagenPerfil = negocio.obtenerImagenPerfil(usuario.IdUsuario);
+
+                // Guardar la URL de la imagen en la sesión
+                Session["ImagenPerfil"] = imagenPerfil ?? "/Images/logoLogin.png";
+            }
         }
 
         protected void btnLogout_Click(object sender, EventArgs e)
