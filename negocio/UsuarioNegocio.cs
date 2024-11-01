@@ -180,5 +180,66 @@ namespace negocio
             }
         }
 
+        public bool ValidarContraseñaActual(int idUsuario, string passwordActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            bool passCoinciden = false;
+
+            try
+            {
+                datos.setearConsulta("SELECT PasswordHash FROM Usuarios WHERE idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    string passwordAlmacenada = (string)datos.Lector["PasswordHash"];
+                    // Aquí deberías comparar la contraseña ingresada con la almacenada
+                    if (passwordAlmacenada.Equals(passwordActual))
+                    {
+                        passCoinciden=true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return passCoinciden;
+        }
+
+        public bool CambiarContraseña(Usuario user, string passAnterior, string passNueva)
+        {
+            // Validar la contraseña anterior usando el método que ya tienes
+            if (!ValidarContraseñaActual(user.IdUsuario, passAnterior))
+            {
+                return false; // Contraseña anterior incorrecta
+            }
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Actualizar la contraseña en la base de datos
+                datos.setearConsulta("UPDATE Usuarios SET PasswordHash = @passNueva WHERE IdUsuario = @id");
+                datos.setearParametro("@passNueva", passNueva);
+                datos.setearParametro("@id", user.IdUsuario);
+                datos.ejecutarAccion();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

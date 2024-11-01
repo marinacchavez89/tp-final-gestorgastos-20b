@@ -104,6 +104,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
             Usuario usuario = (Usuario)Session["Usuario"];
             usuario.UrlImagen = imageUrl;
         }
-       
+
+        protected void btnModificarPass_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("ModificarPass.aspx", false);
+        }
     }
 }

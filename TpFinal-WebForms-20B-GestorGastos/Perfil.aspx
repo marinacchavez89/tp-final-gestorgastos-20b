@@ -48,7 +48,8 @@
             <div class="mt-4">
                 <asp:Button ID="btnModificar" Text="Modificar" CssClass="btn btn-secondary me-2" OnClick="btnModificar_Click" runat="server" />
                 <asp:Button ID="btnGuardar" Text="Guardar" CssClass="btn btn-secondary me-2" OnClick="btnGuardar_Click" runat="server" />
-                <asp:Button ID="btnCancelar" Text="Cancelar" CssClass="btn btn-secondary" OnClick="btnCancelar_Click" runat="server" />
+                <asp:Button ID="btnCancelar" Text="Cancelar" CssClass="btn btn-secondary me-2" OnClick="btnCancelar_Click" runat="server" />
+                <asp:Button ID="btnModificarPass" Text="Modificar Contraseña" CssClass="btn btn-secondary me-2" OnClick="btnModificarPass_Click" runat="server" />
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>

@@ -70,6 +70,7 @@
     <Content Include="Gastos.aspx" />
     <Content Include="Grupos.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="ModificarPass.aspx" />
     <Content Include="Perfil.aspx" />
     <Content Include="Registrarse.aspx" />
     <Content Include="Reportes.aspx" />
@@ -120,6 +121,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ModificarPass.aspx.cs">
+      <DependentUpon>ModificarPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModificarPass.aspx.designer.cs">
+      <DependentUpon>ModificarPass.aspx</DependentUpon>
     </Compile>
     <Compile Include="Perfil.aspx.cs">
       <DependentUpon>Perfil.aspx</DependentUpon>
