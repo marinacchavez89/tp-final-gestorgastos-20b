@@ -60,6 +60,14 @@ CREATE TABLE Pagos (
     FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
 );
 
+CREATE TABLE UsuarioImagenes (
+    idImagen INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    idUsuario INT NOT NULL,
+    urlImagen VARCHAR(255) NOT NULL,
+    fechaCarga DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
+);
+
 --Algunos inserts 
 
 INSERT INTO Usuarios (nombre, email, passwordHash, Activo)
@@ -69,7 +77,7 @@ INSERT INTO Usuarios (nombre, email, passwordHash, Activo)
 VALUES ('Marina', 'marina@example.com', 'hashedpassword', 1);
 
 INSERT INTO Usuarios (nombre, email, passwordHash, Activo)
-VALUES ('Martín', 'martin@example.com', 'hashedpassword', 1);
+VALUES ('MartÃ­n', 'martin@example.com', 'hashedpassword', 1);
 
 INSERT INTO Grupos (nombreGrupo, creadoPor, codigoInvitacion)
 VALUES ('Grupo JuanMariMar', 1, 'INV123');
@@ -87,7 +95,7 @@ INSERT INTO MiembrosGrupos (idGrupo, idUsuario, fechaUnion, rol)
 VALUES (2, 1, GETDATE(), 'miembro'); -- Juan
 
 INSERT INTO MiembrosGrupos (idGrupo, idUsuario, fechaUnion, rol)
-VALUES (2, 2, GETDATE(), 'miembro'); -- Martín
+VALUES (2, 2, GETDATE(), 'miembro'); -- MartÃ­n
 
 INSERT INTO MiembrosGrupos (idGrupo, idUsuario, fechaUnion, rol)
 VALUES (2, 3, GETDATE(), 'miembro'); -- Marina
