@@ -31,7 +31,7 @@ namespace negocio
         }
         public bool RegistrarUsuario(Usuario nuevoUsuario)
         {
-            
+
             if (ExisteUsuario(nuevoUsuario.Email))
             {
                 return false;
@@ -42,13 +42,13 @@ namespace negocio
             try
             {
                 datos.setearConsulta("INSERT INTO Usuarios (Nombre, Email, PasswordHash, FechaRegistro, Activo) VALUES (@Nombre, @Email, @PasswordHash, @FechaRegistro, @Activo)");
-                
+
                 datos.setearParametro("@Nombre", nuevoUsuario.Nombre);
                 datos.setearParametro("@Email", nuevoUsuario.Email);
                 datos.setearParametro("@PasswordHash", nuevoUsuario.PasswordHash);
                 datos.setearParametro("@FechaRegistro", nuevoUsuario.FechaRegistro);
                 datos.setearParametro("@Activo", nuevoUsuario.Activo);
-                
+
                 datos.ejecutarAccion();
                 return true;
             }
@@ -147,7 +147,7 @@ namespace negocio
                 throw ex;
             }
             finally
-            {              
+            {
                 datos.cerrarConexion();
             }
         }
@@ -197,7 +197,7 @@ namespace negocio
                     // Aquí deberías comparar la contraseña ingresada con la almacenada
                     if (passwordAlmacenada.Equals(passwordActual))
                     {
-                        passCoinciden=true;
+                        passCoinciden = true;
                     }
                 }
             }
@@ -235,6 +235,34 @@ namespace negocio
             catch (Exception ex)
             {
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public int obtenerIdUsuarioPorEmail(string email)
+        {
+            int IdUsuario;
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select idUsuario from usuarios where email = @Email");
+                datos.setearParametro("@Email", email);
+                datos.ejecutarLectura();
+                if(datos.Lector.Read())
+                {
+                return (int)datos.Lector["idUsuario"];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
             finally
             {

@@ -13,6 +13,7 @@ namespace dominio
         public DateTime FechaCreacion { get; set; } = DateTime.Now;
         public int CreadoPor { get; set; }
         public string CodigoInvitacion { get; set; }
-        
+
+        public List<Usuario> Participantes { get; set; }
     }
 }

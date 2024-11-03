@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace negocio
 {
-    internal class GeneradorCodigo
+    public class GeneradorCodigo
     {
-        private bool VerificarCodigo(string codigo)
+        private bool verificarCodigo(string codigo)
         {
             AccesoDatos datos = new AccesoDatos();
             try
@@ -31,15 +31,29 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        private string GenerarCodigo()
+        private string generarCodigo()
         {
                 Random random = new Random();
                 string codigo = "";
             for (int i = 0; i < 6; i++)
             {
                 int digito = random.Next(0, 9);
-                codigo += (char)digito;
+                codigo += digito.ToString();
             }
+            return codigo;
+        }
+
+        public string generarCodigoUnico()
+        {
+            string codigo;
+            bool codigoExiste;
+            do
+            {
+                codigo = generarCodigo();
+                codigoExiste = verificarCodigo(codigo);
+            }
+            while(codigoExiste); // esto va a generar el codgi hasta que encuentre uno que no exista
+            return codigo;
         }
     }
 }

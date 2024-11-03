@@ -78,5 +78,27 @@ namespace negocio
 
             return participantes;
         }
+        public void crearGrupo (Grupo nuevoGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+               datos.setearConsulta("insert into Grupos (nombreGrupo, fechaCreacion, creadoPor, codigoInvitacion) " +
+                             "VALUES (@nombreGrupo, @fechaCreacion, @creadoPor, @codigoInvitacion)");
+                datos.setearParametro("@nombreGrupo", nuevoGrupo.NombreGrupo);
+                datos.setearParametro("@fechaCreacion", nuevoGrupo.FechaCreacion);
+                datos.setearParametro("@creadoPor", nuevoGrupo.CreadoPor);
+                datos.setearParametro("@codigoInvitacion", nuevoGrupo.CodigoInvitacion);
+
+
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }
