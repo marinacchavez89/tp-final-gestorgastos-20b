@@ -43,7 +43,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 };
                 GrupoNegocio grupoNegocio = new GrupoNegocio();
                 grupoNegocio.crearGrupo(nuevoGrupo);
-                lblMensaje.Text = $"El grupo fue creado exitosamente. Codigo de invitacion: {codigoInvitacion}";
+                Response.Redirect("Exito.aspx");
             }
             catch (Exception ex)
             {
