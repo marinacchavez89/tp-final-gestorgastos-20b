@@ -24,15 +24,6 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.TextBox txtNombreGrupo;
 
         /// <summary>
-        /// Control btnGuardarGrupo.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnGuardarGrupo;
-
-        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -40,6 +31,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblMensaje;
+
+        /// <summary>
+        /// Control btnGuardarGrupo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardarGrupo;
 
         /// <summary>
         /// Control btnVolver.

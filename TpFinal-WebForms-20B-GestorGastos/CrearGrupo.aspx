@@ -10,10 +10,10 @@
     <div class="form-group">
         <label for="txtNombreGrupo" Style="margin-top: 15px;">Ingrese el nombre del Grupo</label>
         <asp:TextBox ID="txtNombreGrupo" runat="server" CssClass="form-control"  Style="margin-top: 15px;"></asp:TextBox>
+        <asp:Label ID="lblMensaje" runat="server" CssClass="text-danger" Style="margin-top: 15px;"></asp:Label>
     </div>
 
     <asp:Button ID="btnGuardarGrupo" runat="server" CssClass="btn btn-secondary" Text="Aceptar" OnClick="btnGuardarGrupo_Click"  Style="margin-top: 15px;" />
-    <asp:Label ID="lblMensaje" runat="server" CssClass="text-success" Style="margin-top: 15px;"></asp:Label>
     <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-secondary" Text="Volver" OnClick="btnVolver_Click" Style="margin-top: 15px;"/>
 
 </div>
