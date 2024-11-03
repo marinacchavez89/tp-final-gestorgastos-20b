@@ -144,5 +144,34 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public string obtenerCodigoInvitacion(int idGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            string codigoInvitacion = null;
+
+            try
+            {
+                datos.setearConsulta("SELECT codigoInvitacion FROM Grupos Where idGrupo = @idGrupo");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    codigoInvitacion = datos.Lector["codigoInvitacion"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+            
+            return codigoInvitacion;
+        }
     }
 }

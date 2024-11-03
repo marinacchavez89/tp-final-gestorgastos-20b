@@ -17,12 +17,18 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 CargarGrupos();
                 CargarParticipantes();
+                lblCodigoInvitacion.Visible = false;
+                txtCodigoInvitacion.Visible = false;
             }
         }
 
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+            Session.Add("idGrupo", idGrupo);
+            lblCodigoInvitacion.Visible = true;
+            txtCodigoInvitacion.Visible = true;
+            txtCodigoInvitacion.Text = (string)obtenerCodigoInvitacionGrupo();
             if(idGrupo !=0)
             {
                 btnAgregarParticipante.Visible = true;
@@ -43,6 +49,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             repParticipantes.DataSource = participantesConDatos;
             repParticipantes.DataBind();
+
         }
 
         private void CargarGrupos()
@@ -158,6 +165,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
             // Refrescar la lista de participantes
             CargarParticipantes();
             ddlGrupos_SelectedIndexChanged(null, null);
+        }
+
+        private string obtenerCodigoInvitacionGrupo()
+        {
+            GrupoNegocio negocio = new GrupoNegocio();
+            int idGrupo = (int)Session["idGrupo"];
+
+            return negocio.obtenerCodigoInvitacion(idGrupo);
         }
     }
 }

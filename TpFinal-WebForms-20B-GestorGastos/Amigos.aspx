@@ -30,7 +30,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                             <p class="card-text"><%# Eval("Email") %></p>
-                                           <asp:LinkButton ID="btnEliminarParticianteGrupo" runat="server" CssClass="btn btn-danger" CommandArgument='<%# Eval("IdUsuario") %>' OnClick="btnEliminarParticianteGrupo_Click" style="border: none; background: none; padding: 0;">
+                                            <asp:LinkButton ID="btnEliminarParticianteGrupo" runat="server" CssClass="btn btn-danger" CommandArgument='<%# Eval("IdUsuario") %>' OnClick="btnEliminarParticianteGrupo_Click" Style="border: none; background: none; padding: 0;">
                                                 <img src="/Images/logoEliminar.png" alt="Eliminar" style="width: 50px; height: 45px;" />
                                             </asp:LinkButton>
                                         </div>
@@ -40,18 +40,25 @@
                         </asp:Repeater>
                     </div>
 
-                    <div Style="margin-top: 20px;">
+                    <div style="margin-top: 20px;">
                         <asp:TextBox ID="txtEmailParticipante" CssClass="form-control" runat="server" Visible="false" Placeholder="Ingrese el email del participante"></asp:TextBox>
                         <asp:Label ID="lblMensaje" runat="server" Visible="false" ForeColor="Red"></asp:Label>
                     </div>
 
-                    <div Style="margin-top: 20px;">
+                    <div style="margin-top: 20px;">
                         <asp:Button ID="btnGuardar" Text="Guardar" CssClass="btn btn-secondary" runat="server" Visible="false" OnClick="btnGuardar_Click"></asp:Button>
                     </div>
+
 
                 </div>
             </div>
         </div>
+                    <div class="mb-3">
+                        <%--<asp:Label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" Visible="false">Código invitación grupo</asp:Label>--%>
+                        <label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" visible="false">Código invitación grupo</label>
+                        <div class="mb-2"></div>
+                        <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false"/>
+                    </div>
 
     </div>
 </asp:Content>
