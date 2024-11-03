@@ -8,7 +8,7 @@
             <label for="txtCodigoInvitacion">Para unirse a un grupo debe tener un código de invitación en la casilla de correo ingresada.</label>
             <asp:TextBox ID="txtCodigoInvitacion" runat="server" CssClass="form-control" placeholder="Ingrese el código de invitación" Style="margin-top: 15px;"></asp:TextBox>
         </div>
-        <asp:Button ID="btnUnirseGrupo" runat="server" CssClass="btn btn-secondary" Text="Unirse al Grupo" Style="margin-top: 15px;"/>
+        <asp:Button ID="btnUnirseGrupo" runat="server" CssClass="btn btn-secondary" OnClick="btnUnirseGrupo_Click" Text="Unirse al Grupo" Style="margin-top: 15px;"/>
         <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-secondary" Text="Volver" OnClick="btnVolver_Click" Style="margin-top: 15px;"/>
     </div>
 </asp:Content>

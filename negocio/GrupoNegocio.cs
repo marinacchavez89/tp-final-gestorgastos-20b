@@ -100,5 +100,49 @@ namespace negocio
                 throw ex;
             }
         }
+        public int obtenerIdGrupoPorCodigoInvitacion(string codigoInvitacion)
+        {
+            AccesoDatos datos = new AccesoDatos ();
+            try
+            {
+                datos.setearConsulta("select idGrupo from Grupos where codigoInvitacion = @codigoInvitacion");
+                datos.setearParametro("@codigoInvitacion", codigoInvitacion);
+                datos.ejecutarLectura();
+                if (datos.Lector.Read())
+                {
+                    return (int)datos.Lector["idGrupo"];
+                }
+                return -1;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public void agregarUsuarioGrupo(int idUsuario, int idGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("insert into MiembrosGrupos (idUsuario, idGrupo) values(@idUsuario, @idGrupo)");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
