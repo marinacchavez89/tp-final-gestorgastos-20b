@@ -15,7 +15,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
-                    <h5 style="margin-top: 20px;">Participantes 
+                    <h5 id="lblParticipantes" runat="server" style="margin-top: 20px;">Participantes 
                         <asp:LinkButton ID="btnAgregarParticipante" runat="server" OnClick="btnAgregarParticipante_Click" Visible="false"
                             Style="background-color: white; color: #000;">
                         <img src="/Images/plus-solid.svg" alt="Agregar" title="Agregar Participante"  style="height: 20px; width: 20px; margin-right: 8px;" />   

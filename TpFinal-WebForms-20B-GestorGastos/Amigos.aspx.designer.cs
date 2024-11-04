@@ -33,6 +33,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.ListBox lstParticipantesGasto;
 
         /// <summary>
+        /// Control lblParticipantes.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblParticipantes;
+
+        /// <summary>
         /// Control btnAgregarParticipante.
         /// </summary>
         /// <remarks>

@@ -19,11 +19,13 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 CargarParticipantes();
                 lblCodigoInvitacion.Visible = false;
                 txtCodigoInvitacion.Visible = false;
+                lblParticipantes.Visible = false;
             }
         }
 
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lblParticipantes.Visible = true;
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
             Session.Add("idGrupo", idGrupo);
             lblCodigoInvitacion.Visible = true;
