@@ -106,3 +106,11 @@ select * from Grupos
 select * from ParticipantesGasto
 select * from Usuarios
 select * from Pagos
+
+CREATE TABLE UsuarioImagenes (
+    idImagen INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    idUsuario INT NOT NULL,
+    urlImagen VARCHAR(255) NOT NULL,
+    fechaCarga DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (idUsuario) REFERENCES Usuarios(idUsuario)
+);
