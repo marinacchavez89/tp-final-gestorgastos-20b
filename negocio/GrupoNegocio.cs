@@ -173,5 +173,30 @@ namespace negocio
             
             return codigoInvitacion;
         }
+
+        public void eliminarGrupo(int idGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM MiembrosGrupos WHERE idGrupo = @idGrupo");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
+
+                datos.setearConsulta("DELETE FROM Grupos WHERE idGrupo = @id");
+                datos.setearParametro("@id", idGrupo);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally 
+            {     
+                datos.cerrarConexion(); 
+            }
+        }
     }
 }

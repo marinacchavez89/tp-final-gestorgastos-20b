@@ -24,6 +24,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.DropDownList ddlGrupos;
 
         /// <summary>
+        /// Control btnEliminarGrupo.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEliminarGrupo;
+
+        /// <summary>
         /// Control lstParticipantesGasto.
         /// </summary>
         /// <remarks>

@@ -8,6 +8,8 @@
         <label for="idGrupo" class="form-label">Seleccionar grupo</label>
         <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
         </asp:DropDownList>
+        <div class="mb-2"></div>
+        <asp:Button ID="btnEliminarGrupo" Text="Eliminar Grupo" CssClass="btn btn-secondary" OnClick="btnEliminarGrupo_Click" runat="server" />
 
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->
