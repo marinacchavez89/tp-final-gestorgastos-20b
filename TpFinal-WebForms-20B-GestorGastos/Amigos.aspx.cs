@@ -20,13 +20,13 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 lblCodigoInvitacion.Visible = false;
                 txtCodigoInvitacion.Visible = false;
                 lblParticipantes.Visible = false;
-                btnEliminarGrupo.Visible = false;
+                btnEliminarGrupoLogo.Visible = false;
             }
         }
 
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEliminarGrupo.Visible = true;
+            btnEliminarGrupoLogo.Visible = true;
             lblParticipantes.Visible = true;
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
             Session.Add("idGrupo", idGrupo);
@@ -177,7 +177,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             int idGrupo = (int)Session["idGrupo"];
 
             return negocio.obtenerCodigoInvitacion(idGrupo);
-        }
+        }       
 
         protected void btnEliminarGrupo_Click(object sender, EventArgs e)
         {

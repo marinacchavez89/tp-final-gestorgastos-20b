@@ -6,10 +6,13 @@
         <h2>Gestión de Amigos</h2>
 
         <label for="idGrupo" class="form-label">Seleccionar grupo</label>
-        <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
-        </asp:DropDownList>
-        <div class="mb-2"></div>
-        <asp:Button ID="btnEliminarGrupo" Text="Eliminar Grupo" CssClass="btn btn-secondary" OnClick="btnEliminarGrupo_Click" runat="server" />
+        <div style="display: flex; align-items: center;">
+            <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged" Style="width: 80%;"></asp:DropDownList>
+
+            <asp:LinkButton ID="btnEliminarGrupoLogo" runat="server" CssClass="btn btn-danger" OnClick="btnEliminarGrupo_Click" Style="border: none; background: none; padding: 0; margin-left: 10px;">
+                <img src="/Images/logoEliminar.png" alt="Eliminar Grupo" title="Eliminar Grupo" style="width: 50px; height: 45px;" />
+            </asp:LinkButton>
+        </div>
 
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->
@@ -33,7 +36,7 @@
                                             <h5 class="card-title"><%# Eval("Nombre") %></h5>
                                             <p class="card-text"><%# Eval("Email") %></p>
                                             <asp:LinkButton ID="btnEliminarParticianteGrupo" runat="server" CssClass="btn btn-danger" CommandArgument='<%# Eval("IdUsuario") %>' OnClick="btnEliminarParticianteGrupo_Click" Style="border: none; background: none; padding: 0;">
-                                                <img src="/Images/logoEliminar.png" alt="Eliminar" style="width: 50px; height: 45px;" />
+                                                <img src="/Images/logoEliminar.png" alt="Eliminar Participante" title="Eliminar Participante" style="width: 50px; height: 45px;" />
                                             </asp:LinkButton>
                                         </div>
                                     </div>
@@ -60,7 +63,7 @@
             <label id="lblCodigoInvitacion" cssclass="form-control" runat="server" visible="false">Código invitación grupo</label>
             <div class="mb-2"></div>
             <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" />
-        </div>       
+        </div>
 
     </div>
 </asp:Content>

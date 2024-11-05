@@ -25,7 +25,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             Response.Redirect("Exito.aspx", false);
         }
 
-        protected void btnVolver_Click(object sender, EventArgs e)
+        protected void btnCancelar_Click(object sender, EventArgs e)
         {
             Response.Redirect("Amigos.aspx", false);
         }
