@@ -12,6 +12,9 @@
             <asp:LinkButton ID="btnEliminarGrupoLogo" runat="server" CssClass="btn btn-danger" OnClick="btnEliminarGrupo_Click" Style="border: none; background: none; padding: 0; margin-left: 10px;">
                 <img src="/Images/logoEliminar.png" alt="Eliminar Grupo" title="Eliminar Grupo" style="width: 50px; height: 45px;" />
             </asp:LinkButton>
+            <asp:LinkButton ID="btnEditarNombreGrupo" runat="server" CssClass="btn btn-danger" OnClick="btnEditarNombreGrupo_Click" Style="border: none; background: none; padding: 0; margin-left: 10px;">
+                <img src="/Images/logoEditar.png" alt="Editar Nombre Grupo" title="Editar Nombre Grupo" style="width: 45px; height: 40px;" />
+            </asp:LinkButton>
         </div>
 
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          

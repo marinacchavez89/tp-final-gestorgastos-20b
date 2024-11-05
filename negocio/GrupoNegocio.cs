@@ -198,5 +198,25 @@ namespace negocio
                 datos.cerrarConexion(); 
             }
         }
+        public void editarNombreGrupo(string nombreNuevo, int idGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Grupos SET nombreGrupo = @nombreGrupo WHERE idGrupo = @idGrupo");
+                datos.setearParametro("@nombreGrupo", nombreNuevo);
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarAccion();                                
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

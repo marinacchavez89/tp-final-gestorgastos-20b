@@ -67,6 +67,7 @@
     <Content Include="Amigos.aspx" />
     <Content Include="ConfirmarEliminar.aspx" />
     <Content Include="CrearGrupo.aspx" />
+    <Content Include="EditarNombreGrupo.aspx" />
     <Content Include="Exito.aspx" />
     <Content Include="Gastos.aspx" />
     <Content Include="Grupos.aspx" />
@@ -101,6 +102,13 @@
     </Compile>
     <Compile Include="CrearGrupo.aspx.designer.cs">
       <DependentUpon>CrearGrupo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarNombreGrupo.aspx.cs">
+      <DependentUpon>EditarNombreGrupo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarNombreGrupo.aspx.designer.cs">
+      <DependentUpon>EditarNombreGrupo.aspx</DependentUpon>
     </Compile>
     <Compile Include="Exito.aspx.cs">
       <DependentUpon>Exito.aspx</DependentUpon>
