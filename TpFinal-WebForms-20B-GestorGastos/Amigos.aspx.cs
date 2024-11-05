@@ -181,11 +181,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnEliminarGrupo_Click(object sender, EventArgs e)
         {
-            GrupoNegocio negocio = new GrupoNegocio();
-
-            negocio.eliminarGrupo((int)Session["idGrupo"]);
-
-            Response.Redirect("Exito.aspx", false);
+            Response.Redirect("ConfirmarEliminar.aspx", false);
         }
     }
 }

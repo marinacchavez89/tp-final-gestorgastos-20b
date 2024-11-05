@@ -55,12 +55,12 @@
                 </div>
             </div>
         </div>
-                    <div class="mb-3">
-                        <%--<asp:Label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" Visible="false">Código invitación grupo</asp:Label>--%>
-                        <label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" visible="false">Código invitación grupo</label>
-                        <div class="mb-2"></div>
-                        <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false"/>
-                    </div>
+        <div class="mb-3">
+            <%--<asp:Label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" Visible="false">Código invitación grupo</asp:Label>--%>
+            <label id="lblCodigoInvitacion" cssclass="form-control" runat="server" visible="false">Código invitación grupo</label>
+            <div class="mb-2"></div>
+            <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" />
+        </div>       
 
     </div>
 </asp:Content>
