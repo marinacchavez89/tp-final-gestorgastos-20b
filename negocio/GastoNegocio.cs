@@ -313,7 +313,7 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("@SELECT g.IdGrupo, g.NombreGrupo FROM Grupos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.idUsuario = @idUsuario");
+                datos.setearConsulta("SELECT g.IdGrupo, g.NombreGrupo FROM Grupos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.idUsuario = @idUsuario");
                 datos.setearParametro("@idUsuario", idUsuario);
                 datos.ejecutarLectura();
 

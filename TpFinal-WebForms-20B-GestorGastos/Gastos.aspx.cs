@@ -74,8 +74,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         private void CargarGrupos()
         {
+            int idUsuario = (int)Session["UsuarioId"];
             GastoNegocio gastoNegocio = new GastoNegocio();
-            List<Grupo> grupos = gastoNegocio.ListarGrupos();
+            List<Grupo> grupos = gastoNegocio.listarGruposPorUsuario(idUsuario);
 
             
             if (grupos.Count > 0)
