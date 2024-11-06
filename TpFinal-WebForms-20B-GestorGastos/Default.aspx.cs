@@ -23,7 +23,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 }   
             GastoNegocio negocio = new GastoNegocio();
 
-           int idUsuario = (int)Session["UsuarioId"];
+            int idUsuario = (int)Session["UsuarioId"];
             ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
             repRepetidor.DataSource = ListaGastos;
             repRepetidor.DataBind();
