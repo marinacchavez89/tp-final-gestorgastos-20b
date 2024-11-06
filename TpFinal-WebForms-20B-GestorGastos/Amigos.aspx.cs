@@ -208,9 +208,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             if (!string.IsNullOrEmpty(email))
             {
                 EmailService emailService = new EmailService();
-                emailService.armarCorreo(email, "Te unieron a un grupo de gastos...",
-                    "<h1>¡Te unieron a un grupo para compartir gastos!</h1> <br> Iniciá sesión con el email " + email + " y usa como contraseña el codigo de invitación: " + codInvitacion , email, codInvitacion);
-                emailService.enviarEmail();
+                emailService.EnviarCorreoConfirmacion(email, codInvitacion);
 
                 Response.Redirect("AgregarUsuarioPorCodigo.aspx", false);
             }
