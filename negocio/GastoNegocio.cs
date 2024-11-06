@@ -257,11 +257,11 @@ namespace negocio
             {
                 datos.setearConsulta("DELETE FROM MiembrosGrupos WHERE idGrupo = @idGrupo AND idUsuario = @idUsuario");
                 datos.setearParametro("@idGrupo", idGrupo);
-                datos.setearParametro("@idUsuario", idUsuario);                
+                datos.setearParametro("@idUsuario", idUsuario);
                 datos.ejecutarAccion();
-                return true;                
+                return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -271,5 +271,71 @@ namespace negocio
             }
         }
 
+     
+        public List<Gasto> listarGastosPorUsuario(int idUsuario)
+        {
+            List<Gasto> lista = new List<Gasto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT g.IdGasto, g.FechaGasto, g.Descripcion, g.MontoTotal FROM Gastos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.IdUsuario = @idUsuario");
+
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Gasto aux = new Gasto();
+                    aux.IdGasto = (int)datos.Lector["IdGasto"];
+                    aux.FechaGasto = (DateTime)datos.Lector["FechaGasto"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.MontoTotal = (decimal)datos.Lector["MontoTotal"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+        public List<Grupo> listarGruposPorUsuario(int idUsuario)
+        {
+            List<Grupo> lista = new List<Grupo>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("@SELECT g.IdGrupo, g.NombreGrupo FROM Grupos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Grupo aux = new Grupo();
+                    aux.IdGrupo = (int)datos.Lector["IdGrupo"];
+                    aux.NombreGrupo = (string)datos.Lector["NombreGrupo"];
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+     
+        }
     }
 }

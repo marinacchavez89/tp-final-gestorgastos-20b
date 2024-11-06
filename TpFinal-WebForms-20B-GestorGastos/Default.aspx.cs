@@ -14,10 +14,20 @@ namespace TpFinal_WebForms_20B_GestorGastos
         public List<Gasto> ListaGastos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsPostBack)
+            {
+                if(Session["UsuarioId"] == null)
+                {
+                    Response.Redirect("Login.aspx");
+                    return;
+                }
             GastoNegocio negocio = new GastoNegocio();
-            ListaGastos = negocio.listar();
+
+           int idUsuario = (int)Session["UsuarioId"];
+            ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
             repRepetidor.DataSource = ListaGastos;
             repRepetidor.DataBind();
+            }
         }
     }
 }

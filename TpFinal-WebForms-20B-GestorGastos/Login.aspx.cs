@@ -31,6 +31,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 if (usuario != null && usuario.Activo)
                 {
+                    Session["UsuarioId"] = usuario.IdUsuario;
                     Session["UsuarioEmail"] = usuario.Email;
                     Session["UsuarioNombre"] = usuario.Nombre;
                     Response.Redirect("Default.aspx");
