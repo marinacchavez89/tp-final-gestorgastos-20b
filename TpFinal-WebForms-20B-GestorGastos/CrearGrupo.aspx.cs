@@ -42,7 +42,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     FechaCreacion = DateTime.Now,
                 };
                 GrupoNegocio grupoNegocio = new GrupoNegocio();
-                grupoNegocio.crearGrupo(nuevoGrupo);
+                int idGrupo = grupoNegocio.crearGrupo(nuevoGrupo);
+                grupoNegocio.agregarUsuarioGrupo(creadoPor, idGrupo);
                 Response.Redirect("Exito.aspx");
             }
             catch (Exception ex)

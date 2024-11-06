@@ -78,26 +78,30 @@ namespace negocio
 
             return participantes;
         }
-        public void crearGrupo (Grupo nuevoGrupo)
+        public int crearGrupo (Grupo nuevoGrupo)
         {
             AccesoDatos datos = new AccesoDatos();
+            int idGrupo = -1;
             try
             {
                datos.setearConsulta("insert into Grupos (nombreGrupo, fechaCreacion, creadoPor, codigoInvitacion) " +
-                             "VALUES (@nombreGrupo, @fechaCreacion, @creadoPor, @codigoInvitacion)");
+                             "OUTPUT INSERTED.IdGrupo VALUES (@nombreGrupo, @fechaCreacion, @creadoPor, @codigoInvitacion)");
                 datos.setearParametro("@nombreGrupo", nuevoGrupo.NombreGrupo);
                 datos.setearParametro("@fechaCreacion", nuevoGrupo.FechaCreacion);
                 datos.setearParametro("@creadoPor", nuevoGrupo.CreadoPor);
                 datos.setearParametro("@codigoInvitacion", nuevoGrupo.CodigoInvitacion);
-
-
-
-                datos.ejecutarAccion();
+                idGrupo = (int)datos.ejecutarScalar();
+               // datos.ejecutarAccion();
+               return idGrupo;
             }
             catch (Exception ex)
             {
 
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
         public int obtenerIdGrupoPorCodigoInvitacion(string codigoInvitacion)

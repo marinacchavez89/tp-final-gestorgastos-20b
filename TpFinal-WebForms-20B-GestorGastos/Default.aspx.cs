@@ -20,7 +20,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 {
                     Response.Redirect("Login.aspx");
                     return;
-                }
+                }   
             GastoNegocio negocio = new GastoNegocio();
 
            int idUsuario = (int)Session["UsuarioId"];
