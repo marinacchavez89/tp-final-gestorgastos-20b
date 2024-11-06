@@ -64,6 +64,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AgregarUsuarioPorCodigo.aspx" />
     <Content Include="Amigos.aspx" />
     <Content Include="ConfirmarEliminar.aspx" />
     <Content Include="CrearGrupo.aspx" />
@@ -82,6 +83,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgregarUsuarioPorCodigo.aspx.cs">
+      <DependentUpon>AgregarUsuarioPorCodigo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarUsuarioPorCodigo.aspx.designer.cs">
+      <DependentUpon>AgregarUsuarioPorCodigo.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Amigos.aspx.cs">
       <DependentUpon>Amigos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

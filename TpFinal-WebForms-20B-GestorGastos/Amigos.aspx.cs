@@ -125,7 +125,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             if (idUsuario == null)
             {
-                lblMensaje.Text = "El usuario con el email especificado no existe.";
+                lblMensaje.Text = "El usuario con el email especificado no existe. Puede invitarlo mediante código de invitación.";
                 lblMensaje.Visible = true;
                 return;
             }
@@ -191,6 +191,29 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected void btnEditarNombreGrupo_Click(object sender, EventArgs e)
         {
             Response.Redirect("EditarNombreGrupo.aspx", false);
+        }
+
+        protected void btnInvitarConCodigo_Click(object sender, EventArgs e)
+        {
+            txtEmailAInvitarPorCodigo.Visible = true;
+            string email = txtEmailAInvitarPorCodigo.Text;
+            Session.Add("emailUsuarioAInvitar", email);
+            string codInvitacion = txtCodigoInvitacion.Text;
+            Session.Add("codInvitacionGrupo", codInvitacion);
+            int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+            Session.Add("idGrupoAInvitarPorCodigo", idGrupo);
+            GastoNegocio negocio = new GastoNegocio();
+            int? idUsuario = negocio.ObtenerIdUsuarioPorEmail(email);
+
+            if (!string.IsNullOrEmpty(email))
+            {
+                EmailService emailService = new EmailService();
+                emailService.armarCorreo(email, "Te unieron a un grupo de gastos...",
+                    "<h1>¡Te unieron a un grupo para compartir gastos!</h1> <br> Iniciá sesión con el email " + email + " y usa como contraseña el codigo de invitación: " + codInvitacion , email, codInvitacion);
+                emailService.enviarEmail();
+
+                Response.Redirect("AgregarUsuarioPorCodigo.aspx", false);
+            }
         }
     }
 }

@@ -61,11 +61,12 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">
-            <%--<asp:Label ID="lblCodigoInvitacion" CssClass="form-control" runat="server" Visible="false">Código invitación grupo</asp:Label>--%>
+        <div class="mb-3">            
             <label id="lblCodigoInvitacion" cssclass="form-control" runat="server" visible="false">Código invitación grupo</label>
             <div class="mb-2"></div>
-            <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" />
+            <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" style="margin-top: 20px;"/>
+            <asp:TextBox ID="txtEmailAInvitarPorCodigo" CssClass="form-control" runat="server" Visible="false" Placeholder="Ingrese el email para que enviemos el código..." style="margin-top: 20px;"></asp:TextBox>
+            <asp:Button ID="btnInvitarConCodigo" Text="Invitar Amigo" CssClass="btn btn-secondary" runat="server" OnClick="btnInvitarConCodigo_Click" style="margin-top: 20px;"></asp:Button>
         </div>
 
     </div>

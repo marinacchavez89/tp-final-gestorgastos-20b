@@ -20,14 +20,14 @@ namespace negocio
             server.EnableSsl = true;           
         }
 
-        public void armarCorreo(string emailDestino, string asunto, string cuerpo)
+        public void armarCorreo(string emailDestino, string asunto, string cuerpo, string emailRegistro, string codInvitacion)
         {
             email = new MailMessage();
             email.From = new MailAddress("noresponder@sorteo.com");
             email.To.Add(emailDestino);
             email.Subject = asunto;
             email.IsBodyHtml = true;
-            email.Body = "<h1>¡Gracias por haber participado en el sorteo!</h1> <br> La inscripción al sorteo fue exitosa. ¡Muchos éxitos!";
+            email.Body = "<h1>¡Te unieron a un grupo para compartir gastos!</h1> <br> Iniciá sesión con el email " + emailRegistro + " y usa como contraseña el codigo de invitación: " + codInvitacion;
         }
 
         public void enviarEmail()
