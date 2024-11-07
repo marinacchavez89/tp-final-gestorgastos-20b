@@ -12,7 +12,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
     public partial class Login : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {   
 
         }
 
@@ -34,7 +34,18 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Session["UsuarioId"] = usuario.IdUsuario;
                     Session["UsuarioEmail"] = usuario.Email;
                     Session["UsuarioNombre"] = usuario.Nombre;
-                    Response.Redirect("Default.aspx");
+
+                    bool verificarPassActualCodInvitacion = usuarioNegocio.VerificarContraseñaConCodigoInvitacion(usuario.IdUsuario, usuario.PasswordHash);
+
+                    if (verificarPassActualCodInvitacion)
+                    {                     
+                        Response.Redirect("Perfil.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("Default.aspx");
+                    }
+                    
                 }
                 else
                 {

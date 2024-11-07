@@ -269,6 +269,43 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-       
+
+        public bool VerificarContraseñaConCodigoInvitacion(int idUsuario, string passwordActual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            bool redirigirAEditarPerfil = false;
+
+            try
+            {
+                datos.setearConsulta("SELECT g.codigoInvitacion FROM Grupos g " +
+                                     "INNER JOIN MiembrosGrupos mg ON g.idGrupo = mg.idGrupo " +
+                                     "WHERE mg.idUsuario = @idUsuario");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    string codigoInvitacion = datos.Lector["codigoInvitacion"].ToString();
+
+                    if (codigoInvitacion.Equals(passwordActual))
+                    {
+                        redirigirAEditarPerfil = true;
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return redirigirAEditarPerfil;        
+
+        }
+
     }
 }

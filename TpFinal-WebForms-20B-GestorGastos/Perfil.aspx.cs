@@ -37,6 +37,13 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                     // Asignar la URL de la imagen al control de imagen o usar la imagen predeterminada
                     imgNuevoPerfil.ImageUrl = !string.IsNullOrEmpty(imagenPerfil) ? imagenPerfil : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
+
+                    bool mostrarLblParaUserMismaPassCodInv = negocio.VerificarContraseñaConCodigoInvitacion(usuario.IdUsuario, usuario.PasswordHash);
+                    if (mostrarLblParaUserMismaPassCodInv)
+                    {
+                        lblCambiarPassCodInvitacion.Visible = true;
+                        lblCambiarPassCodInvitacion.Text = "¡Por seguridad, debes cambiar tu contraseña!";
+                    }
                 }
             }
 

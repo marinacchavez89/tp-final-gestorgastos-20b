@@ -6,6 +6,9 @@
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
             <h2>Perfil de <%=Session["UsuarioNombre"]%></h2>
+            <div class="mb-3">
+                <asp:Label ID="lblCambiarPassCodInvitacion" CssClass="text-danger" runat="server" Visible="false"></asp:Label>
+            </div>
             <div class="d-flex flex-row justify-content-between" style="width: 100%;">
                 <div class="d-flex flex-column justify-content-around" style="width: 600px">
                     <div class="mb-3">
@@ -19,7 +22,7 @@
                     </div>
                 </div>
                 <div class="d-flex flex-column" style="width: 350px">
-                    <label class="form-label" style="margin-top: 15px;">Imagen Perfil</label>                    
+                    <label class="form-label" style="margin-top: 15px;">Imagen Perfil</label>
                     <asp:Image ID="imgNuevoPerfil" runat="server" CssClass="img-fluid mb-3"
                         Style="max-width: 200px; border-radius: 20px;"
                         AlternateText="Imagen de Perfil" />
