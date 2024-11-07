@@ -45,12 +45,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
             }
             GastoNegocio gastoNegocio = new GastoNegocio();
             List<ParticipanteGasto> participantes = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
-
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             var participantesConDatos = participantes.Select(p => new
             {
                 p.IdUsuario,
                 Nombre = gastoNegocio.ObtenerNombreUsuario(p.IdUsuario),
-                Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario)
+                Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario),
+                ImagenPerfil = usuarioNegocio.obtenerImagenPerfil(p.IdUsuario)               
+               
             }).ToList();
 
             repParticipantes.DataSource = participantesConDatos;
@@ -62,41 +64,47 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
             //List<Grupo> grupos = gastoNegocio.ListarGrupos();
-            int idUsuario = (int)Session["UsuarioId"];
-            List<Grupo> grupos = gastoNegocio.listarGruposPorUsuario(idUsuario);
-
-
-            if (grupos.Count > 0)
+            
+            if (Session["UsuarioId"] != null)
             {
-                ddlGrupos.DataSource = grupos;
-                ddlGrupos.DataValueField = "IdGrupo";
-                ddlGrupos.DataTextField = "NombreGrupo";
-                ddlGrupos.DataBind();
-            }
-            else
-            {
-                Console.WriteLine("No se encontraron grupos.");
-            }
+                int idUsuario = (int)Session["UsuarioId"];
+                List<Grupo> grupos = gastoNegocio.listarGruposPorUsuario(idUsuario);
 
-            ddlGrupos.Items.Insert(0, new ListItem("Seleccione un grupo", "0"));
+                if (grupos.Count > 0)
+                {
+                    ddlGrupos.DataSource = grupos;
+                    ddlGrupos.DataValueField = "IdGrupo";
+                    ddlGrupos.DataTextField = "NombreGrupo";
+                    ddlGrupos.DataBind();
+                }
+                else
+                {
+                    Console.WriteLine("No se encontraron grupos.");
+                }
+
+                ddlGrupos.Items.Insert(0, new ListItem("Seleccione un grupo", "0"));
+            }
         }
 
         private void CargarParticipantes()
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
-            int idGrupo = Convert.ToInt32(ddlGrupos.SelectedValue);
-            List<ParticipanteGasto> participantesGasto = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
-
-            lstParticipantesGasto.Items.Clear();
-
-            foreach (var participante in participantesGasto)
+            if (Session["UsuarioId"] != null)
             {
-                string nombreUsuario = gastoNegocio.ObtenerNombreUsuario(participante.IdUsuario);
-                lstParticipantesGasto.Items.Add(new ListItem
+                int idGrupo = Convert.ToInt32(ddlGrupos.SelectedValue);
+                List<ParticipanteGasto> participantesGasto = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
+
+                lstParticipantesGasto.Items.Clear();
+
+                foreach (var participante in participantesGasto)
                 {
-                    Value = participante.IdUsuario.ToString(),
-                    Text = nombreUsuario
-                });
+                    string nombreUsuario = gastoNegocio.ObtenerNombreUsuario(participante.IdUsuario);
+                    lstParticipantesGasto.Items.Add(new ListItem
+                    {
+                        Value = participante.IdUsuario.ToString(),
+                        Text = nombreUsuario
+                    });
+                }
             }
         }
 
