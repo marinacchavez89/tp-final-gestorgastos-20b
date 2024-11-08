@@ -15,6 +15,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             if (!IsPostBack)
             {
+                rblDivision.SelectedValue = "1";
                 CargarGrupos();
                 CargarParticipantes();
             }
@@ -136,6 +137,77 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             repParticipantes.DataSource = participantesConDatos;
             repParticipantes.DataBind();
+            ActualizarMontosIndividuales();
+        }
+        private void ActualizarMontosIndividuales()
+        {
+            if (decimal.TryParse(txtMontoGasto.Text, out decimal montoTotal))
+            {
+                int participantesSeleccionados = 0;
+                foreach (RepeaterItem item in repParticipantes.Items)
+                {
+                    CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
+                    if (chkParticipante != null && chkParticipante.Checked)
+                    {
+                        participantesSeleccionados++;
+                    }
+                }
+
+                if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "1") // Equitativa
+                {
+                    decimal montoIndividual = montoTotal / participantesSeleccionados;
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                        CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
+                        Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
+                        if (lblMontoIndividual != null)
+                        {
+                            if(chkParticipante != null && chkParticipante.Checked)
+                            {
+                            lblMontoIndividual.Text = montoIndividual.ToString();
+
+                            }
+                            else
+                            {
+                                lblMontoIndividual.Text = "0";
+
+                            }
+                        }
+                    }
+                }
+                else if(participantesSeleccionados > 0 && rblDivision.SelectedValue == "2")
+                {
+                   // logica porcentaje
+                    
+                }
+            }
+        }
+        private void mostrarCamposAdicionales()
+        {
+            foreach (RepeaterItem item in repParticipantes.Items)
+            {
+                Panel pnlMontosExactos = (Panel)item.FindControl("pnlMontosExactos");
+                Panel pnlPorcentaje = (Panel)item.FindControl("pnlPorcentaje");
+                Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
+
+                int metodoDivision = int.Parse(rblDivision.SelectedValue);
+                pnlMontosExactos.Visible = metodoDivision == 2;
+                pnlPorcentaje.Visible = metodoDivision == 3;
+                lblMontoIndividual.Visible = metodoDivision == 1;
+            }
+        }
+        protected void rblDivision_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ActualizarMontosIndividuales();
+            mostrarCamposAdicionales();
+        }
+        protected void chkParticipante_CheckedChanged(object sender, EventArgs e)
+        {
+            ActualizarMontosIndividuales();
+        }
+        protected void txtMontoGasto_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarMontosIndividuales();
         }
     }
 }
