@@ -19,6 +19,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 CargarGrupos();
                 CargarParticipantes();
             }
+
         }
 
         protected void btnAgregar_Click(object sender, EventArgs e)
@@ -35,7 +36,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             GastoNegocio gastoNegocio = new GastoNegocio();
             gastoNegocio.AgregarGasto(nuevoGasto);
 
-            
+
             int participantesSeleccionados = 0;
             foreach (ListItem item in lstParticipantesGasto.Items)
             {
@@ -59,11 +60,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
                             IdUsuario = Convert.ToInt32(item.Value),
                             MontoIndividual = montoIndividual
                         };
-                       
+
                         ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
                         participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
                     }
-                }               
+                }
             }
             else
             {
@@ -96,11 +97,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 ddlGrupos.Items.Insert(0, new ListItem("Seleccione un grupo", "0"));
             }
-            
+
         }
 
         private void CargarParticipantes()
-        {   
+        {
             if (Session["UsuarioId"] != null)
             {
                 GastoNegocio gastoNegocio = new GastoNegocio();
@@ -119,7 +120,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     });
                 }
             }
-            
+
         }
 
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
@@ -134,6 +135,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 Nombre = gastoNegocio.ObtenerNombreUsuario(p.IdUsuario),
                 Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario)
             }).ToList();
+
+
 
             repParticipantes.DataSource = participantesConDatos;
             repParticipantes.DataBind();
@@ -162,9 +165,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
                         Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
                         if (lblMontoIndividual != null)
                         {
-                            if(chkParticipante != null && chkParticipante.Checked)
+                            if (chkParticipante != null && chkParticipante.Checked)
                             {
-                            lblMontoIndividual.Text = montoIndividual.ToString();
+                                lblMontoIndividual.Text = montoIndividual.ToString();
 
                             }
                             else
@@ -175,11 +178,44 @@ namespace TpFinal_WebForms_20B_GestorGastos
                         }
                     }
                 }
-                else if(participantesSeleccionados > 0 && rblDivision.SelectedValue == "2")
+             /*   else if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "3")
                 {
-                   // logica porcentaje
-                    
+                    int totalPorcentaje = 0;
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                        TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
+                        if (txtPorcentaje != null)
+                        {
+                           int.TryParse(txtPorcentaje.Text, out int porcentaje);
+                            totalPorcentaje += porcentaje;
+                        }
+                    }
+                    if(totalPorcentaje > 0)
+                    {
+
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                            TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
+                            Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
+                            CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
+                          if(  int.TryParse(txtPorcentaje.Text, out int porcentaje))
+                            {
+
+                            float montoIndividual = (float)(montoTotal * porcentaje / 100);
+                            lblMontoIndividual.Text = montoIndividual.ToString();
+                            }
+                            else
+                            {
+                                lblMontoIndividual.Text = "0.00";
+                            }
+                     }
+                    }
+
+                  
+                    //logica
                 }
+             */
+
             }
         }
         private void mostrarCamposAdicionales()
@@ -191,6 +227,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
 
                 int metodoDivision = int.Parse(rblDivision.SelectedValue);
+
                 pnlMontosExactos.Visible = metodoDivision == 2;
                 pnlPorcentaje.Visible = metodoDivision == 3;
                 lblMontoIndividual.Visible = metodoDivision == 1;
@@ -206,6 +243,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
             ActualizarMontosIndividuales();
         }
         protected void txtMontoGasto_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarMontosIndividuales();
+        }
+        protected void txtPorcentaje_TextChanged(object sender, EventArgs e)
         {
             ActualizarMontosIndividuales();
         }

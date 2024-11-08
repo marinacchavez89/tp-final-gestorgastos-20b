@@ -2,6 +2,10 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server"></asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+        <ContentTemplate>
+
+    
     <div class="container">
         <h2>Gestión de Gastos</h2>
         <p>Comenzá a gestionar tus cuentas ingresando un nuevo gasto</p>
@@ -56,15 +60,15 @@
                                             <!-- Panel Montos Exactos -->
                                             <asp:Panel ID="pnlMontosExactos" runat="server" Visible="false">
                                                 <label class="form-label">Monto Exacto:</label>
-                                                <asp:TextBox ID="txtMontoExacto" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                                <asp:TextBox ID="txtMontoExacto" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true"></asp:TextBox>
                                             </asp:Panel>
 
                                             <!-- Panel Porcentaje -->
                                             <asp:Panel ID="pnlPorcentaje" runat="server" Visible="false">
                                                 <label class="form-label">% </label>
-                                                <asp:TextBox ID="txtPorcentaje" runat="server" CssClass="form-control" TextMode="Number"></asp:TextBox>
+                                                <asp:TextBox ID="txtPorcentaje" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true" OnTextChanged="txtPorcentaje_TextChanged"></asp:TextBox>
                                             </asp:Panel>
-                                            <p class="card-text">Monto Calculado: $<asp:Label ID="lblMontoIndividual" runat="server" Text="0.00"></asp:Label></p>
+                                            <p class="card-text">Monto Calculado: $ <asp:Label ID="lblMontoIndividual" runat="server" Text="0.00"></asp:Label></p>
                                         </div>
                                     </div>
                                 </div>
@@ -76,4 +80,6 @@
         </div>
 
         <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
+            </ContentTemplate>
+</asp:UpdatePanel>
 </asp:Content>
