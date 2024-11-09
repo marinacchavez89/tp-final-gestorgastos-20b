@@ -18,6 +18,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 rblDivision.SelectedValue = "1";
                 CargarGrupos();
                 CargarParticipantes();
+                mostrarCamposAdicionales();
             }
 
         }
@@ -162,23 +163,23 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     foreach (RepeaterItem item in repParticipantes.Items)
                     {
                         CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
-                        Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
-                        if (lblMontoIndividual != null)
+                        TextBox txtMontoIndividual = (TextBox)item.FindControl("txtMontoIndividual");
+                        if (txtMontoIndividual != null)
                         {
                             if (chkParticipante != null && chkParticipante.Checked)
                             {
-                                lblMontoIndividual.Text = montoIndividual.ToString();
+                                txtMontoIndividual.Text = montoIndividual.ToString();
 
                             }
                             else
                             {
-                                lblMontoIndividual.Text = "0";
+                                txtMontoIndividual.Text = "0";
 
                             }
                         }
                     }
                 }
-             /*   else if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "3")
+                else if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "3")
                 {
                     int totalPorcentaje = 0;
                     foreach (RepeaterItem item in repParticipantes.Items)
@@ -186,37 +187,36 @@ namespace TpFinal_WebForms_20B_GestorGastos
                         TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
                         if (txtPorcentaje != null)
                         {
-                           int.TryParse(txtPorcentaje.Text, out int porcentaje);
+                            int.TryParse(txtPorcentaje.Text, out int porcentaje);
                             totalPorcentaje += porcentaje;
                         }
                     }
-                    if(totalPorcentaje > 0)
+                    if (totalPorcentaje > 0)
                     {
 
-                    foreach (RepeaterItem item in repParticipantes.Items)
-                    {
+                        foreach (RepeaterItem item in repParticipantes.Items)
+                        {
                             TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
                             Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
                             CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
-                          if(  int.TryParse(txtPorcentaje.Text, out int porcentaje))
+                            if (int.TryParse(txtPorcentaje.Text, out int porcentaje))
                             {
 
-                            float montoIndividual = (float)(montoTotal * porcentaje / 100);
-                            lblMontoIndividual.Text = montoIndividual.ToString();
+                                decimal montoIndividual = (decimal)(montoTotal * porcentaje / 100);
+                                lblMontoIndividual.Text = montoIndividual.ToString();
                             }
                             else
                             {
-                                lblMontoIndividual.Text = "0.00";
+                                lblMontoIndividual.Text = "0";
                             }
-                     }
+                        }
                     }
 
-                  
-                    //logica
+
                 }
-             */
 
             }
+
         }
         private void mostrarCamposAdicionales()
         {
@@ -230,13 +230,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 pnlMontosExactos.Visible = metodoDivision == 2;
                 pnlPorcentaje.Visible = metodoDivision == 3;
-                lblMontoIndividual.Visible = metodoDivision == 1;
+                lblMontoIndividual.Visible = metodoDivision == 1 || metodoDivision == 3 ;
             }
+
         }
         protected void rblDivision_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ActualizarMontosIndividuales();
             mostrarCamposAdicionales();
+            ActualizarMontosIndividuales();
+
         }
         protected void chkParticipante_CheckedChanged(object sender, EventArgs e)
         {
