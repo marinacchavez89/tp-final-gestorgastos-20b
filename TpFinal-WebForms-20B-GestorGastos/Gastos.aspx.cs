@@ -230,7 +230,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 pnlMontosExactos.Visible = metodoDivision == 2;
                 pnlPorcentaje.Visible = metodoDivision == 3;
-                lblMontoIndividual.Visible = metodoDivision == 1 || metodoDivision == 3 ;
+                if (lblMontoIndividual != null)
+                {
+                lblMontoIndividual.Visible = true; 
+
+                }
             }
 
         }
