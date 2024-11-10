@@ -19,6 +19,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 CargarGrupos();
                 CargarParticipantes();
                 mostrarCamposAdicionales();
+                setearFechaDeHoy();
             }
 
         }
@@ -282,6 +283,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected void txtMontoExacto_TextChanged(object sender, EventArgs e)
         {
             ActualizarMontosIndividuales();
+        }
+
+        private void setearFechaDeHoy()
+        { 
+            txtFechaGasto.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
     }
 }
