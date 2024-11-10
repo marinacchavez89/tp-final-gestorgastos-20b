@@ -60,7 +60,7 @@
                                                     <!-- Panel Montos Exactos -->
                                                     <asp:Panel ID="pnlMontosExactos" runat="server" Visible="false">
                                                         <label class="form-label">Monto Exacto:</label>
-                                                        <asp:TextBox ID="txtMontoExacto" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true"></asp:TextBox>
+                                                        <asp:TextBox ID="txtMontoExacto" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true" OnTextChanged="txtMontoExacto_TextChanged"></asp:TextBox>
                                                     </asp:Panel>
 
                                                     <!-- Panel Porcentaje -->

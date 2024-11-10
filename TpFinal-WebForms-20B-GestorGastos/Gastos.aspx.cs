@@ -214,6 +214,28 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
 
                 }
+                else if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "2")
+                {
+                    float montoAsignado = 0;
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                        TextBox txtMontoExacto = (TextBox)item.FindControl("txtMontoExacto");
+                        Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
+                        CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
+
+                        if (txtMontoExacto != null)
+                        {
+                            float.TryParse(txtMontoExacto.Text, out float montoExacto);
+                            montoAsignado += montoExacto;
+                            lblMontoIndividual.Text = montoExacto.ToString();
+                        }
+                        else
+                        {
+                            lblMontoIndividual.Text = "0";
+
+                        }
+                    }
+                }
 
             }
 
@@ -253,6 +275,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
             ActualizarMontosIndividuales();
         }
         protected void txtPorcentaje_TextChanged(object sender, EventArgs e)
+        {
+            ActualizarMontosIndividuales();
+        }
+
+        protected void txtMontoExacto_TextChanged(object sender, EventArgs e)
         {
             ActualizarMontosIndividuales();
         }
