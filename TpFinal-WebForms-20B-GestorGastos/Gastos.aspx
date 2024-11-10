@@ -31,6 +31,7 @@
                 <label for="idGrupo" class="form-label">Grupo</label>
                 <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-control" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
                 </asp:DropDownList>
+                <asp:Label ID="lblErrorddlGrupos" Text="Debe seleccionar un grupo para continuar." Visible="false" ForeColor="Red" runat="server" />
 
                 <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->

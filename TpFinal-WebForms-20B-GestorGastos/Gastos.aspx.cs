@@ -44,6 +44,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     return;
                 }
             }
+            if (string.IsNullOrEmpty(ddlGrupos.SelectedItem.Text) || ddlGrupos.SelectedItem.Text == "Seleccione un grupo")
+            {
+                lblErrorddlGrupos.Visible = true;
+                return;
+            }
             Gasto nuevoGasto = new Gasto
             {
                 IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
