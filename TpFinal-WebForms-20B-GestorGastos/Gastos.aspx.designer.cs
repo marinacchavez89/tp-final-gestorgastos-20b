@@ -33,6 +33,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.TextBox txtFechaGasto;
 
         /// <summary>
+        /// Control lblErrorFecha.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorFecha;
+
+        /// <summary>
         /// Control txtConceptoGasto.
         /// </summary>
         /// <remarks>
@@ -42,6 +51,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.TextBox txtConceptoGasto;
 
         /// <summary>
+        /// Control lblErrorConceptoGasto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorConceptoGasto;
+
+        /// <summary>
         /// Control txtMontoGasto.
         /// </summary>
         /// <remarks>
@@ -49,6 +67,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtMontoGasto;
+
+        /// <summary>
+        /// Control lblErrorMontoGasto.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblErrorMontoGasto;
 
         /// <summary>
         /// Control ddlGrupos.

@@ -13,16 +13,19 @@
                 <div class="mb-3">
                     <label for="fechaGasto" class="form-label">Fecha</label>
                     <asp:TextBox ID="txtFechaGasto" runat="server" TextMode="Date" CssClass="form-control"></asp:TextBox>
+                    <asp:Label ID="lblErrorFecha" Text="Debe seleccionar una fecha válida" Visible="false" ForeColor="Red" runat="server" />
                 </div>
 
                 <div class="mb-3">
                     <label for="conceptoGasto" class="form-label">Descripción del Gasto</label>
                     <asp:TextBox ID="txtConceptoGasto" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:Label ID="lblErrorConceptoGasto" Text="El campo descripción no puede estar vacío." Visible="false" ForeColor="Red" runat="server" />
                 </div>
 
                 <div class="mb-3">
                     <label for="montoGasto" class="form-label">Monto Total</label>
                     <asp:TextBox ID="txtMontoGasto" runat="server" CssClass="form-control" TextMode="Number" AutoPostBack="true" OnTextChanged="txtMontoGasto_TextChanged"></asp:TextBox>
+                    <asp:Label ID="lblErrorMontoGasto" Text="El monto del gasto debe ser mayor a cero." Visible="false" ForeColor="Red" runat="server" />
                 </div>
 
                 <label for="idGrupo" class="form-label">Grupo</label>

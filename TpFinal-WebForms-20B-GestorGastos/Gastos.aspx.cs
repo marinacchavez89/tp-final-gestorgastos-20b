@@ -26,6 +26,24 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
+            if(string.IsNullOrEmpty(txtFechaGasto.Text))
+            {
+                lblErrorFecha.Visible = true;
+                return;
+            }
+            if (string.IsNullOrEmpty(txtConceptoGasto.Text))
+            {
+                lblErrorConceptoGasto.Visible = true;
+                return;
+            }
+            if(int.TryParse(txtMontoGasto.Text, out int montoGasto))
+            {
+                if(montoGasto <= 0)
+                {
+                    lblErrorMontoGasto.Visible = true;
+                    return;
+                }
+            }
             Gasto nuevoGasto = new Gasto
             {
                 IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
