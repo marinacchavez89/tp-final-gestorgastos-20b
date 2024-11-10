@@ -163,17 +163,17 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     foreach (RepeaterItem item in repParticipantes.Items)
                     {
                         CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
-                        TextBox txtMontoIndividual = (TextBox)item.FindControl("txtMontoIndividual");
-                        if (txtMontoIndividual != null)
+                        Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
+                        if (lblMontoIndividual != null)
                         {
                             if (chkParticipante != null && chkParticipante.Checked)
                             {
-                                txtMontoIndividual.Text = montoIndividual.ToString();
+                                lblMontoIndividual.Text = montoIndividual.ToString();
 
                             }
                             else
                             {
-                                txtMontoIndividual.Text = "0";
+                                lblMontoIndividual.Text = "0";
 
                             }
                         }
