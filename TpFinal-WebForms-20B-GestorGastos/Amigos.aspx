@@ -16,6 +16,9 @@
                 <img src="/Images/logoEditar.png" alt="Editar Nombre Grupo" title="Editar Nombre Grupo" style="width: 45px; height: 40px;" />
             </asp:LinkButton>
         </div>
+            <div>
+                <asp:Label ID="lblErrorGrupos" Text="Debe seleccionar un grupo para continuar." Visible="false" ForeColor="Red" runat="server" />
+            </div>
 
         <!--<asp:ListBox ID="lstParticipantesGasto" runat="server" SelectionMode="Multiple" CssClass="form-control">          
         </asp:ListBox>-->
@@ -61,12 +64,12 @@
                 </div>
             </div>
         </div>
-        <div class="mb-3">            
+        <div class="mb-3">
             <label id="lblCodigoInvitacion" cssclass="form-control" runat="server" visible="false">Código invitación grupo</label>
             <div class="mb-2"></div>
-            <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" style="margin-top: 20px;"/>
-            <asp:TextBox ID="txtEmailAInvitarPorCodigo" CssClass="form-control" runat="server" Visible="false" Placeholder="Ingrese el email para que enviemos el código..." style="margin-top: 20px;"></asp:TextBox>
-            <asp:Button ID="btnInvitarConCodigo" Text="Invitar Amigo" CssClass="btn btn-secondary" runat="server" OnClick="btnInvitarConCodigo_Click" style="margin-top: 20px;"></asp:Button>
+            <asp:TextBox ID="txtCodigoInvitacion" CssClass="form-control" runat="server" Enabled="false" Style="margin-top: 20px;" />
+            <asp:TextBox ID="txtEmailAInvitarPorCodigo" CssClass="form-control" runat="server" Visible="false" Placeholder="Ingrese el email para que enviemos el código..." Style="margin-top: 20px;"></asp:TextBox>
+            <asp:Button ID="btnInvitarConCodigo" Text="Invitar Amigo" CssClass="btn btn-secondary" runat="server" OnClick="btnInvitarConCodigo_Click" Style="margin-top: 20px;"></asp:Button>
         </div>
 
     </div>

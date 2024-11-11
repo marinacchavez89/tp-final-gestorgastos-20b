@@ -27,13 +27,25 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            btnEliminarGrupoLogo.Visible = true;
-            btnEditarNombreGrupo.Visible = true;
-            lblParticipantes.Visible = true;
+            if(string.IsNullOrEmpty(ddlGrupos.SelectedItem.Text) || ddlGrupos.SelectedItem.Text == "Seleccione un grupo")
+            {
+                btnEliminarGrupoLogo.Visible = false;
+                btnEditarNombreGrupo.Visible = false;
+                lblParticipantes.Visible = false;
+                lblCodigoInvitacion.Visible = false;
+                txtCodigoInvitacion.Visible = false;
+            }
+            else
+            {
+                lblErrorGrupos.Visible = false;
+                btnEliminarGrupoLogo.Visible = true;
+                btnEditarNombreGrupo.Visible = true;
+                lblParticipantes.Visible = true;
+                lblCodigoInvitacion.Visible = true;
+                txtCodigoInvitacion.Visible = true;
+            }
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
             Session.Add("idGrupo", idGrupo);
-            lblCodigoInvitacion.Visible = true;
-            txtCodigoInvitacion.Visible = true;
             txtCodigoInvitacion.Text = (string)obtenerCodigoInvitacionGrupo();
             if(idGrupo !=0)
             {
@@ -203,6 +215,11 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnInvitarConCodigo_Click(object sender, EventArgs e)
         {
+            if( string.IsNullOrEmpty(ddlGrupos.SelectedItem.Text) || ddlGrupos.SelectedItem.Text == "Seleccione un grupo")
+            {
+                lblErrorGrupos.Visible = true;
+                return;
+            }
             txtEmailAInvitarPorCodigo.Visible = true;
             string email = txtEmailAInvitarPorCodigo.Text;
             Session.Add("emailUsuarioAInvitar", email);
