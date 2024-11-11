@@ -34,6 +34,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 lblParticipantes.Visible = false;
                 lblCodigoInvitacion.Visible = false;
                 txtCodigoInvitacion.Visible = false;
+                txtEmailAInvitarPorCodigo.Visible = false;
             }
             else
             {
