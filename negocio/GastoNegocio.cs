@@ -70,6 +70,27 @@ namespace negocio
             }
         }
 
+        public void eliminarGasto(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM Gastos Where idGasto = @idGasto");
+                datos.setearParametro("@idGasto", idGasto);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally 
+            { 
+                datos.cerrarConexion();
+            }
+        }
+
         public string ObtenerNombreUsuario(int idUsuario)
         {
             AccesoDatos datos = new AccesoDatos();
