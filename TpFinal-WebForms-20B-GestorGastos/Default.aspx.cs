@@ -32,17 +32,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnEliminarGasto_Click(object sender, ImageClickEventArgs e)
         {
-            GastoNegocio negocio = new GastoNegocio();
-
             ImageButton btn = (ImageButton)sender;
             int idGasto = Convert.ToInt32(btn.CommandArgument);
-
-            negocio.eliminarGasto(idGasto);
-
-            int idUsuario = (int)Session["UsuarioId"];
-            ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
-            repRepetidor.DataSource = ListaGastos;
-            repRepetidor.DataBind();
+            Session.Add("idGasto", idGasto);
+            Response.Redirect("ConfirmarEliminarGasto.aspx", false);         
         }
     }
 }

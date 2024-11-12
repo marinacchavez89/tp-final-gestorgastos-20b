@@ -66,7 +66,8 @@
   <ItemGroup>
     <Content Include="AgregarUsuarioPorCodigo.aspx" />
     <Content Include="Amigos.aspx" />
-    <Content Include="ConfirmarEliminar.aspx" />
+    <Content Include="ConfirmarEliminarGrupo.aspx" />
+    <Content Include="ConfirmarEliminarGasto.aspx" />
     <Content Include="CrearGrupo.aspx" />
     <Content Include="EditarNombreGrupo.aspx" />
     <Content Include="Exito.aspx" />
@@ -97,12 +98,19 @@
     <Compile Include="Amigos.aspx.designer.cs">
       <DependentUpon>Amigos.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ConfirmarEliminar.aspx.cs">
-      <DependentUpon>ConfirmarEliminar.aspx</DependentUpon>
+    <Compile Include="ConfirmarEliminarGrupo.aspx.cs">
+      <DependentUpon>ConfirmarEliminarGrupo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ConfirmarEliminar.aspx.designer.cs">
-      <DependentUpon>ConfirmarEliminar.aspx</DependentUpon>
+    <Compile Include="ConfirmarEliminarGrupo.aspx.designer.cs">
+      <DependentUpon>ConfirmarEliminarGrupo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmarEliminarGasto.aspx.cs">
+      <DependentUpon>ConfirmarEliminarGasto.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmarEliminarGasto.aspx.designer.cs">
+      <DependentUpon>ConfirmarEliminarGasto.aspx</DependentUpon>
     </Compile>
     <Compile Include="CrearGrupo.aspx.cs">
       <DependentUpon>CrearGrupo.aspx</DependentUpon>

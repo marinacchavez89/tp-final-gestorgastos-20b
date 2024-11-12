@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="ConfirmarEliminar.aspx.cs" Inherits="TpFinal_WebForms_20B_GestorGastos.ConfirmarEliminar" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="ConfirmarEliminarGrupo.aspx.cs" Inherits="TpFinal_WebForms_20B_GestorGastos.ConfirmarEliminar" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
