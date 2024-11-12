@@ -55,8 +55,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 Descripcion = txtConceptoGasto.Text,
                 MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
                 FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
-                CreadoPor = 1 //Esto despues se puede asumir que es por el usuario logueado
-            };
+                CreadoPor = (int)Session["UsuarioId"]
+            }; 
 
             GastoNegocio gastoNegocio = new GastoNegocio();
             gastoNegocio.AgregarGasto(nuevoGasto);
