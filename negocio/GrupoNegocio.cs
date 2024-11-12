@@ -133,14 +133,24 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
-                datos.setearConsulta("insert into MiembrosGrupos (idUsuario, idGrupo) values(@idUsuario, @idGrupo)");
+                // Primero se verifica que no exista ya ese participante en el grupo
+                datos.setearConsulta("SELECT COUNT(*) FROM MiembrosGrupos WHERE idUsuario = @idUsuario AND idGrupo = @idGrupo");
                 datos.setearParametro("@idUsuario", idUsuario);
                 datos.setearParametro("@idGrupo", idGrupo);
-                datos.ejecutarAccion();
+
+                int count = (int)datos.ejecutarScalar();
+               
+                if(count == 0)
+                {
+                    datos.setearConsulta("INSERT INTO MiembrosGrupos (idUsuario, idGrupo) VALUES (@idUsuario, @idGrupo)");
+                    datos.setearParametro("@idUsuario", idUsuario);
+                    datos.setearParametro("@idGrupo", idGrupo);
+                    datos.ejecutarAccion();
+                }
+               
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             finally

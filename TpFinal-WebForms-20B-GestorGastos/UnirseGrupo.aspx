@@ -5,7 +5,7 @@
      <div class="container">
         <h2>Unirse a un Grupo Existente</h2>
         <div class="form-group" Style="margin-top: 15px;">
-            <label for="txtCodigoInvitacion">Para unirse a un grupo debe tener un código de invitación en la casilla de correo ingresada.</label>
+            <label for="txtCodigoInvitacion">Para unirse a un grupo debe tener un código de invitación que le haya brindado su amigo.</label>
             <asp:TextBox ID="txtCodigoInvitacion" runat="server" CssClass="form-control" placeholder="Ingrese el código de invitación" Style="margin-top: 15px;"></asp:TextBox>
         </div>
         <asp:Button ID="btnUnirseGrupo" runat="server" CssClass="btn btn-secondary" OnClick="btnUnirseGrupo_Click" Text="Unirse al Grupo" Style="margin-top: 15px;"/>
