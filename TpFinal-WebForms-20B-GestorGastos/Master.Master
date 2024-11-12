@@ -60,7 +60,8 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
+        
+        <div class="container"> 
             <hr />
             <div>
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
@@ -69,23 +70,17 @@
         </div>
     </form>
 
-    <div class="container" style="padding: 20px 0;">
+    <div class="container">
         <br />
         <hr />
-        <div class="card text-center">
+        <div class="card text-center mb-3">            
             <div class="card-header">
-                Sobre Nosotros
-            </div>
-            <div class="card-body">
                 <h5 class="card-title">Sitio desarrollado con ASP.NET</h5>
                 <p class="card-text">Programación III - UTN FRGP</p>
             </div>
             <div class="card-footer text-muted">
                 Marina Celeste Chávez - Juan Cruz Gauna - Martin Lozano
-            </div>
-            <div class="card-footer text-muted">
-                Noviembre 2024
-            </div>
+            </div>          
         </div>
     </div>
 </body>

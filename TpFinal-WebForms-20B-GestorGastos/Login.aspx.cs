@@ -23,7 +23,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             try
             {                
                 string email = txtEmail.Text;
-                string password = txtPass.Text;
+                string password = txtPassLogin.Text;
 
                 // Verificamos las credenciales del usuario
                 Usuario usuario = usuarioNegocio.ValidarUsuario(email, HashPassword(password));
