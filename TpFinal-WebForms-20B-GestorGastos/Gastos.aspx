@@ -53,7 +53,7 @@
                                     <ItemTemplate>
                                         <div class="col-md-3">
                                             <div class="card">
-                                                <img src="/Images/logoParticipante.png" class="card-img-top d-block mx-auto" alt="img-participante" style="height: 100px; width: 100px;">
+                                                <img src='<%# Eval("ImagenPerfil") != null && Eval("ImagenPerfil").ToString() != "" ? Eval("ImagenPerfil") : "/Images/logoParticipante.png" %>' class="card-img-top d-block mx-auto" alt="img-participante" style="height: 100px; width: 100px;">
                                                 <div class="card-body">
                                                     <h5 class="card-title">
                                                         <asp:CheckBox ID="chkParticipante" runat="server" Checked="true" AutoPostBack="true" OnCheckedChanged="chkParticipante_CheckedChanged" />

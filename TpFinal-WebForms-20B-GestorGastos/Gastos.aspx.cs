@@ -153,12 +153,13 @@ namespace TpFinal_WebForms_20B_GestorGastos
             int idGrupo = int.Parse(ddlGrupos.SelectedValue);
             GastoNegocio gastoNegocio = new GastoNegocio();
             List<ParticipanteGasto> participantes = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
-
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             var participantesConDatos = participantes.Select(p => new
             {
                 p.IdUsuario,
                 Nombre = gastoNegocio.ObtenerNombreUsuario(p.IdUsuario),
-                Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario)
+                Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario),
+                ImagenPerfil = usuarioNegocio.obtenerImagenPerfil(p.IdUsuario)
             }).ToList();
 
 
