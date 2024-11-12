@@ -56,7 +56,7 @@ namespace negocio
                 mensaje.Subject = "¡Te unieron a un grupo de gastos!";
                 mensaje.Body = $"<h1>¡Hola, {emailParticipante}!</h1>" +
                                $"<p> Te invitaron a que te unas a un grupo de gestión de gastos. Si nunca te has registrado ni cambiado la contraseña, podes ingresar con el email {emailParticipante} y el código de invitacion {codInvitacionPass} como contraseña y participar en la división de gastos con tus amigos.</p>" +
-                               $"<p> Si ya te habías unido a un grupo, nunca cambiaste la contraseña y no recordás el primer código de inivitación, podes elegir desde Iniciar Sesión 'Olvidé mi contraseña' y generar una nueva.</p>" +
+                               $"<p> Si ya te habías unido a un grupo, nunca cambiaste la contraseña y no recordás el primer código de invitación, podes elegir desde Iniciar Sesión 'Olvidé mi contraseña' y generar una nueva.</p>" +
                                $"<p> Te esperamos pronto en la app, no olvides cambiar tu password si sigue siendo el código de invitación. ¡Gracias por elegirnos!</p>" +
                                $"<br/>" +
                                $"<p>Atentamente,</p>" +
