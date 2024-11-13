@@ -28,7 +28,7 @@
                                                 ImageUrl="/Images/logoEliminar.png" AlternateText="Eliminar Gasto" ToolTip="Eliminar Gasto"
                                                 Style="width: 50px; height: 45px; border: none; background: none; padding: 0;" />
                                             <asp:ImageButton ID="btnModificarGasto" ImageUrl="/Images/logoEditar.png" AutoPostBack="true" CommandArgument='<%# Eval("IdGasto") %>'
-                                                AlternateText="Modificar Gasto" ToolTip="Modificar Gasto" runat="server" CssClass="btn btn-secondary"
+                                                AlternateText="Modificar Gasto" OnClick="btnModificarGasto_Click" ToolTip="Modificar Gasto" runat="server" CssClass="btn btn-secondary"
                                                 Style="width: 45px; height: 40px; border: none; background: none; padding: 0;"/>
                                         </div>
                                     </div>

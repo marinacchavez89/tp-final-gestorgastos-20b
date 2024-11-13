@@ -37,5 +37,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
             Session.Add("idGasto", idGasto);
             Response.Redirect("ConfirmarEliminarGasto.aspx", false);         
         }
+
+        protected void btnModificarGasto_Click(object sender, ImageClickEventArgs e)
+        {
+            ImageButton btn = (ImageButton)sender;
+            int idGasto = Convert.ToInt32(btn.CommandArgument);
+
+            Session.Add("idGasto", idGasto);
+            Response.Redirect("Gastos.aspx?id=" + idGasto);
+        }
     }
 }

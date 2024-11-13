@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -21,6 +22,46 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 mostrarCamposAdicionales();
                 setearFechaDeHoy();
             }
+            
+            if (Request.QueryString["id"] != null && !IsPostBack)
+            {
+                btnAgregar.Text = "Modificar";
+                pSubtitulo.Visible = false;
+                GastoNegocio negocio = new GastoNegocio();
+                List<Gasto> lista = new List<Gasto>();
+                lista = negocio.listarPorId(Request.QueryString["id"].ToString());
+                Gasto seleccionado = lista[0];
+                Session.Add("idGasto", seleccionado.IdGasto);
+                Session.Add("idGrupo", seleccionado.IdGrupo);
+
+                txtFechaGasto.Text = seleccionado.FechaGasto.ToString("yyyy-MM-dd");
+                txtConceptoGasto.Text = seleccionado.Descripcion.ToString();
+                txtMontoGasto.Text = seleccionado.MontoTotal.ToString("0", CultureInfo.InvariantCulture);
+                List<Grupo> grupo = new List<Grupo>();
+                grupo = negocio.listarGrupoModificar((int)Session["idGrupo"]);
+                ddlGrupos.DataSource = grupo;
+                ddlGrupos.DataValueField = "IdGrupo";
+                ddlGrupos.DataTextField = "NombreGrupo";
+                ddlGrupos.DataBind();
+                ddlGrupos.Enabled = false;
+
+                int idGrupo = int.Parse(ddlGrupos.SelectedValue);
+                GastoNegocio gastoNegocio = new GastoNegocio();
+                List<ParticipanteGasto> participantes = gastoNegocio.ListarParticipantesPorGrupo(idGrupo);
+                UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+                var participantesConDatos = participantes.Select(p => new
+                {
+                    p.IdUsuario,
+                    Nombre = gastoNegocio.ObtenerNombreUsuario(p.IdUsuario),
+                    Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario),
+                    ImagenPerfil = usuarioNegocio.obtenerImagenPerfil(p.IdUsuario)
+                }).ToList();
+
+                repParticipantes.DataSource = participantesConDatos;
+                repParticipantes.DataBind();
+                ActualizarMontosIndividuales();
+            }
+
 
         }
 
@@ -49,17 +90,36 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 lblErrorddlGrupos.Visible = true;
                 return;
             }
-            Gasto nuevoGasto = new Gasto
+            Gasto nuevoGasto;
+            if (Request.QueryString["id"] != null)
             {
-                IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
-                Descripcion = txtConceptoGasto.Text,
-                MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
-                FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
-                CreadoPor = (int)Session["UsuarioId"]
-            }; 
+                nuevoGasto = new Gasto
+                {
+                    IdGasto = (int)Session["idGasto"],
+                    IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
+                    Descripcion = txtConceptoGasto.Text,
+                    MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
+                    FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
+                    CreadoPor = (int)Session["UsuarioId"]
+                };
+            }
+            else
+            {
+                nuevoGasto = new Gasto
+                {
+                    IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
+                    Descripcion = txtConceptoGasto.Text,
+                    MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
+                    FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
+                    CreadoPor = (int)Session["UsuarioId"]
+                };
+            }
 
             GastoNegocio gastoNegocio = new GastoNegocio();
-            gastoNegocio.AgregarGasto(nuevoGasto);
+            if (Request.QueryString["id"] != null)
+                gastoNegocio.modificar(nuevoGasto);
+            else
+                gastoNegocio.AgregarGasto(nuevoGasto);
 
 
             int participantesSeleccionados = 0;

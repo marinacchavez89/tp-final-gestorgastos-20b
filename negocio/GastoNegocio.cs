@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -88,6 +89,27 @@ namespace negocio
             finally 
             { 
                 datos.cerrarConexion();
+            }
+        }
+
+        public void modificar(Gasto gasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE Gastos SET descripcion = @descripcion, montoTotal = @monto, fechaGasto = @fecha WHERE idGasto = @id");
+                datos.setearParametro("@descripcion", gasto.Descripcion);
+                datos.setearParametro("@monto", gasto.MontoTotal);
+                datos.setearParametro("@fecha", gasto.FechaGasto);
+                datos.setearParametro("@id", gasto.IdGasto);
+                
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 
@@ -187,6 +209,38 @@ namespace negocio
             try
             {
                 datos.setearConsulta("SELECT IdGrupo, NombreGrupo FROM Grupos");
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Grupo grupo = new Grupo
+                    {
+                        IdGrupo = (int)datos.Lector["IdGrupo"],
+                        NombreGrupo = (string)datos.Lector["NombreGrupo"]
+                    };
+                    listaGrupos.Add(grupo);
+                }
+
+                return listaGrupos;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public List<Grupo> listarGrupoModificar(int id)
+        {
+            List<Grupo> listaGrupos = new List<Grupo>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdGrupo, NombreGrupo FROM Grupos WHERE IdGrupo = @id");
+                datos.setearParametro("@id", id);
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
@@ -357,6 +411,40 @@ namespace negocio
                 datos.cerrarConexion();
             }
      
+        }
+
+        public List<Gasto> listarPorId(string id)
+        {
+            List<Gasto> lista = new List<Gasto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT IdGasto, idGrupo, Descripcion, MontoTotal, fechaGasto FROM Gastos WHERE IdGasto = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Gasto aux = new Gasto();
+                    aux.IdGasto = (int)datos.Lector["IdGasto"];
+                    aux.IdGrupo = (int)datos.Lector["idGrupo"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.MontoTotal = (decimal)datos.Lector["MontoTotal"];
+                    aux.FechaGasto = (DateTime)datos.Lector["FechaGasto"];
+
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

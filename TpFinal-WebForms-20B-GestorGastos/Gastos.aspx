@@ -8,7 +8,7 @@
 
             <div class="container">
                 <h2>Gestión de Gastos</h2>
-                <p>Comenzá a gestionar tus cuentas ingresando un nuevo gasto</p>
+                <p id="pSubtitulo" runat="server">Comenzá a gestionar tus cuentas ingresando un nuevo gasto</p>
 
                 <div class="mb-3">
                     <label for="fechaGasto" class="form-label">Fecha</label>
