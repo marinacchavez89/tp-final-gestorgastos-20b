@@ -3,6 +3,7 @@ using negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -68,9 +69,31 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnOlvidePass_Click(object sender, EventArgs e)
         {
-            // Aquí podrías redirigir a una página de recuperación de contraseña o mostrar un mensaje
-            lblError.Text = "Funcionalidad de recuperación de contraseña aún no implementada.";
-            lblError.Visible = true;
+            UsuarioNegocio negocio = new UsuarioNegocio();
+            string email = txtEmail.Text;
+            string passDefaultAleatoria = generarPasswordAleatoria();
+            if (negocio.ExisteUsuario(email))
+            {
+                EmailService emailService = new EmailService();
+                emailService.EnviarCorreoOlvidoPass(email, passDefaultAleatoria);
+                lblError.Text = "En la casilla de email registrada ha recibido una nueva contraseña.";
+                lblError.ForeColor = System.Drawing.Color.Green;
+                lblError.Visible=true;                
+            }
+
+        }
+        public static string generarPasswordAleatoria()
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+            var random = new Random();
+            var password = new StringBuilder();
+
+            for (int i = 0; i < 8; i++)
+            {
+                password.Append(chars[random.Next(chars.Length)]);
+            }
+
+            return password.ToString();
         }
     }
 }

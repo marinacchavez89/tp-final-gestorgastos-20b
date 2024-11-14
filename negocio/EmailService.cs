@@ -75,5 +75,36 @@ namespace negocio
                 throw new Exception("Error al enviar el correo electrónico: " + ex.Message);
             }
         }
+
+        public void EnviarCorreoOlvidoPass(string emailParticipante, string passDefault)
+        {
+            try
+            {
+                // Definir el mensaje de correo
+                MailMessage mensaje = new MailMessage();
+                mensaje.From = new MailAddress("progratresmarjuanmartin@gmail.com");
+                mensaje.To.Add(new MailAddress(emailParticipante));
+                mensaje.Subject = "¡Te olvidaste la contraseña!";
+                mensaje.Body = $"<h1>¡Hola, {emailParticipante}!</h1>" +
+                               $"<p> Te has olvidado la contraseña. Tu nueva contraseña es {passDefault}.</p>" +
+                               $"<p> Iniciá sesión con la contraseña otorgada y, por favor, modificá tu contraseña.</p>" +
+                               $"<p> Te esperamos pronto en la app, no olvides cambiar tu password si sigue siendo la constraseña por default. ¡Gracias por elegirnos!</p>" +
+                               $"<br/>" +
+                               $"<p>Atentamente,</p>" +
+                               $"<p>App Gestor de Gastos TweentyB</p>";
+                mensaje.IsBodyHtml = true;
+                // Configurar el cliente SMTP para Gmail
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);  //el servidor smtp OJO, SOLO FUNCIONA CON ESE PUERTO Y NO FUNCIONA CON NINGUNO MAS
+                smtpClient.Credentials = new NetworkCredential("progratresmarjuanmartin@gmail.com", "ndgo fttt cyio rrrs"); // esta es la api key que tenemos que usar
+                smtpClient.EnableSsl = true;
+                // Enviar el mensaje
+                smtpClient.Send(mensaje);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception("Error al enviar el correo electrónico: " + ex.Message);
+            }
+        }
     }
 }
