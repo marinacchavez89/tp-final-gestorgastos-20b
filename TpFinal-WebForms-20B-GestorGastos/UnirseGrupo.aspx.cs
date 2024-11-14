@@ -28,8 +28,17 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 int idUsuario = new UsuarioNegocio().obtenerIdUsuarioPorEmail(email);
                 GrupoNegocio grupoNegocio = new GrupoNegocio();
                 int idGrupo = grupoNegocio.obtenerIdGrupoPorCodigoInvitacion(codigoInvitacion);
-                grupoNegocio.agregarUsuarioGrupo(idUsuario, idGrupo);
-                Response.Redirect("Exito.aspx");
+                if (idGrupo == -1) 
+                {
+                    lblError.Text = "El código de invitación no es válido.";
+                    lblError.Visible = true;
+                }
+                else
+                {
+                    grupoNegocio.agregarUsuarioGrupo(idUsuario, idGrupo);
+                    Response.Redirect("Exito.aspx");                    
+                }
+               
             }
             catch (Exception ex)
             {
