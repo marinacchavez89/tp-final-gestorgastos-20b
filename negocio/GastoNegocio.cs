@@ -446,32 +446,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public string ObtenerNombreGrupoPorId(int idGrupo)
-        {
-            AccesoDatos datos = new AccesoDatos();
-            try
-            {
-                datos.setearConsulta("SELECT nombreGrupo FROM Grupos WHERE idGrupo = @idGrupo");
-                datos.setearParametro("@idGrupo", idGrupo);
-                datos.ejecutarLectura();
-
-                if (datos.Lector.Read())
-                {
-                    return datos.Lector["nombreGrupo"].ToString();
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            finally
-            {
-                datos.cerrarConexion();
-            }
-        }
-
-        
+               
 
         public Gasto obtenerGastoPorId(int idGasto)
         {

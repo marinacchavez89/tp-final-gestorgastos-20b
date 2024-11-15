@@ -15,7 +15,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
 		{
 			if(!IsPostBack)
             {
-                int idGasto = 7; // el gasto va por ahora hardcodeado
+                CargarGrupos();
+                int idGasto = 6; // el gasto va por ahora hardcodeado
                 cargarDetalleGasto(idGasto);
             }
 		}
@@ -32,6 +33,29 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 lblFechaGasto.Text = gasto.FechaGasto.ToString();
                 lblGrupo.Text = nombreGrupo;
             }
-        }        
+        }
+        private void CargarGrupos()
+        {
+            if (Session["UsuarioId"] != null)
+            {
+                int usuarioId = (int)Session["UsuarioId"];
+                GastoNegocio gastoNegocio = new GastoNegocio();
+                List<Grupo> grupos = gastoNegocio.listarGruposPorUsuario(usuarioId);
+
+                ddlGrupos.DataSource = grupos;
+                ddlGrupos.DataValueField = "IdGrupo";
+                ddlGrupos.DataTextField = "NombreGrupo";
+                ddlGrupos.DataBind();
+                ddlGrupos.Items.Insert(0, new ListItem("Selecciona un grupo", "0"));
+            }
+        }
+        protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int grupoId = Convert.ToInt32(ddlGrupos.SelectedValue);
+            if (grupoId > 0)
+            {
+              //logica
+            }
+        }
     }
 }
