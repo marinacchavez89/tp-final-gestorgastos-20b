@@ -5,7 +5,8 @@
      <div class="container mt-5">
         <h2 class="text-center">Detalle del Gasto</h2>
 
-        <!-- Tabla de Detalle del Gasto -->
+        <!-- tabla de detalle del gasto con el idGastoGenerado invocamos los campos
+            sin la posibilidad de modificarlos -->
         <div class="card mb-4">
             <div class="card-body">
                 <table class="table table-striped">
@@ -29,7 +30,7 @@
             </div>
         </div>
 
-        <!-- Tabla de Participantes -->
+        <!-- tabla de participantes. vamos a llamar al mismo repeater -->
         <h3 class="text-center">Participantes y Pagos</h3>
         <div class="card">
             <div class="card-body">
@@ -45,11 +46,15 @@
                     <tbody>
                         <asp:Repeater ID="repPagosParticipantes" runat="server">
                             <ItemTemplate>
-                                <tr>
+                               <!-- <tr> aca va a ir la logica del idGastoGenerado
+                                   1.- idGastoGenerado
+                                   2.- idGrupo
+                                   3.- idPago
+
                                     <td><%# Eval("Nombre") %></td>
                                     <td><%# Eval("Email") %></td>
                                     <td>$<%# Eval("MontoIndividual") %></td>
-                                    <td>
+                                    <td>-->
                                         <asp:CheckBox ID="chkPagoConfirmado" runat="server" />
                                     </td>
                                 </tr>

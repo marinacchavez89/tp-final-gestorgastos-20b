@@ -446,5 +446,65 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public string ObtenerNombreGrupoPorId(int idGrupo)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT nombreGrupo FROM Grupos WHERE idGrupo = @idGrupo");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    return datos.Lector["nombreGrupo"].ToString();
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        
+
+        public Gasto obtenerGastoPorId(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT IdGasto, IdGrupo, Descripcion, MontoTotal, FechaGasto, CreadoPor FROM Gastos WHERE IdGasto = @idGasto");
+                datos.setearParametro("@idGasto", idGasto);
+                datos.ejecutarLectura();
+
+                if (datos.Lector.Read())
+                {
+                    Gasto gasto = new Gasto
+                    {
+                        IdGasto = (int)datos.Lector["IdGasto"],
+                        IdGrupo = (int)datos.Lector["IdGrupo"],
+                        Descripcion = (string)datos.Lector["Descripcion"],
+                        MontoTotal = (decimal)datos.Lector["MontoTotal"],
+                        FechaGasto = (DateTime)datos.Lector["FechaGasto"],
+                        CreadoPor = (int)datos.Lector["CreadoPor"]
+                    };
+                    return gasto;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
