@@ -22,8 +22,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
         private void cargarDetalleGasto(int idGasto)
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
+            GrupoNegocio grupoNegocio = new GrupoNegocio();
             Gasto gasto = gastoNegocio.obtenerGastoPorId(idGasto);
-            string nombreGrupo = gastoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
+            string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
             if (gasto != null)
             {
             lblDescripcion.Text = gasto.Descripcion;
