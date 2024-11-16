@@ -373,5 +373,6 @@ namespace TpFinal_WebForms_20B_GestorGastos
         { 
             txtFechaGasto.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
+
     }
 }

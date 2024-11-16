@@ -11,37 +11,49 @@
             </asp:DropDownList>
         </div>
 
-        <h2 class="text-center">Detalle del Gasto</h2>
-
-        <!-- tabla de detalle del gasto con el idGastoGenerado invocamos los campos
-            sin la posibilidad de modificarlos -->
-        <div class="card mb-4">
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Descripción</th>
-                            <th>Fecha</th>
-                            <th>Monto Total</th>
-                            <th>Grupo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <asp:Label ID="lblDescripcion" runat="server" /></td>
-                            <td>
-                                <asp:Label ID="lblFechaGasto" runat="server" /></td>
-                            <td>
-                                <asp:Label ID="lblMontoTotal" runat="server" /></td>
-                            <td>
-                                <asp:Label ID="lblGrupo" runat="server" /></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                <div id="gastosContainer" runat="server" visible="false">
+            <h3>Lista de Gastos</h3>
+            <asp:Repeater ID="repGastos" runat="server" OnItemCommand="repGastos_ItemCommand">
+                <ItemTemplate>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><%# Eval("Descripcion") %></h5>
+                            <p class="card-text">Monto: <%# Eval("MontoTotal") %></p>
+                            <p class="card-text">Fecha: <%# Eval("FechaGasto") %></p>
+                            <asp:Button ID="btnSeleccionarGasto" runat="server" CommandName="SeleccionarGasto" CommandArgument='<%# Eval("IdGasto") %>' Text="Seleccionar" CssClass="btn btn-secondary" />
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
 
+
+        <h2 class="text-center">Detalle del Gasto</h2>
+
+
+        <div id="detalleGastoContainer" runat="server" visible="false" class="mt-4">
+            <h3>Detalle del Gasto</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Monto Total</th>
+                        <th>Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><asp:Label ID="lblDescripcion" runat="server" /></td>
+                        <td><asp:Label ID="lblFechaGasto" runat="server" /></td>
+                        <td><asp:Label ID="lblMontoTotal" runat="server" /></td>
+                        <td><asp:Label ID="lblGrupo" runat="server" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+      
         <!-- tabla de participantes. vamos a llamar al mismo repeater -->
         <h3 class="text-center">Participantes y Pagos</h3>
         <div class="card">

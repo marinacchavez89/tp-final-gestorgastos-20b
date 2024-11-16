@@ -16,8 +16,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 			if(!IsPostBack)
             {
                 CargarGrupos();
-                int idGasto = 6; // el gasto va por ahora hardcodeado
-                cargarDetalleGasto(idGasto);
+
             }
 		}
         private void cargarDetalleGasto(int idGasto)
@@ -25,13 +24,22 @@ namespace TpFinal_WebForms_20B_GestorGastos
             GastoNegocio gastoNegocio = new GastoNegocio();
             GrupoNegocio grupoNegocio = new GrupoNegocio();
             Gasto gasto = gastoNegocio.obtenerGastoPorId(idGasto);
-            string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
             if (gasto != null)
             {
+               string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
                 lblDescripcion.Text = gasto.Descripcion;
                 lblMontoTotal.Text = gasto.MontoTotal.ToString();
                 lblFechaGasto.Text = gasto.FechaGasto.ToString();
                 lblGrupo.Text = nombreGrupo;
+                detalleGastoContainer.Visible = true;
+            }
+            else
+            {
+                lblDescripcion.Text = "";
+                lblMontoTotal.Text = "";
+                lblFechaGasto.Text = "";
+                lblGrupo.Text = "";
+                detalleGastoContainer.Visible = false;
             }
         }
         private void CargarGrupos()
@@ -51,11 +59,42 @@ namespace TpFinal_WebForms_20B_GestorGastos
         }
         protected void ddlGrupos_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int grupoId = Convert.ToInt32(ddlGrupos.SelectedValue);
-            if (grupoId > 0)
+            GastoNegocio gastoNegocio = new GastoNegocio();
+            int idGrupo = Convert.ToInt32(ddlGrupos.SelectedValue);
+            if (idGrupo > 0)
             {
-              //logica
+             listarGastosPorGrupo(idGrupo);
             }
         }
+        private void listarGastosPorGrupo(int idGrupo)
+        {
+            GastoNegocio gastoNegocio = new GastoNegocio();
+            List<Gasto> gastos = gastoNegocio.listarGastosPorGrupo(idGrupo);
+           if(gastos != null && gastos.Count > 0)
+            {
+                repGastos.DataSource = gastos;
+                repGastos.DataBind();
+                gastosContainer.Visible = true;
+            }
+           else
+            {
+                repGastos.DataSource = null;
+                repGastos.DataBind();
+                gastosContainer.Visible = false;
+            }
+        }
+        protected void repGastos_ItemCommand(object source, RepeaterCommandEventArgs e)
+        {
+            if (e.CommandName == "SeleccionarGasto")
+            {
+                int idGasto = Convert.ToInt32(e.CommandArgument);
+                cargarDetalleGasto(idGasto);
+            }
+            else
+            {
+                // error generico (no deberia pasar)
+            }
+        }
+       
     }
 }

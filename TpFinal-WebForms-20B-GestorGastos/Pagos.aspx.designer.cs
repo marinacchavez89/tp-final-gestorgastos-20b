@@ -24,6 +24,33 @@ namespace TpFinal_WebForms_20B_GestorGastos
         protected global::System.Web.UI.WebControls.DropDownList ddlGrupos;
 
         /// <summary>
+        /// Control gastosContainer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl gastosContainer;
+
+        /// <summary>
+        /// Control repGastos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repGastos;
+
+        /// <summary>
+        /// Control detalleGastoContainer.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl detalleGastoContainer;
+
+        /// <summary>
         /// Control lblDescripcion.
         /// </summary>
         /// <remarks>

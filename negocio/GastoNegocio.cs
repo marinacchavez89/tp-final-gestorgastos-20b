@@ -481,5 +481,40 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public List<Gasto> listarGastosPorGrupo(int idGrupo)
+        {
+            List<Gasto> lista = new List<Gasto>();
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT idGasto, idGrupo, descripcion, montoTotal, fechaGasto, creadoPor FROM Gastos WHERE idGrupo = @idGrupo");
+                datos.setearParametro("@idGrupo", idGrupo);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    Gasto aux = new Gasto();
+                    aux.IdGasto = (int)datos.Lector["idGasto"];
+                    aux.IdGrupo = (int)datos.Lector["idGrupo"];
+                    aux.Descripcion = (string)datos.Lector["descripcion"];
+                    aux.MontoTotal = (decimal)datos.Lector["montoTotal"];
+                    aux.FechaGasto = (DateTime)datos.Lector["fechaGasto"];
+                    aux.CreadoPor = (int)datos.Lector["creadoPor"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
