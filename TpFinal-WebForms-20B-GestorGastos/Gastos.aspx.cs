@@ -120,44 +120,82 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
 
              
-
-            int participantesSeleccionados = 0;
-            foreach (RepeaterItem item in repParticipantes.Items)
+            if(rblDivision.SelectedValue == "1") //Equitativa
             {
-                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
-                if (chkParticipante != null && chkParticipante.Checked)
+                int participantesSeleccionados = 0;
+                foreach (RepeaterItem item in repParticipantes.Items)
                 {
-                    participantesSeleccionados++;
+                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                    if (chkParticipante != null && chkParticipante.Checked)
+                    {
+                        participantesSeleccionados++;
+                    }
                 }
-            }
 
-            if (participantesSeleccionados > 0)
+                if (participantesSeleccionados > 0)
+                {
+                    decimal montoIndividual = nuevoGasto.MontoTotal / participantesSeleccionados;
+
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                    HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                        if (chkParticipante != null && chkParticipante.Checked && hdnIdUsuario != null)
+                        {
+                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
+                            {
+                                IdGasto = nuevoGasto.IdGasto,
+                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                                MontoIndividual = montoIndividual
+                            };
+
+                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                            participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                        }
+                    }
+                }
+
+            }
+            
+            if (rblDivision.SelectedValue == "3") //Porcentaje
             {
-                decimal montoIndividual = nuevoGasto.MontoTotal / participantesSeleccionados;
+                int totalPorcentaje = 0;
+                List<ParticipanteGasto> participantesConPorcentaje = new List<ParticipanteGasto>();
 
                 foreach (RepeaterItem item in repParticipantes.Items)
                 {
-                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
-                HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
-                    if (chkParticipante != null && chkParticipante.Checked && hdnIdUsuario != null)
+                    TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
+                    if (txtPorcentaje != null)
                     {
-                        ParticipanteGasto nuevoParticipante = new ParticipanteGasto
+                        int porcentaje;
+                        if (int.TryParse(txtPorcentaje.Text, out porcentaje))
                         {
-                            IdGasto = nuevoGasto.IdGasto,
-                            IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                            MontoIndividual = montoIndividual
-                        };
+                            totalPorcentaje += porcentaje;
 
+                            HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                            if (hdnIdUsuario != null)
+                            {
+                                participantesConPorcentaje.Add(new ParticipanteGasto
+                                {
+                                    IdGasto = nuevoGasto.IdGasto,
+                                    IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                                    MontoIndividual = nuevoGasto.MontoTotal * porcentaje / 100
+                                });
+                            }
+                        }
+                    }
+                }
+
+                if (totalPorcentaje == 100)
+                {
+                    foreach (var participante in participantesConPorcentaje)
+                    {
                         ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                        participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                        participanteGastoNegocio.AgregarParticipante(participante);
                     }
                 }
             }
-            else
-            {
-                //Arrojar algun error o redirigir a pagina en especial.
-            }
-            
+
             Response.Redirect("Exito.aspx", false);
         }
 
