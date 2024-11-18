@@ -100,14 +100,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
         private void cargarParticipantesConEstadoDePago(int idGasto)
         {
             ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
             List<ParticipanteGasto> participantes = participanteGastoNegocio.listarParticipantesConEstadoPago(idGasto);
-            foreach (ParticipanteGasto participante in participantes)
-            {
-                participante.MontoPagado = participanteGastoNegocio.obtenerMontoPagadoPorUsuario(participante.IdGasto, participante.IdUsuario);
-                participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
 
-            }
             repPagosParticipantes.DataSource = participantes;
             repPagosParticipantes.DataBind();
 
