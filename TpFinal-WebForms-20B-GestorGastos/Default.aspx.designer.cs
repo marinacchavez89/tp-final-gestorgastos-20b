@@ -15,6 +15,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
     {
 
         /// <summary>
+        /// Control lblNoHayGastos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblNoHayGastos;
+
+        /// <summary>
         /// Control repRepetidor.
         /// </summary>
         /// <remarks>

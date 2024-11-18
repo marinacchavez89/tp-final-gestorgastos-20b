@@ -27,6 +27,10 @@ namespace TpFinal_WebForms_20B_GestorGastos
             ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
             repRepetidor.DataSource = ListaGastos;
             repRepetidor.DataBind();
+                if(ListaGastos.Count == 0 && ListaGastos != null)
+                {
+                    lblNoHayGastos.Visible = true;
+                }
             }
         }
 

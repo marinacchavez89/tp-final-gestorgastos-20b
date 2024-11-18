@@ -6,6 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 text-center">
                 <h1>Listado de Gastos</h1>
+                <h5 id="lblNoHayGastos" visible="false" runat="server">¡Usted no posee gastos, agregue uno para comenzar!</h5>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <asp:Repeater runat="server" ID="repRepetidor">
                         <ItemTemplate>
@@ -29,7 +30,7 @@
                                                 Style="width: 50px; height: 45px; border: none; background: none; padding: 0;" />
                                             <asp:ImageButton ID="btnModificarGasto" ImageUrl="/Images/logoEditar.png" AutoPostBack="true" CommandArgument='<%# Eval("IdGasto") %>'
                                                 AlternateText="Modificar Gasto" OnClick="btnModificarGasto_Click" ToolTip="Modificar Gasto" runat="server" CssClass="btn btn-secondary"
-                                                Style="width: 45px; height: 40px; border: none; background: none; padding: 0;"/>
+                                                Style="width: 45px; height: 40px; border: none; background: none; padding: 0;" />
                                         </div>
                                     </div>
                                 </div>
