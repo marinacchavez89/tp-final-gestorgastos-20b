@@ -116,8 +116,48 @@ namespace TpFinal_WebForms_20B_GestorGastos
             GastoNegocio gastoNegocio = new GastoNegocio();
             if (Request.QueryString["id"] != null)
                 gastoNegocio.modificar(nuevoGasto);
-            else
+            else if (rblDivision.SelectedValue == "3") //Si radioButton == 3 es decir porcentaje y la sumatoria supera el 100% que no deje avanzar
+            {
+                int totalPorcentaje = 0;
+                List<ParticipanteGasto> participantesConPorcentaje = new List<ParticipanteGasto>();
+
+                foreach (RepeaterItem item in repParticipantes.Items)
+                {
+                    TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
+                    if (txtPorcentaje != null)
+                    {
+                        int porcentaje;
+                        if (int.TryParse(txtPorcentaje.Text, out porcentaje))
+                        {
+                            totalPorcentaje += porcentaje;
+
+                            HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                            if (hdnIdUsuario != null)
+                            {
+                                participantesConPorcentaje.Add(new ParticipanteGasto
+                                {
+                                    IdGasto = nuevoGasto.IdGasto,
+                                    IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                                    MontoIndividual = nuevoGasto.MontoTotal * porcentaje / 100
+                                });
+                            }
+                        }
+                    }
+                }
+
+                if (totalPorcentaje != 100)
+                {
+                    return;
+                }
+                else
+                {
+                    nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
+                }
+            }
+            else 
+            {
                 nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
+            }
 
              
             if(rblDivision.SelectedValue == "1") //Equitativa
