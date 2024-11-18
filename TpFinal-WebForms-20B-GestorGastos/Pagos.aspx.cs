@@ -69,13 +69,33 @@ namespace TpFinal_WebForms_20B_GestorGastos
         private void listarGastosPorGrupo(int idGrupo)
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
+            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+            int usuarioId = (int)Session["UsuarioId"];
             List<Gasto> gastos = gastoNegocio.listarGastosPorGrupo(idGrupo);
-            if (gastos != null && gastos.Count > 0)
+
+            foreach (Gasto gasto in gastos)
+            {
+                List<ParticipanteGasto> participantes = participanteGastoNegocio.listarParticipantesConEstadoPago(gasto.IdGasto);
+                ParticipanteGasto miParticipante = participantes.Find(x => x.IdUsuario == usuarioId);
+
+                if (miParticipante != null)
+                {
+                    gasto.Descripcion += $" - Estado: {miParticipante.EstadoDeuda}";
+                }
+                else
+                {
+                    gasto.Descripcion += "- Estado: No participas";
+
+                }
+            }
+
+                if (gastos != null && gastos.Count > 0)
             {
                 repGastos.DataSource = gastos;
                 repGastos.DataBind();
                 gastosContainer.Visible = true;
             }
+            
             else
             {
                 repGastos.DataSource = null;

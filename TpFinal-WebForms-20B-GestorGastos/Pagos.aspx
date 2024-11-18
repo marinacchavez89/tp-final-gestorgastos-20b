@@ -20,7 +20,6 @@
                             <h5 class="card-title"><%# Eval("Descripcion") %></h5>
                             <p class="card-text">Monto: <%# Eval("MontoTotal") %></p>
                             <p class="card-text">Fecha: <%# Eval("FechaGasto") %></p>
-                            <p class="card-text"><strong>Estado:</strong> <%# Eval("EstadoDeuda") %></p>
                             <asp:Button ID="btnSeleccionarGasto" runat="server" CommandName="SeleccionarGasto" CommandArgument='<%# Eval("IdGasto") %>' Text="Seleccionar" CssClass="btn btn-secondary" />
                         </div>
                     </div>
