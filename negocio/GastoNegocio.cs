@@ -78,6 +78,11 @@ namespace negocio
             AccesoDatos datos = new AccesoDatos();
             try
             {
+                datos.setearConsulta("DELETE FROM ParticipantesGasto Where idGasto = @idGastoParticipantesGasto");
+                datos.setearParametro("@idGastoParticipantesGasto", idGasto);
+                datos.ejecutarAccion();
+                datos.cerrarConexion();
+
                 datos.setearConsulta("DELETE FROM Gastos Where idGasto = @idGasto");
                 datos.setearParametro("@idGasto", idGasto);
 

@@ -36,7 +36,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 txtFechaGasto.Text = seleccionado.FechaGasto.ToString("yyyy-MM-dd");
                 txtConceptoGasto.Text = seleccionado.Descripcion.ToString();
-                txtMontoGasto.Text = seleccionado.MontoTotal.ToString("0", CultureInfo.InvariantCulture);
+                txtMontoGasto.Text = seleccionado.MontoTotal.ToString("0", CultureInfo.InvariantCulture);             
                 List<Grupo> grupo = new List<Grupo>();
                 grupo = negocio.listarGrupoModificar((int)Session["idGrupo"]);
                 ddlGrupos.DataSource = grupo;
@@ -56,7 +56,6 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Email = gastoNegocio.ObtenerEmailUsuario(p.IdUsuario),
                     ImagenPerfil = usuarioNegocio.obtenerImagenPerfil(p.IdUsuario)
                 }).ToList();
-
                 repParticipantes.DataSource = participantesConDatos;
                 repParticipantes.DataBind();
                 ActualizarMontosIndividuales();
@@ -158,7 +157,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 //Arrojar algun error o redirigir a pagina en especial.
             }
-
+            
             Response.Redirect("Exito.aspx", false);
         }
 
