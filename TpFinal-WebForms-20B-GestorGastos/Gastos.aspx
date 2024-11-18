@@ -74,8 +74,8 @@
                                                     </asp:Panel>
                                                     <p class="card-text">
                                                         Monto Calculado: $
-                                                        <asp:Label ID="lblMontoIndividual" runat="server" CssClass="form-label" Text="0.00"></asp:Label>
-                                                    </p>
+                                                        <asp:Label ID="lblMontoIndividual" runat="server" CssClass="form-label" Text="0.00"></asp:Label>                                                       
+                                                    </p>                                                   
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +85,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div>
+                    <asp:Label ID="lblErrorPorcentaje" Text="La sumatoria de porcentajes no es igual al 100%" Visible="false" ForeColor="Red" runat="server" />
+                </div>
                 <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
                 <asp:Button ID="btnVolver" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" runat="server" />
         </ContentTemplate>

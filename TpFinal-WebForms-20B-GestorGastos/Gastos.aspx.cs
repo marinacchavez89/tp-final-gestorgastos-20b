@@ -147,6 +147,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                 if (totalPorcentaje != 100)
                 {
+                    lblErrorPorcentaje.Visible = true;
                     return;
                 }
                 else
