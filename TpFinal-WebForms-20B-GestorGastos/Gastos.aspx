@@ -87,6 +87,7 @@
                 </div>
 
                 <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
+                <asp:Button ID="btnVolver" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" runat="server" />
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

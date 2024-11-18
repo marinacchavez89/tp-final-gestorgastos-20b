@@ -374,5 +374,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
             txtFechaGasto.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
 
+        protected void btnVolver_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Default.aspx", false);
+        }
     }
 }
