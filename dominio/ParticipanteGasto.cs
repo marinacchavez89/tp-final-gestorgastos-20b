@@ -13,7 +13,24 @@ namespace dominio
         public decimal MontoIndividual { get; set; }
         public decimal MontoPagado { get; set; }
         public decimal DeudaPendiente { get; set; }
-       
+        public string EstadoDeuda
+        {
+            get
+            {
+                if (MontoPagado > MontoIndividual)
+                {
+                    return "Te deben";
+                }
+                else if (MontoPagado < MontoIndividual)
+                {
+                    return "Debes";
+                }
+                else
+                {
+                    return "Estás a mano";
+                }
+            }
+        }
     }
 }
 
