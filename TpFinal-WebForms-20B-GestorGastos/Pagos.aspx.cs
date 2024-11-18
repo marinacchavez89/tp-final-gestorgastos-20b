@@ -9,16 +9,16 @@ using System.Web.UI.WebControls;
 
 namespace TpFinal_WebForms_20B_GestorGastos
 {
-	public partial class Pagos : System.Web.UI.Page
-	{
-		protected void Page_Load(object sender, EventArgs e)
-		{
-			if(!IsPostBack)
+    public partial class Pagos : System.Web.UI.Page
+    {
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
             {
                 CargarGrupos();
 
             }
-		}
+        }
         private void cargarDetalleGasto(int idGasto)
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
@@ -26,7 +26,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             Gasto gasto = gastoNegocio.obtenerGastoPorId(idGasto);
             if (gasto != null)
             {
-               string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
+                string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
                 lblDescripcion.Text = gasto.Descripcion;
                 lblMontoTotal.Text = gasto.MontoTotal.ToString();
                 lblFechaGasto.Text = gasto.FechaGasto.ToString();
@@ -63,20 +63,20 @@ namespace TpFinal_WebForms_20B_GestorGastos
             int idGrupo = Convert.ToInt32(ddlGrupos.SelectedValue);
             if (idGrupo > 0)
             {
-             listarGastosPorGrupo(idGrupo);
+                listarGastosPorGrupo(idGrupo);
             }
         }
         private void listarGastosPorGrupo(int idGrupo)
         {
             GastoNegocio gastoNegocio = new GastoNegocio();
             List<Gasto> gastos = gastoNegocio.listarGastosPorGrupo(idGrupo);
-           if(gastos != null && gastos.Count > 0)
+            if (gastos != null && gastos.Count > 0)
             {
                 repGastos.DataSource = gastos;
                 repGastos.DataBind();
                 gastosContainer.Visible = true;
             }
-           else
+            else
             {
                 repGastos.DataSource = null;
                 repGastos.DataBind();
@@ -89,12 +89,27 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 int idGasto = Convert.ToInt32(e.CommandArgument);
                 cargarDetalleGasto(idGasto);
+                cargarParticipantesConEstadoDePago(idGasto);
             }
             else
             {
                 // error generico (no deberia pasar)
             }
         }
-       
-    }
-}
+
+        private void cargarParticipantesConEstadoDePago(int idGasto)
+        {
+            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            List<ParticipanteGasto> participantes = participanteGastoNegocio.listarParticipantesConEstadoPago(idGasto);
+            foreach (ParticipanteGasto participante in participantes)
+            {
+                participante.MontoPagado = participanteGastoNegocio.obtenerMontoPagadoPorUsuario(participante.IdGasto, participante.IdUsuario);
+                participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
+
+            }
+            repPagosParticipantes.DataSource = participantes;
+            repPagosParticipantes.DataBind();
+
+        }
+    } }

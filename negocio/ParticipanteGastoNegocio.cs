@@ -1,10 +1,6 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace negocio
 {
@@ -71,6 +67,69 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }            
+        }
+        public List<ParticipanteGasto> listarParticipantesConEstadoPago(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            List<ParticipanteGasto> lista = new List<ParticipanteGasto>();
+            try
+            {
+                datos.setearConsulta("select pg.idUsuario, pg.montoIndividual, ISNULL(SUM(p.montoPagado),0) as montoPagado from ParticipantesGasto pg left join Pagos p ON pg.idGasto = p.idGasto AND pg.idUsuario = p.idUsuario where pg.idGasto = @idGasto group by pg.idUsuario, pg.montoIndividual");
+                datos.setearParametro("@idGasto", idGasto);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    ParticipanteGasto participante = new ParticipanteGasto
+                    {
+                        IdUsuario = (int)datos.Lector["idUsuario"],
+                        MontoIndividual = (decimal)datos.Lector["montoIndividual"],
+                        MontoPagado = (decimal)datos.Lector["montoPagado"]
+                    };
+
+                    participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
+
+                    lista.Add(participante);
+                }
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al listar participantes con estado de pago",ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        public decimal obtenerMontoPagadoPorUsuario(int idGasto, int idUsuario)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT ISNULL(SUM(montoPagado),0) FROM Pagos WHERE idGasto = @idGasto AND idUsuario = @idUsuario");
+                datos.setearParametro("@idGasto", idGasto);
+                datos.setearParametro("@idUsuario", idUsuario);
+
+                object resultado = datos.ejecutarScalar();
+                if(resultado == null || resultado == DBNull.Value)
+                {
+                    return 0;
+                }
+                else { 
+                       
+                return Convert.ToDecimal(resultado);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
         }
     }
 }

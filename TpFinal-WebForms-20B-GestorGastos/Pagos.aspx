@@ -11,7 +11,7 @@
             </asp:DropDownList>
         </div>
 
-                <div id="gastosContainer" runat="server" visible="false">
+        <div id="gastosContainer" runat="server" visible="false">
             <h3>Lista de Gastos</h3>
             <asp:Repeater ID="repGastos" runat="server" OnItemCommand="repGastos_ItemCommand">
                 <ItemTemplate>
@@ -20,6 +20,7 @@
                             <h5 class="card-title"><%# Eval("Descripcion") %></h5>
                             <p class="card-text">Monto: <%# Eval("MontoTotal") %></p>
                             <p class="card-text">Fecha: <%# Eval("FechaGasto") %></p>
+                            <p class="card-text"><strong>Estado:</strong> <%# Eval("EstadoDeuda") %></p>
                             <asp:Button ID="btnSeleccionarGasto" runat="server" CommandName="SeleccionarGasto" CommandArgument='<%# Eval("IdGasto") %>' Text="Seleccionar" CssClass="btn btn-secondary" />
                         </div>
                     </div>
@@ -44,16 +45,20 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><asp:Label ID="lblDescripcion" runat="server" /></td>
-                        <td><asp:Label ID="lblFechaGasto" runat="server" /></td>
-                        <td><asp:Label ID="lblMontoTotal" runat="server" /></td>
-                        <td><asp:Label ID="lblGrupo" runat="server" /></td>
+                        <td>
+                            <asp:Label ID="lblDescripcion" runat="server" /></td>
+                        <td>
+                            <asp:Label ID="lblFechaGasto" runat="server" /></td>
+                        <td>
+                            <asp:Label ID="lblMontoTotal" runat="server" /></td>
+                        <td>
+                            <asp:Label ID="lblGrupo" runat="server" /></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-      
+
         <!-- tabla de participantes. vamos a llamar al mismo repeater -->
         <h3 class="text-center">Participantes y Pagos</h3>
         <div class="card">
@@ -64,25 +69,21 @@
                             <th>Participante</th>
                             <th>Email</th>
                             <th>Monto Individual</th>
-                            <th>Pago Confirmado</th>
+                            <th>Monto Pagado</th>
+                            <th>Deuda Pendiente</th>
                         </tr>
                     </thead>
                     <tbody>
                         <asp:Repeater ID="repPagosParticipantes" runat="server">
                             <ItemTemplate>
-                                <!-- <tr> aca va a ir la logica del idGastoGenerado
-                                   1.- idGastoGenerado
-                                   2.- idGrupo
-                                   3.- idPago
-
-                                    <td><%# Eval("Nombre") %></td>
-                                    <td><%# Eval("Email") %></td>
+                                <tr>
+                                    <td><%# Eval("IdUsuario") %></td>
+                                    <td>---</td> <!-- aca hay que agregar la logica para nombre de usuario y el email-->
                                     <td>$<%# Eval("MontoIndividual") %></td>
-                                    <td>-->
-                                <asp:CheckBox ID="chkPagoConfirmado" runat="server" />
-                                </td>
+                                    <td>$<%# Eval("MontoPagado") %></td>
+                                    <td>$<%# Eval("DeudaPendiente") %></td>
                                 </tr>
-                           
+                                <!-- hacer el eval de deuda pendiente-->
                             </ItemTemplate>
                         </asp:Repeater>
                     </tbody>

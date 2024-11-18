@@ -14,5 +14,6 @@ namespace dominio
         public decimal MontoTotal { get; set; }
         public DateTime FechaGasto { get; set; } = DateTime.Now;
         public int CreadoPor { get; set; }
+        public string EstadoDeuda { get; set; }
     }
 }
