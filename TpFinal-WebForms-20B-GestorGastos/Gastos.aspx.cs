@@ -114,18 +114,19 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     CreadoPor = (int)Session["UsuarioId"]
                 };
             }
-
             GastoNegocio gastoNegocio = new GastoNegocio();
             if (Request.QueryString["id"] != null)
                 gastoNegocio.modificar(nuevoGasto);
             else
-                gastoNegocio.AgregarGasto(nuevoGasto);
+                nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
 
+             
 
             int participantesSeleccionados = 0;
-            foreach (ListItem item in lstParticipantesGasto.Items)
+            foreach (RepeaterItem item in repParticipantes.Items)
             {
-                if (item.Selected)
+                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                if (chkParticipante != null && chkParticipante.Checked)
                 {
                     participantesSeleccionados++;
                 }
@@ -135,14 +136,16 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 decimal montoIndividual = nuevoGasto.MontoTotal / participantesSeleccionados;
 
-                foreach (ListItem item in lstParticipantesGasto.Items)
+                foreach (RepeaterItem item in repParticipantes.Items)
                 {
-                    if (item.Selected)
+                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                    if (chkParticipante != null && chkParticipante.Checked && hdnIdUsuario != null)
                     {
                         ParticipanteGasto nuevoParticipante = new ParticipanteGasto
                         {
                             IdGasto = nuevoGasto.IdGasto,
-                            IdUsuario = Convert.ToInt32(item.Value),
+                            IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
                             MontoIndividual = montoIndividual
                         };
 

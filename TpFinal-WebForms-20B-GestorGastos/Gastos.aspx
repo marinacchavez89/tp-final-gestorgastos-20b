@@ -60,7 +60,7 @@
                                                         <%# Eval("Nombre") %>
                                             </h5>
                                                     <p class="card-text"><%# Eval("Email") %></p>
-
+                                                    <asp:HiddenField ID="hdnIdUsuarioGasto" runat="server" Value='<%# Eval("IdUsuario") %>' />
                                                     <!-- Panel Montos Exactos -->
                                                     <asp:Panel ID="pnlMontosExactos" runat="server" Visible="false">
                                                         <label class="form-label">Monto Exacto:</label>

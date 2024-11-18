@@ -45,13 +45,13 @@ namespace negocio
             }
         }
 
-        public void AgregarGasto(Gasto nuevoGasto)
+        public int AgregarGasto(Gasto nuevoGasto)
         {
             AccesoDatos datos = new AccesoDatos();
 
             try
             {
-                datos.setearConsulta("INSERT INTO Gastos (IdGrupo, Descripcion, MontoTotal, FechaGasto, CreadoPor) VALUES (@IdGrupo, @Descripcion, @MontoTotal, @FechaGasto, @CreadoPor)");
+                datos.setearConsulta("INSERT INTO Gastos (IdGrupo, Descripcion, MontoTotal, FechaGasto, CreadoPor) OUTPUT INSERTED.IdGasto VALUES (@IdGrupo, @Descripcion, @MontoTotal, @FechaGasto, @CreadoPor)");
 
                 datos.setearParametro("@IdGrupo", nuevoGasto.IdGrupo);
                 datos.setearParametro("@Descripcion", nuevoGasto.Descripcion);
@@ -59,7 +59,9 @@ namespace negocio
                 datos.setearParametro("@FechaGasto", nuevoGasto.FechaGasto);
                 datos.setearParametro("@CreadoPor", nuevoGasto.CreadoPor);
 
-                datos.ejecutarAccion();
+                int idGastoAutoGenerado = (int)datos.ejecutarScalar();
+
+                return idGastoAutoGenerado;
             }
             catch (Exception ex)
             {
