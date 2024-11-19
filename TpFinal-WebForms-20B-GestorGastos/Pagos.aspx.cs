@@ -152,11 +152,12 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();            
             List<ParticipanteGasto> participantes = participanteGastoNegocio.listarParticipantesConEstadoPago(idGasto);
-
-            // Filtrar la lista sin user logueado
+            Usuario usuario = new Usuario();
+            int idUsuarioCreador = participanteGastoNegocio.obtenerUsuarioCreadorPorIdGasto(idGasto).IdUsuario;
+            // Filtrar la lista sin user creador del gasto.
             List<ParticipanteGasto> participantesFiltrados = participantes
-                .Where(p => p.IdUsuario != (int)Session["UsuarioId"])
-                .ToList();
+               .Where(p => p.IdUsuario != idUsuarioCreador)
+               .ToList(); ;
             
             ddlParticipantes.DataSource = participantesFiltrados;
             ddlParticipantes.DataValueField = "IdUsuario";
