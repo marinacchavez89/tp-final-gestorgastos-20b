@@ -58,7 +58,7 @@
                                                     <h5 class="card-title">
                                                         <asp:CheckBox ID="chkParticipante" runat="server" Checked="true" AutoPostBack="true" OnCheckedChanged="chkParticipante_CheckedChanged" />
                                                         <%# Eval("Nombre") %>
-                                            </h5>
+                                                    </h5>
                                                     <p class="card-text"><%# Eval("Email") %></p>
                                                     <asp:HiddenField ID="hdnIdUsuarioGasto" runat="server" Value='<%# Eval("IdUsuario") %>' />
                                                     <!-- Panel Montos Exactos -->
@@ -74,8 +74,8 @@
                                                     </asp:Panel>
                                                     <p class="card-text">
                                                         Monto Calculado: $
-                                                        <asp:Label ID="lblMontoIndividual" runat="server" CssClass="form-label" Text="0.00"></asp:Label>                                                       
-                                                    </p>                                                   
+                                                        <asp:Label ID="lblMontoIndividual" runat="server" CssClass="form-label" Text="0.00"></asp:Label>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -87,6 +87,9 @@
                 </div>
                 <div>
                     <asp:Label ID="lblErrorPorcentaje" Text="La sumatoria de porcentajes no es igual al 100%" Visible="false" ForeColor="Red" runat="server" />
+                </div>
+                <div>
+                    <asp:Label ID="lblErrorMontoExacto" Visible="false" ForeColor="Red" runat="server" />
                 </div>
                 <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
                 <asp:Button ID="btnVolver" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" runat="server" />

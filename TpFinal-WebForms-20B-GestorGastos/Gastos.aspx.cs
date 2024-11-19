@@ -2,6 +2,7 @@
 using negocio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -197,7 +198,50 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 }
 
             }
-            
+
+            if (rblDivision.SelectedValue == "2") //Montos exactos
+            {
+                int participantesSeleccionados = 0;
+                foreach (RepeaterItem item in repParticipantes.Items)
+                {
+                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                    if (chkParticipante != null && chkParticipante.Checked)
+                    {
+                        participantesSeleccionados++;
+                    }
+                }
+
+                if (participantesSeleccionados > 0)
+                {
+                    foreach (RepeaterItem item in repParticipantes.Items)
+                    {
+                        CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                        HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                        TextBox txtMontoIndividual = item.FindControl("txtMontoExacto") as TextBox;
+                        if (decimal.TryParse(txtMontoIndividual.Text, out decimal montoIndividual) && montoIndividual > 0)
+                        {
+                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
+                            {
+                                IdGasto = nuevoGasto.IdGasto,
+                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                                MontoIndividual = montoIndividual
+                            };
+
+                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                            participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                        }
+                        else
+                        {
+                            // Manejar el caso en que el monto no sea válido (por ejemplo, mostrar un mensaje de error)
+                            lblErrorMontoExacto.Text = "Por favor, ingrese un monto válido para cada participante.";
+                            lblErrorMontoExacto.ForeColor = System.Drawing.Color.Red;
+                            lblErrorMontoExacto.Visible = true;
+                        }
+                    }
+                }
+
+            }
+
             if (rblDivision.SelectedValue == "3") //Porcentaje
             {
                 int totalPorcentaje = 0;
