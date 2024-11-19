@@ -231,8 +231,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                             participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
                         }
                         else
-                        {
-                            // Manejar el caso en que el monto no sea válido (por ejemplo, mostrar un mensaje de error)
+                        {                            
                             lblErrorMontoExacto.Text = "Por favor, ingrese un monto válido para cada participante.";
                             lblErrorMontoExacto.ForeColor = System.Drawing.Color.Red;
                             lblErrorMontoExacto.Visible = true;

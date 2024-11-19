@@ -66,7 +66,7 @@ namespace negocio
             finally
             {
                 datos.cerrarConexion();
-            }            
+            }
         }
         public List<ParticipanteGasto> listarParticipantesConEstadoPago(int idGasto)
         {
@@ -74,7 +74,18 @@ namespace negocio
             List<ParticipanteGasto> lista = new List<ParticipanteGasto>();
             try
             {
-                datos.setearConsulta("select pg.idUsuario, pg.montoIndividual, ISNULL(SUM(p.montoPagado),0) as montoPagado from ParticipantesGasto pg left join Pagos p ON pg.idGasto = p.idGasto AND pg.idUsuario = p.idUsuario where pg.idGasto = @idGasto group by pg.idUsuario, pg.montoIndividual");
+                datos.setearConsulta(@"
+                SELECT 
+                    pg.idUsuario, 
+                    u.Nombre AS NombreUsuario, 
+                    u.Email AS EmailUsuario,
+                    pg.montoIndividual, 
+                    ISNULL(SUM(p.montoPagado),0) AS montoPagado
+                FROM ParticipantesGasto pg
+                LEFT JOIN Usuarios u ON pg.idUsuario = u.idUsuario
+                LEFT JOIN Pagos p ON pg.idGasto = p.idGasto AND pg.idUsuario = p.idUsuario
+                WHERE pg.idGasto = @idGasto
+                GROUP BY pg.idUsuario, u.Nombre, u.Email, pg.montoIndividual");
                 datos.setearParametro("@idGasto", idGasto);
                 datos.ejecutarLectura();
 
@@ -83,6 +94,8 @@ namespace negocio
                     ParticipanteGasto participante = new ParticipanteGasto
                     {
                         IdUsuario = (int)datos.Lector["idUsuario"],
+                        NombreUsuario = datos.Lector["NombreUsuario"].ToString(),
+                        EmailUsuario = datos.Lector["EmailUsuario"].ToString(),
                         MontoIndividual = (decimal)datos.Lector["montoIndividual"],
                         MontoPagado = (decimal)datos.Lector["montoPagado"]
                     };
@@ -95,7 +108,7 @@ namespace negocio
             }
             catch (Exception ex)
             {
-                throw new Exception("Error al listar participantes con estado de pago",ex);
+                throw new Exception("Error al listar participantes con estado de pago", ex);
             }
             finally
             {
@@ -112,19 +125,60 @@ namespace negocio
                 datos.setearParametro("@idUsuario", idUsuario);
 
                 object resultado = datos.ejecutarScalar();
-                if(resultado == null || resultado == DBNull.Value)
+                if (resultado == null || resultado == DBNull.Value)
                 {
                     return 0;
                 }
-                else { 
-                       
-                return Convert.ToDecimal(resultado);
+                else
+                {
+
+                    return Convert.ToDecimal(resultado);
                 }
             }
             catch (Exception ex)
             {
 
                 throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public Usuario obtenerUsuarioCreadorPorIdGasto(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {                
+                datos.setearConsulta(@"
+                SELECT u.idUsuario, u.Nombre, u.Email 
+                FROM Gastos g
+                INNER JOIN Usuarios u ON g.creadoPor = u.idUsuario
+                WHERE g.idGasto = @idGasto
+                ");
+                datos.setearParametro("@idGasto", idGasto);
+
+                datos.ejecutarLectura();
+                
+                if (datos.Lector.Read())
+                {
+                    Usuario usuario = new Usuario
+                    {
+                        IdUsuario = (int)datos.Lector["idUsuario"],
+                        Nombre = datos.Lector["Nombre"].ToString(),
+                        Email = datos.Lector["Email"].ToString()
+                    };
+                    return usuario;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el usuario creador por idGasto", ex);
             }
             finally
             {
