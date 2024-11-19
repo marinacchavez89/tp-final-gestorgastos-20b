@@ -39,7 +39,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     imgNuevoPerfil.ImageUrl = !string.IsNullOrEmpty(imagenPerfil) ? imagenPerfil : "https://www.palomacornejo.com/wp-content/uploads/2021/08/no-image.jpg";
 
                     bool mostrarLblParaUserMismaPassCodInv = negocio.VerificarContraseñaConCodigoInvitacion(usuario.IdUsuario, usuario.PasswordHash);
-                    if (mostrarLblParaUserMismaPassCodInv)
+                    bool mostrarLblParaUserMismaPassAleatoria = negocio.esPasswordAleatoria(usuario.PasswordHash, usuario.IdUsuario);
+                    if (mostrarLblParaUserMismaPassCodInv || mostrarLblParaUserMismaPassAleatoria)
                     {
                         lblCambiarPassCodInvitacion.Visible = true;
                         lblCambiarPassCodInvitacion.Text = "¡Por seguridad, debes cambiar tu contraseña!";

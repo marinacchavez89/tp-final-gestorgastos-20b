@@ -241,9 +241,8 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-        public int obtenerIdUsuarioPorEmail(string email)
-        {
-            int IdUsuario;
+        public int obtenerIdUsuarioPorEmail(string email)        {
+            
             AccesoDatos datos = new AccesoDatos();
             try
             {
@@ -354,6 +353,55 @@ namespace negocio
             {
                 datos.cerrarConexion();
             }
+        }
+
+        public void updatePass(int idUsuario, string passNuevaAleatoria)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Update Usuarios SET passwordHash = @passNuevaAleatoria WHERE idUsuario = @id");
+                datos.setearParametro("@passNuevaAleatoria", passNuevaAleatoria);
+                datos.setearParametro("@id", idUsuario);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public bool esPasswordAleatoria(string passwordHash, int idUsuario)
+        {
+            bool esPassAleatoria = false;
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("Select passwordHash from Usuarios WHERE idUsuario = @id");
+                datos.setearParametro("@passNuevaAleatoria", passwordHash);
+                datos.setearParametro("@id", idUsuario);
+                datos.ejecutarAccion();
+                if (passwordHash.EndsWith("-A"))
+                {
+                    esPassAleatoria = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return esPassAleatoria;
         }
 
     }

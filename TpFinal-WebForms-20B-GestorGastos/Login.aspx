@@ -45,7 +45,7 @@
     </div>
 
     <div class="mb-3">
-        <asp:Label ID="lblError" CssClass="text-danger" runat="server" Visible="false"></asp:Label>
+        <asp:Label ID="lblError" runat="server" Visible="false"></asp:Label>
     </div>
     
     <div>    

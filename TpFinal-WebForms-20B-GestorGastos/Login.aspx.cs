@@ -26,6 +26,22 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 string email = txtEmail.Text;
                 string password = txtPassLogin.Text;
 
+                if (string.IsNullOrWhiteSpace(email))
+                {
+                    lblError.Text = "El campo de email no puede estar vacío.";
+                    lblError.ForeColor = System.Drawing.Color.Red;
+                    lblError.Visible = true;
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    lblError.Text = "El campo contraseña no puede estar vacío.";
+                    lblError.ForeColor = System.Drawing.Color.Red;
+                    lblError.Visible = true;
+                    return;
+                }
+
                 // Verificamos las credenciales del usuario
                 Usuario usuario = usuarioNegocio.ValidarUsuario(email, HashPassword(password));
                 Session.Add("Usuario", usuario);
@@ -37,8 +53,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     Session["UsuarioNombre"] = usuario.Nombre;
 
                     bool verificarPassActualCodInvitacion = usuarioNegocio.VerificarContraseñaConCodigoInvitacion(usuario.IdUsuario, usuario.PasswordHash);
+                    bool verificacionPassActualAleatoria = usuarioNegocio.esPasswordAleatoria(usuario.PasswordHash, usuario.IdUsuario);
 
-                    if (verificarPassActualCodInvitacion)
+                    if (verificarPassActualCodInvitacion || verificacionPassActualAleatoria)
                     {                     
                         Response.Redirect("Perfil.aspx");
                     }
@@ -63,22 +80,33 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         private string HashPassword(string password)
         {
-            // Implementar el método de hasheo de password (ej., con bcrypt o SHA256)
-            return password; // Solo pa ejemplo
+            // Acá se debería implmementar SHA como en labo III
+            return password;
         }
 
         protected void btnOlvidePass_Click(object sender, EventArgs e)
         {
             UsuarioNegocio negocio = new UsuarioNegocio();
             string email = txtEmail.Text;
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                lblError.Text = "El campo de email no puede estar vacío.";
+                lblError.ForeColor = System.Drawing.Color.Red;
+                lblError.Visible = true;
+                return;
+            }            
+
             string passDefaultAleatoria = generarPasswordAleatoria();
             if (negocio.ExisteUsuario(email))
-            {
+            {   
+                int idUsuario = negocio.obtenerIdUsuarioPorEmail(email);
+                negocio.updatePass(idUsuario, passDefaultAleatoria);
                 EmailService emailService = new EmailService();
                 emailService.EnviarCorreoOlvidoPass(email, passDefaultAleatoria);
-                lblError.Text = "En la casilla de email registrada ha recibido una nueva contraseña.";
                 lblError.ForeColor = System.Drawing.Color.Green;
-                lblError.Visible=true;                
+                lblError.Visible = true;
+                lblError.Text = "En la casilla de email registrada ha recibido una nueva contraseña.";                
             }
 
         }
@@ -93,7 +121,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 password.Append(chars[random.Next(chars.Length)]);
             }
 
-            return password.ToString();
-        }
+            // Le agrego el sufijo -A para identificar que es una pass generada aleatoriamente.
+            return password.ToString() + "-A";
+        }        
     }
 }
