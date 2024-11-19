@@ -68,12 +68,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 else
                 {
                     lblError.Text = "Email o contraseña incorrectos.";
+                    lblError.ForeColor = System.Drawing.Color.Red;
                     lblError.Visible = true;
                 }
             }
             catch (Exception ex)
             {
                 lblError.Text = "Ocurrió un error al intentar iniciar sesión: " + ex.Message;
+                lblError.ForeColor = System.Drawing.Color.Red;
                 lblError.Visible = true;
             }
         }
