@@ -157,7 +157,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
             // Filtrar la lista sin user creador del gasto.
             List<ParticipanteGasto> participantesFiltrados = participantes
                .Where(p => p.IdUsuario != idUsuarioCreador)
-               .ToList(); ;
+               .ToList();
             
             ddlParticipantes.DataSource = participantesFiltrados;
             ddlParticipantes.DataValueField = "IdUsuario";
