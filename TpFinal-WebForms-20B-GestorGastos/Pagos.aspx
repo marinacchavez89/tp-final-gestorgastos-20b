@@ -88,13 +88,15 @@
                     </tbody>
                 </table>
             </div>
-        </div>
 
-        <div class="text-center mt-4">
-            <asp:Button ID="btnIniciarPagos" runat="server" CssClass="btn btn-secondary" Text="Iniciar Pagos" OnClick="btnIniciarPagos_Click" />
-        </div>
+            <div class="text-center mt-4" style="margin-bottom:20px">
+                <asp:Button ID="btnExportarExcel" runat="server" CssClass="btn btn-secondary" Text="Exportar a Excel" OnClick="btnExportarExcel_Click" />
+                <asp:Button ID="btnIniciarPagos" runat="server" CssClass="btn btn-secondary" Text="Iniciar Pagos" OnClick="btnIniciarPagos_Click" />
+            </div>
 
-        <div class="mb-3">
+        </div>      
+
+        <div class="mb-3" style="margin-top:20px">
             <asp:Label ID="lblParticipantes" runat="server" CssClass="form-label" Visible="false">Selecciona quien paga</asp:Label>
             <asp:DropDownList ID="ddlParticipantes" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlParticipantes_SelectedIndexChanged" Visible="false">
             </asp:DropDownList>
@@ -102,7 +104,7 @@
 
         <div class="mb-3">
             <asp:Label ID="lblParticipantesFiltrado" runat="server" CssClass="form-label" Visible="false">Le abonarás al creador del gasto:</asp:Label>
-            <asp:TextBox ID="txtParticipanteFiltrado" runat="server" CssClass="form-control" Visible="false" ReadOnly="true"></asp:TextBox>            
+            <asp:TextBox ID="txtParticipanteFiltrado" runat="server" CssClass="form-control" Visible="false" ReadOnly="true"></asp:TextBox>
         </div>
         <div class="mb-3">
             <asp:Label ID="lblImporteAPagar" runat="server" CssClass="form-label" Visible="false">Ingresá el importe que vas a abonar</asp:Label>

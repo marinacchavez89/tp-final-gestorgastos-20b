@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ClosedXML.Excel;
+using System.IO;
 
 namespace TpFinal_WebForms_20B_GestorGastos
 {
@@ -201,5 +203,54 @@ namespace TpFinal_WebForms_20B_GestorGastos
             }
 
         }
-    } 
+
+        protected void btnExportarExcel_Click(object sender, EventArgs e)
+        {
+            // Crear un nuevo libro de Excel
+            using (var workbook = new XLWorkbook())
+            {
+                // Crear una hoja de trabajo
+                var worksheet = workbook.Worksheets.Add("Participantes Pagos");
+
+                // Agregar cabeceras a la hoja de trabajo
+                worksheet.Cell(1, 1).Value = "Nombre Usuario";
+                worksheet.Cell(1, 2).Value = "Nombre Usuario";
+                worksheet.Cell(1, 3).Value = "Estado Deuda";
+                worksheet.Cell(1, 4).Value = "Monto Individual"; 
+                worksheet.Cell(1, 5).Value = "Monto Pagado";
+                worksheet.Cell(1, 6).Value = "Deuda Pendiente";
+
+                // Obtener la lista de participantes con estado de pago.
+                ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                int idGastoSeleccionado = (int)Session["idGastoSeleccionado"];
+                List<ParticipanteGasto> participantes = participanteGastoNegocio.listarParticipantesConEstadoPago(idGastoSeleccionado);
+
+                // Agregar los datos de los participantes
+                int row = 2; // Comienza desde la fila 2, ya que en la primera estan los encabezados.
+                foreach (var participante in participantes)
+                {
+                    worksheet.Cell(row, 1).Value = participante.NombreUsuario;
+                    worksheet.Cell(row, 2).Value = participante.EmailUsuario;
+                    worksheet.Cell(row, 3).Value = participante.EstadoDeuda;
+                    worksheet.Cell(row, 4).Value = participante.MontoIndividual;
+                    worksheet.Cell(row, 5).Value = participante.MontoPagado;
+                    worksheet.Cell(row, 6).Value = participante.DeudaPendiente;
+                    row++;
+                }
+
+                // Configurar la respuesta HTTP para la descarga del archivo Excel
+                Response.Clear();
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("Content-Disposition", "attachment;filename=Participantes_Pagos.xlsx");
+
+                // Escribir el archivo Excel en la respuesta HTTP
+                using (var memoryStream = new MemoryStream())
+                {
+                    workbook.SaveAs(memoryStream);
+                    memoryStream.WriteTo(Response.OutputStream);
+                    Response.End();
+                }
+            }
+        }
+    }
 }
