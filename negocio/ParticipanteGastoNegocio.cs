@@ -185,6 +185,56 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public void modificarParticipante(ParticipanteGasto participante)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("UPDATE ParticipantesGasto SET montoIndividual = @montoIndividual WHERE idGasto = @idGasto AND idUsuario = @idUsuario");
+                datos.setearParametro("@idGasto", participante.IdGasto);
+                datos.setearParametro("@idUsuario", participante.IdUsuario);
+                datos.setearParametro("@montoIndividual", participante.MontoIndividual);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally 
+            { 
+                datos.cerrarConexion(); 
+            }
+        }
+
+        public bool agregarParticipanteAGasto(int idGasto, int idUsuario, decimal montoIndividual)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                // Verificar si el usuario existe en la ParticipantesGasto para el gasto que deseamos modificar
+                datos.setearConsulta("SELECT COUNT(*) FROM ParticipantesGasto WHERE idUsuario = @idUsuario AND idGasto = @idGasto");
+                datos.setearParametro("@idUsuario", idUsuario);
+                datos.setearParametro("@idGasto", idGasto);
+                int usuarioExiste = (int)datos.ejecutarScalar();
+
+                if (usuarioExiste > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
 

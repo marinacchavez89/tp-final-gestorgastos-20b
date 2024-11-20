@@ -182,6 +182,18 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     {
                     CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
                     HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                        if(!chkParticipante.Checked)
+                        {
+                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
+                            {
+                                IdGasto = nuevoGasto.IdGasto,
+                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                                MontoIndividual = 0
+                            };
+                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                            participanteGastoNegocio.modificarParticipante(nuevoParticipante);
+                        }
+
                         if (chkParticipante != null && chkParticipante.Checked && hdnIdUsuario != null)
                         {
                             ParticipanteGasto nuevoParticipante = new ParticipanteGasto
@@ -192,7 +204,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
                             };
 
                             ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                            participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                            if(Request.QueryString["id"] != null && participanteGastoNegocio.agregarParticipanteAGasto(nuevoParticipante.IdGasto, nuevoParticipante.IdUsuario, nuevoParticipante.MontoIndividual))
+                            {
+                                
+                                participanteGastoNegocio.modificarParticipante(nuevoParticipante);
+                            }                         
+                            else
+                            {
+                                participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                            }
                         }
                     }
                 }
