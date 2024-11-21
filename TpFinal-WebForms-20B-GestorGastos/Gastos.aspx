@@ -91,8 +91,10 @@
                 <div>
                     <asp:Label ID="lblErrorMontoExacto" Visible="false" ForeColor="Red" runat="server" />
                 </div>
-                <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
-                <asp:Button ID="btnVolver" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" runat="server" />
+                <div style="margin-top: 20px;">
+                    <asp:Button ID="btnAgregar" Text="Agregar" CssClass="btn btn-secondary" OnClick="btnAgregar_Click" runat="server" />
+                    <asp:Button ID="btnVolver" Text="Volver" CssClass="btn btn-secondary" OnClick="btnVolver_Click" runat="server" />
+                </div>
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>

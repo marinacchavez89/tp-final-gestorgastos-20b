@@ -194,7 +194,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 TextBox txtMontoIndividual = item.FindControl("txtMontoExacto") as TextBox;
 
                 if (decimal.TryParse(txtMontoIndividual.Text, out decimal montoIndividual) && montoIndividual > 0)
-                {
+                {   
                     ParticipanteGasto nuevoParticipante = new ParticipanteGasto
                     {
                         IdGasto = nuevoGasto.IdGasto,
@@ -411,14 +411,16 @@ namespace TpFinal_WebForms_20B_GestorGastos
                             }
                         }
                     }
-
-
                 }
                 else if (participantesSeleccionados > 0 && rblDivision.SelectedValue == "2")
                 {
                     float montoAsignado = 0;
+                    float sumatoriaMontosAsignados = 0;
                     foreach (RepeaterItem item in repParticipantes.Items)
                     {
+                        lblErrorMontoExacto.Text = string.Empty;
+                        lblErrorMontoExacto.Visible = false;
+
                         TextBox txtMontoExacto = (TextBox)item.FindControl("txtMontoExacto");
                         Label lblMontoIndividual = (Label)item.FindControl("lblMontoIndividual");
                         CheckBox chkParticipante = (CheckBox)item.FindControl("chkParticipante");
@@ -427,6 +429,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                         {
                             float.TryParse(txtMontoExacto.Text, out float montoExacto);
                             montoAsignado += montoExacto;
+                            sumatoriaMontosAsignados += montoExacto;
                             lblMontoIndividual.Text = montoExacto.ToString();
                         }
                         else
@@ -435,10 +438,14 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                         }
                     }
+                    
+                    if(((float)sumatoriaMontosAsignados)>((float)montoTotal))
+                    {
+                        lblErrorMontoExacto.Text = "La suma de los montos exactos no puede ser mayor al monto total del evento";
+                        lblErrorMontoExacto.Visible = true;
+                    }
                 }
-
             }
-
         }
         private void mostrarCamposAdicionales()
         {
