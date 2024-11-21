@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="Pagos.aspx.cs" Inherits="TpFinal_WebForms_20B_GestorGastos.Pagos" %>
 
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
@@ -70,6 +70,7 @@
                             <th>Monto Individual</th>
                             <th>Monto Pagado</th>
                             <th>Saldo</th>
+                            <th>Editar Pago</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,6 +83,13 @@
                                     <td>$<%# Eval("MontoPagado") %></td>
                                     <td>
                                         <asp:Label ID="lblSaldo" runat="server" Text='<%# "$" + Eval("DeudaPendiente") %>'></asp:Label>
+                                    </td>
+                                    <td>
+                                        <asp:HiddenField ID="hfMontoPagado" runat="server" Value='<%# Eval("MontoPagado") %>' />
+                                        <asp:HiddenField ID="hfEmail" runat="server" Value='<%# Eval("EmailUsuario") %>' />
+                                        <asp:ImageButton ID="btnModificarPago" ImageUrl="/Images/logoEditar.png" AutoPostBack="true" CommandArgument='<%# Eval("IdGasto") %>'
+                                            AlternateText="Modificar Gasto" OnClick="btnModificarPago_Click" ToolTip="Modificar Pago" runat="server" CssClass="btn btn-secondary"
+                                            Style="width: 25px; height: 20px; border: none; background: none; padding: 0;" />
                                     </td>
                                 </tr>
                                 <!-- hacer el eval de deuda pendiente-->
@@ -127,6 +135,32 @@
         <div class="mb-3">
             <asp:Button ID="btnConfirmarPago" runat="server" CssClass="btn btn-secondary" Text="Pagar" Visible="false" OnClick="btnConfirmarPago_Click" />
         </div>
+
+        <!-- Panel para editar pago -->
+        <asp:Panel ID="pnlEditarPago" runat="server" Visible="false" CssClass="card border-secondary mb-3">
+            <div class="card-header" style="position: relative; display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1.25rem;">
+                <h5>Editar Pago</h5>
+                <asp:Button ID="btnCerrarPanel" runat="server" Text="" CssClass="btn-close float-end" OnClick="btnCerrarPanel_Click" CausesValidation="false" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%);" />
+            </div>
+            <div class="card-body">
+                <asp:HiddenField ID="hfIdGasto" runat="server" />
+                <asp:HiddenField ID="hfIdUsuario" runat="server" />
+                <div class="mb-3">
+                    <asp:TextBox ID="txtEmail" runat="server" ReadOnly="true" CssClass="form-control"></asp:TextBox>
+                </div>
+                <div class="mb-3">
+                    <label for="txtNuevoMonto" class="form-label">Nuevo Monto</label>
+                    <asp:TextBox ID="txtNuevoMonto" runat="server" CssClass="form-control"></asp:TextBox>
+                    <asp:RequiredFieldValidator ControlToValidate="txtNuevoMonto" ErrorMessage="El monto es requerido" CssClass="text-danger" runat="server" />
+                    <asp:RegularExpressionValidator ControlToValidate="txtNuevoMonto" ValidationExpression="^\d+(\.\d{1,2})?$" ErrorMessage="Ingrese un monto válido" CssClass="text-danger" runat="server" />
+                </div>
+                <asp:Label ID="lblErrorEdicionPago" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
+                <div class="mt-3">
+                    <asp:Button ID="btnGuardarEdicion" runat="server" CssClass="btn btn-secondary" Text="Guardar Cambios" OnClick="btnGuardarEdicion_Click" />
+                    <asp:Button ID="btnCancelarEdicion" runat="server" CssClass="btn btn-secondary" Text="Cancelar" OnClick="btnCancelarEdicion_Click" CausesValidation="false" />
+                </div>
+            </div>
+        </asp:Panel>
 
     </div>
 </asp:Content>

@@ -30,5 +30,29 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+
+        public bool ActualizarMontoPago(int idUsuario, decimal montoPagado, int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("UPDATE Pagos SET montoPagado = @montoPagado WHERE  IdUsuario = @IdUsuario AND idGasto = @idGasto");
+                datos.setearParametro("@montoPagado", montoPagado);
+                datos.setearParametro("@IdUsuario", idUsuario);
+                datos.setearParametro("@idGasto", idGasto);
+
+                datos.ejecutarAccion();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }

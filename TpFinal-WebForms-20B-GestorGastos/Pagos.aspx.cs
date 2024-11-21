@@ -242,7 +242,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 worksheet.Cell(1, 3).Value = "Estado Deuda";
                 worksheet.Cell(1, 4).Value = "Monto Individual"; 
                 worksheet.Cell(1, 5).Value = "Monto Pagado";
-                worksheet.Cell(1, 6).Value = "Deuda Pendiente";
+                worksheet.Cell(1, 6).Value = "Saldo";
 
                 // Obtener la lista de participantes con estado de pago.
                 ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
@@ -298,6 +298,82 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     }
                 }
             }
+        }
+
+        protected void btnModificarPago_Click(object sender, ImageClickEventArgs e)
+        {
+
+            int idGasto = Convert.ToInt32(Session["idGastoSeleccionado"]);
+
+            ImageButton btn = (ImageButton)sender;
+            RepeaterItem item = (RepeaterItem)btn.NamingContainer;
+
+            HiddenField hfMontoPagado = item.FindControl("hfMontoPagado") as HiddenField;
+
+            float montoPagado = 0f;
+
+            if (!string.IsNullOrEmpty(hfMontoPagado?.Value))
+            {
+                float.TryParse(hfMontoPagado.Value, out montoPagado);
+            }
+
+
+            HiddenField hfEmail = item.FindControl("hfEmail") as HiddenField;
+            string emailUsuario = hfEmail?.Value;
+
+            hfMontoPagado.Value = montoPagado.ToString();
+            txtEmail.Text = emailUsuario;
+
+            pnlEditarPago.Visible = true;
+        }
+
+        protected void btnGuardarEdicion_Click(object sender, EventArgs e)
+        {
+            int idGasto = Convert.ToInt32(Session["idGastoSeleccionado"]);
+            string emailUsuario = txtEmail.Text;
+
+            UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
+            int idUsuario = usuarioNegocio.obtenerIdUsuarioPorEmail(emailUsuario);
+
+            if (idUsuario > 0)
+            {
+                decimal nuevoMonto = decimal.Parse(txtNuevoMonto.Text);
+
+                ParticipanteGastoNegocio participanteNegocio = new ParticipanteGastoNegocio();
+                PagoNegocio pagoNegocio = new PagoNegocio();
+                bool exito = pagoNegocio.ActualizarMontoPago(idUsuario, nuevoMonto, idGasto);
+
+                if (exito)
+                {
+                    lblErrorImporteAPagar.Text = "Pago modificado con éxito.";
+                    lblErrorImporteAPagar.ForeColor = System.Drawing.Color.Green;
+                    lblErrorImporteAPagar.Visible = true;
+
+                    cargarParticipantesConEstadoDePago(idGasto);
+
+                    pnlEditarPago.Visible = false;
+                }
+                else
+                {
+                    lblErrorEdicionPago.Text = "Hubo un error al actualizar el pago.";
+                    lblErrorEdicionPago.Visible = true;
+                }
+            }
+            else
+            {
+                lblErrorEdicionPago.Text = "Usuario no encontrado.";
+                lblErrorEdicionPago.Visible = true;
+            }
+        }
+
+        protected void btnCancelarEdicion_Click(object sender, EventArgs e)
+        {
+            pnlEditarPago.Visible = false;
+        }
+
+        protected void btnCerrarPanel_Click(object sender, EventArgs e)
+        {
+            pnlEditarPago.Visible = false;            
         }
     }
 }

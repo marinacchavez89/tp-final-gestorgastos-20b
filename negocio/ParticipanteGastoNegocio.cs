@@ -1,6 +1,7 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Remoting.Lifetime;
 
@@ -291,6 +292,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+       
     }
 }
 
