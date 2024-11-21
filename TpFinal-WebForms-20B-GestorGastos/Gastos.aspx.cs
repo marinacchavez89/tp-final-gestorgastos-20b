@@ -439,9 +439,9 @@ namespace TpFinal_WebForms_20B_GestorGastos
                         }
                     }
                     
-                    if(sumatoriaMontosAsignados>((float)montoTotal))
+                    if(sumatoriaMontosAsignados!=((float)montoTotal))
                     {
-                        lblErrorMontoExacto.Text = "La suma de los montos exactos no puede ser mayor al monto total del evento";
+                        lblErrorMontoExacto.Text = "La suma de los montos exactos tiene que ser igual al monto total del evento";
                         lblErrorMontoExacto.Visible = true;
                     }
                 }
