@@ -37,6 +37,7 @@
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
+                    <asp:Label ID="lblErrorEliminarGasto" runat="server" CssClass="text-danger" Visible="false"></asp:Label>
                 </div>
             </div>
         </div>

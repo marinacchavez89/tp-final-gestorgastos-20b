@@ -38,8 +38,20 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             ImageButton btn = (ImageButton)sender;
             int idGasto = Convert.ToInt32(btn.CommandArgument);
+            PagoNegocio pagoNegocio = new PagoNegocio();
+
+            if(pagoNegocio.tienePagosAsociados(idGasto))
+            {
+                lblErrorEliminarGasto.Text = "No se puede eliminar el gasto porque tiene pagos asociados.";
+                lblErrorEliminarGasto.Visible = true;
+            }
+            else
+            {
             Session.Add("idGasto", idGasto);
             Response.Redirect("ConfirmarEliminarGasto.aspx", false);         
+
+            }
+
         }
 
         protected void btnModificarGasto_Click(object sender, ImageClickEventArgs e)

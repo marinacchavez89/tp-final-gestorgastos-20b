@@ -54,5 +54,28 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
+        public bool tienePagosAsociados(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT COUNT(*) FROM Pagos WHERE idGasto = @idGasto AND montoPagado > 0");
+                datos.setearParametro("@idGasto", idGasto);
+                int pagosAsociados = (int)datos.ejecutarScalar();
+                if (pagosAsociados > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
     }
 }
