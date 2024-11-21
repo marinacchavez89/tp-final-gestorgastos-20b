@@ -188,6 +188,22 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 if (importeAPagar > 0)
                 {
+                    int idGastoSeleccionado = (int)Session["idGastoSeleccionado"];
+                    int idUsuarioSeleccionado = int.Parse(ddlParticipantes.SelectedValue);
+                    Pago pago = new Pago
+                    {
+                        IdGasto = idGastoSeleccionado,
+                        IdUsuario = idUsuarioSeleccionado,
+                        MontoPagado = importeAPagar,
+                        FechaPago = DateTime.Now,
+                    };
+                    PagoNegocio pagoNegocio = new PagoNegocio();
+                    pagoNegocio.AgregarPago(pago);
+                    lblErrorImporteAPagar.Text = "Pago registrado con exito...";
+                    lblErrorImporteAPagar.ForeColor = System.Drawing.Color.Green;
+                    lblErrorImporteAPagar.Visible = true;
+
+                    cargarParticipantesConEstadoDePago(idGastoSeleccionado);
                     // Acá debemos hacer la lógica de saldar deuda.
                 }
                 else
