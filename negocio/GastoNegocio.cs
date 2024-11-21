@@ -361,7 +361,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT g.IdGasto, g.FechaGasto, g.Descripcion, g.MontoTotal FROM Gastos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.IdUsuario = @idUsuario");
+                datos.setearConsulta("SELECT g.IdGasto,g.IdGrupo, g.FechaGasto, g.Descripcion, g.MontoTotal FROM Gastos g JOIN MiembrosGrupos mg ON g.IdGrupo = mg.IdGrupo WHERE mg.IdUsuario = @idUsuario");
 
                 datos.setearParametro("@idUsuario", idUsuario);
                 datos.ejecutarLectura();
@@ -373,7 +373,7 @@ namespace negocio
                     aux.FechaGasto = (DateTime)datos.Lector["FechaGasto"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
                     aux.MontoTotal = (decimal)datos.Lector["MontoTotal"];
-
+                    aux.IdGrupo = (int)datos.Lector["IdGrupo"];
                     lista.Add(aux);
                 }
 

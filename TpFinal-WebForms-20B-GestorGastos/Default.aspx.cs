@@ -14,20 +14,25 @@ namespace TpFinal_WebForms_20B_GestorGastos
         public List<Gasto> ListaGastos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
-                if(Session["UsuarioId"] == null)
+                if (Session["UsuarioId"] == null)
                 {
                     Response.Redirect("Login.aspx");
                     return;
-                }   
-            GastoNegocio negocio = new GastoNegocio();
-
-            int idUsuario = (int)Session["UsuarioId"];
-            ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
-            repRepetidor.DataSource = ListaGastos;
-            repRepetidor.DataBind();
-                if(ListaGastos.Count == 0 && ListaGastos != null)
+                }
+                GastoNegocio negocio = new GastoNegocio();
+                GrupoNegocio grupoNegocio = new GrupoNegocio();
+                int idUsuario = (int)Session["UsuarioId"];
+                ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
+                foreach (var gasto in ListaGastos)
+                {
+                    string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
+                    gasto.Descripcion += $" (Grupo: {nombreGrupo})";
+                }
+                repRepetidor.DataSource = ListaGastos;
+                repRepetidor.DataBind();
+                if (ListaGastos.Count == 0 && ListaGastos != null)
                 {
                     lblNoHayGastos.Visible = true;
                 }
@@ -40,15 +45,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
             int idGasto = Convert.ToInt32(btn.CommandArgument);
             PagoNegocio pagoNegocio = new PagoNegocio();
 
-            if(pagoNegocio.tienePagosAsociados(idGasto))
+            if (pagoNegocio.tienePagosAsociados(idGasto))
             {
                 lblErrorEliminarGasto.Text = "No se puede eliminar el gasto porque tiene pagos asociados.";
                 lblErrorEliminarGasto.Visible = true;
             }
             else
             {
-            Session.Add("idGasto", idGasto);
-            Response.Redirect("ConfirmarEliminarGasto.aspx", false);         
+                Session.Add("idGasto", idGasto);
+                Response.Redirect("ConfirmarEliminarGasto.aspx", false);
 
             }
 
