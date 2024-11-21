@@ -1,6 +1,7 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Lifetime;
 
 namespace negocio
 {
@@ -74,6 +75,8 @@ namespace negocio
             List<ParticipanteGasto> lista = new List<ParticipanteGasto>();
             try
             {
+
+                Usuario creador = obtenerUsuarioCreadorPorIdGasto(idGasto);
                 datos.setearConsulta(@"
                 SELECT 
                     pg.idUsuario, 
@@ -89,6 +92,8 @@ namespace negocio
                 datos.setearParametro("@idGasto", idGasto);
                 datos.ejecutarLectura();
 
+                decimal montoTotal = obtenerMontoTotalPorIdGasto(idGasto);
+
                 while (datos.Lector.Read())
                 {
                     ParticipanteGasto participante = new ParticipanteGasto
@@ -100,7 +105,28 @@ namespace negocio
                         MontoPagado = (decimal)datos.Lector["montoPagado"]
                     };
 
-                    participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
+                    if(participante.IdUsuario == creador.IdUsuario)
+                    {
+                        participante.MontoPagado = montoTotal;
+                        participante.DeudaPendiente = montoTotal - participante.MontoIndividual;
+                        participante.EstadoDeuda = "Te deben";
+                    }
+                    else
+                    {
+                        participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
+                        if(participante.DeudaPendiente > 0)
+                        {
+                            participante.EstadoDeuda = "debes";
+                        }
+                        else if(participante.DeudaPendiente == 0)
+                        {
+                            participante.EstadoDeuda = "Estas a mano";
+                        }
+                        else if(participante.DeudaPendiente < 0)
+                        {
+                            participante.EstadoDeuda = "Te deben";
+                        }
+                    }
 
                     lista.Add(participante);
                 }
@@ -109,6 +135,24 @@ namespace negocio
             catch (Exception ex)
             {
                 throw new Exception("Error al listar participantes con estado de pago", ex);
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+        private decimal obtenerMontoTotalPorIdGasto(int idGasto)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("SELECT MontoTotal FROM Gastos WHERE idGasto = @idGasto");
+                datos.setearParametro("@idGasto", idGasto);
+                return (decimal)datos.ejecutarScalar();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al obtener el monto total del gasto", ex);
             }
             finally
             {
