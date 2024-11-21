@@ -176,7 +176,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     };
 
                     ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                    if (Request.QueryString["id"] != null)
+                    if (Request.QueryString["id"] != null && 
+                        participanteGastoNegocio.agregarParticipanteAGasto(nuevoParticipante.IdGasto, nuevoParticipante.IdUsuario, nuevoParticipante.MontoIndividual))
                         participanteGastoNegocio.modificarParticipante(nuevoParticipante);
                     else
                         participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
@@ -203,7 +204,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
 
                     ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                    if (Request.QueryString["id"] != null)
+                    if (Request.QueryString["id"] != null &&
+                        participanteGastoNegocio.agregarParticipanteAGasto(nuevoParticipante.IdGasto, nuevoParticipante.IdUsuario, nuevoParticipante.MontoIndividual))
                     {
                         participanteGastoNegocio.modificarParticipante(nuevoParticipante);
                     }
@@ -251,7 +253,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
             foreach (var participante in participantesConPorcentaje)
             {
-                if (Request.QueryString["id"] != null)
+                ParticipanteGasto nuevoParticipante = new ParticipanteGasto 
+                {                    
+                    IdGasto = participante.IdGasto,
+                    IdUsuario = participante.IdUsuario,
+                    MontoIndividual = participante.MontoIndividual
+                };
+
+                if (Request.QueryString["id"] != null &&
+                        participanteGastoNegocio.agregarParticipanteAGasto(nuevoParticipante.IdGasto, nuevoParticipante.IdUsuario, nuevoParticipante.MontoIndividual))
                 {
                     participanteGastoNegocio.modificarParticipante(participante);
                 }
@@ -260,7 +270,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     participanteGastoNegocio.AgregarParticipante(participante);
                 }
             }
-
+            lblErrorPorcentaje.Visible = false;
             return false;
         }
 
