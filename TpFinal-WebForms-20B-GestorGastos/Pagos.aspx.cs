@@ -29,8 +29,8 @@ namespace TpFinal_WebForms_20B_GestorGastos
             {
                 string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
                 lblDescripcion.Text = gasto.Descripcion;
-                lblMontoTotal.Text = gasto.MontoTotal.ToString();
-                lblFechaGasto.Text = gasto.FechaGasto.ToString();
+                lblMontoTotal.Text = "$" + gasto.MontoTotal.ToString();
+                lblFechaGasto.Text = gasto.FechaGasto.ToString("dd/MM/yyyy");
                 lblGrupo.Text = nombreGrupo;
                 detalleGastoContainer.Visible = true;
             }

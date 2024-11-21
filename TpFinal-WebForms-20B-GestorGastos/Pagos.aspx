@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container mt-5">
-        <h2>Pagos</h2>
+        <h2>Grupos</h2>
         <div class="mb-3">
             <label for="ddlGrupos" class="form-label">Selecciona un Grupo</label>
             <asp:DropDownList ID="ddlGrupos" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlGrupos_SelectedIndexChanged">
@@ -12,14 +12,14 @@
         </div>
 
         <div id="gastosContainer" runat="server" visible="false">
-            <h3>Lista de Gastos</h3>
+            <h3>Eventos</h3>
             <asp:Repeater ID="repGastos" runat="server" OnItemCommand="repGastos_ItemCommand">
                 <ItemTemplate>
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Descripcion") %></h5>
                             <p class="card-text">Monto: <%# Eval("MontoTotal") %></p>
-                            <p class="card-text">Fecha: <%# Eval("FechaGasto") %></p>
+                            <p class="card-text">Fecha: <%# Eval("FechaGasto", "{0:dd/MM/yyyy}") %></p>
                             <asp:Button ID="btnSeleccionarGasto" runat="server" CommandName="SeleccionarGasto" CommandArgument='<%# Eval("IdGasto") %>' Text="Seleccionar" CssClass="btn btn-secondary" />
                         </div>
                     </div>
@@ -28,7 +28,7 @@
         </div>
 
 
-        <h2 class="text-center">Detalle del Gasto</h2>
+        <h2 class="text-center">Detalle del Evento</h2>
 
 
         <div id="detalleGastoContainer" runat="server" visible="false" class="mt-4">

@@ -21,6 +21,31 @@ namespace TpFinal_WebForms_20B_GestorGastos
         {
             UsuarioNegocio usuarioNegocio = new UsuarioNegocio();
 
+            string email = txtEmail.Text.Trim();
+            string password = txtPass.Text.Trim();
+            string nombre = txtNombre.Text.Trim();
+
+            if (string.IsNullOrEmpty(email))
+            {
+                lblError.Text = "El email no puede estar vacío.";
+                lblError.Visible = true;
+                return;
+            }
+
+            if (!IsValidEmail(email))
+            {
+                lblError.Text = "El email debe tener un formato válido (ejemplo: usuario@dominio.com).";
+                lblError.Visible = true;
+                return;
+            }
+
+            if (string.IsNullOrEmpty(password))
+            {
+                lblError.Text = "La contraseña no puede estar vacía.";
+                lblError.Visible = true;
+                return;
+            }           
+
             Usuario nuevoUsuario = new Usuario
             {
                 Nombre = txtNombre.Text,
@@ -55,9 +80,13 @@ namespace TpFinal_WebForms_20B_GestorGastos
         private string HashPassword(string password)
         {
             // Acá se debería implementar el método de hasheo de password, por ejemplo con bcrypt o SHA256
-            return password; // (Temporal, solo para ejemplo)
+            return password;
         }
 
-    }
-    
+        private bool IsValidEmail(string email)
+        {            
+            string emailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+            return System.Text.RegularExpressions.Regex.IsMatch(email, emailPattern);
+        }
+    }    
 }
