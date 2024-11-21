@@ -6,7 +6,7 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-6 text-center">
                 <h1>Listado de Eventos</h1>
-                <h5 id="lblNoHayGastos" visible="false" runat="server">¡Usted no posee gastos, agregue uno para comenzar!</h5>
+                <h5 id="lblNoHayGastos" visible="false" runat="server">¡Usted no posee eventos, agregue uno para comenzar!</h5>
                 <div class="row row-cols-1 row-cols-md-3 g-4">
                     <asp:Repeater runat="server" ID="repRepetidor">
                         <ItemTemplate>
