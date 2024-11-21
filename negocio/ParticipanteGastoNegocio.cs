@@ -108,34 +108,38 @@ namespace negocio
                         MontoPagado = (decimal)datos.Lector["montoPagado"]
                     };
 
-                    if(participante.IdUsuario == creador.IdUsuario)
+                    if (participante.IdUsuario == creador.IdUsuario)
                     {
                         totalPagosDeOtros = lista.Sum(x => x.MontoPagado);// la suma de los pagos del resto del grupo
                         participante.MontoPagado = montoTotal;
                         participante.DeudaPendiente = montoTotal - participante.MontoIndividual - totalPagosDeOtros;
 
-                        if(participante.DeudaPendiente > 0)
+                        if (participante.DeudaPendiente > 0)
                         {
                             participante.EstadoDeuda = "Te deben";
                         }
-                        else if(participante.DeudaPendiente == 0)
+                        else if (participante.DeudaPendiente == 0)
                         {
                             participante.EstadoDeuda = "Estas a mano";
+                        }
+                        else if (participante.DeudaPendiente < 0)
+                        {
+                            participante.EstadoDeuda = "Debes";
                         }
 
                     }
                     else
                     {
                         participante.DeudaPendiente = participante.MontoIndividual - participante.MontoPagado;
-                        if(participante.DeudaPendiente > 0)
+                        if (participante.DeudaPendiente > 0)
                         {
                             participante.EstadoDeuda = "debes";
                         }
-                        else if(participante.DeudaPendiente == 0)
+                        else if (participante.DeudaPendiente == 0)
                         {
                             participante.EstadoDeuda = "Estas a mano";
                         }
-                        else if(participante.DeudaPendiente < 0)
+                        else if (participante.DeudaPendiente < 0)
                         {
                             participante.EstadoDeuda = "Te deben";
                         }
@@ -207,7 +211,7 @@ namespace negocio
         {
             AccesoDatos datos = new AccesoDatos();
             try
-            {                
+            {
                 datos.setearConsulta(@"
                 SELECT u.idUsuario, u.Nombre, u.Email 
                 FROM Gastos g
@@ -217,7 +221,7 @@ namespace negocio
                 datos.setearParametro("@idGasto", idGasto);
 
                 datos.ejecutarLectura();
-                
+
                 if (datos.Lector.Read())
                 {
                     Usuario usuario = new Usuario
@@ -259,9 +263,9 @@ namespace negocio
 
                 throw ex;
             }
-            finally 
-            { 
-                datos.cerrarConexion(); 
+            finally
+            {
+                datos.cerrarConexion();
             }
         }
 
@@ -292,7 +296,7 @@ namespace negocio
                 datos.cerrarConexion();
             }
         }
-       
+
     }
 }
 
