@@ -69,18 +69,20 @@
                             <th>Email</th>
                             <th>Monto Individual</th>
                             <th>Monto Pagado</th>
-                            <th>Deuda Pendiente</th>
+                            <th>Saldo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <asp:Repeater ID="repPagosParticipantes" runat="server">
+                        <asp:Repeater ID="repPagosParticipantes" runat="server" OnItemDataBound="repPagosParticipantes_ItemDataBound">
                             <ItemTemplate>
                                 <tr>
                                     <td><%# Eval("NombreUsuario") %></td>
                                     <td><%# Eval("EmailUsuario") %></td>
                                     <td>$<%# Eval("MontoIndividual") %></td>
                                     <td>$<%# Eval("MontoPagado") %></td>
-                                    <td>$<%# Eval("DeudaPendiente") %></td>
+                                    <td>
+                                        <asp:Label ID="lblSaldo" runat="server" Text='<%# "$" + Eval("DeudaPendiente") %>'></asp:Label>
+                                    </td>
                                 </tr>
                                 <!-- hacer el eval de deuda pendiente-->
                             </ItemTemplate>
@@ -89,14 +91,14 @@
                 </table>
             </div>
 
-            <div class="text-center mt-4" style="margin-bottom:20px">
+            <div class="text-center mt-4" style="margin-bottom: 20px">
                 <asp:Button ID="btnExportarExcel" runat="server" CssClass="btn btn-secondary" Text="Exportar a Excel" OnClick="btnExportarExcel_Click" />
                 <asp:Button ID="btnIniciarPagos" runat="server" CssClass="btn btn-secondary" Text="Iniciar Pagos" OnClick="btnIniciarPagos_Click" />
             </div>
 
-        </div>      
+        </div>
 
-        <div class="mb-3" style="margin-top:20px">
+        <div class="mb-3" style="margin-top: 20px">
             <asp:Label ID="lblParticipantes" runat="server" CssClass="form-label" Visible="false">Selecciona quien paga</asp:Label>
             <asp:DropDownList ID="ddlParticipantes" runat="server" CssClass="form-select" AutoPostBack="true" OnSelectedIndexChanged="ddlParticipantes_SelectedIndexChanged" Visible="false">
             </asp:DropDownList>

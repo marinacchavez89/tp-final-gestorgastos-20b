@@ -109,7 +109,7 @@ namespace negocio
 
                     if(participante.IdUsuario == creador.IdUsuario)
                     {
-                        totalPagosDeOtros = lista.Sum(x => x.MontoPagado);// la suma de los pagos del resto del gruipo
+                        totalPagosDeOtros = lista.Sum(x => x.MontoPagado);// la suma de los pagos del resto del grupo
                         participante.MontoPagado = montoTotal;
                         participante.DeudaPendiente = montoTotal - participante.MontoIndividual - totalPagosDeOtros;
 

@@ -18,7 +18,6 @@ namespace TpFinal_WebForms_20B_GestorGastos
             if (!IsPostBack)
             {
                 CargarGrupos();
-
             }
         }
         private void cargarDetalleGasto(int idGasto)
@@ -274,6 +273,29 @@ namespace TpFinal_WebForms_20B_GestorGastos
                     workbook.SaveAs(memoryStream);
                     memoryStream.WriteTo(Response.OutputStream);
                     Response.End();
+                }
+            }
+        }
+
+        protected void repPagosParticipantes_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                ParticipanteGasto participante = (ParticipanteGasto)e.Item.DataItem;
+
+                Label lblSaldo = (Label)e.Item.FindControl("lblSaldo");
+
+                if (lblSaldo != null)
+                {                   
+                    if (participante.EstadoDeuda == "Te deben")
+                    {
+                        lblSaldo.ForeColor = System.Drawing.Color.Green;
+                    }
+                    
+                    else if (participante.EstadoDeuda == "debes")
+                    {
+                        lblSaldo.ForeColor = System.Drawing.Color.Red;
+                    }
                 }
             }
         }
