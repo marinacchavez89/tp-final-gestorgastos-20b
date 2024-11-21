@@ -1,6 +1,7 @@
 ﻿using dominio;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Remoting.Lifetime;
 
 namespace negocio
@@ -77,6 +78,7 @@ namespace negocio
             {
 
                 Usuario creador = obtenerUsuarioCreadorPorIdGasto(idGasto);
+                decimal montoTotal = obtenerMontoTotalPorIdGasto(idGasto);
                 datos.setearConsulta(@"
                 SELECT 
                     pg.idUsuario, 
@@ -92,7 +94,7 @@ namespace negocio
                 datos.setearParametro("@idGasto", idGasto);
                 datos.ejecutarLectura();
 
-                decimal montoTotal = obtenerMontoTotalPorIdGasto(idGasto);
+                decimal totalPagosDeOtros = 0;
 
                 while (datos.Lector.Read())
                 {
@@ -107,9 +109,19 @@ namespace negocio
 
                     if(participante.IdUsuario == creador.IdUsuario)
                     {
+                        totalPagosDeOtros = lista.Sum(x => x.MontoPagado);// la suma de los pagos del resto del gruipo
                         participante.MontoPagado = montoTotal;
-                        participante.DeudaPendiente = montoTotal - participante.MontoIndividual;
-                        participante.EstadoDeuda = "Te deben";
+                        participante.DeudaPendiente = montoTotal - participante.MontoIndividual - totalPagosDeOtros;
+
+                        if(participante.DeudaPendiente > 0)
+                        {
+                            participante.EstadoDeuda = "Te deben";
+                        }
+                        else if(participante.DeudaPendiente == 0)
+                        {
+                            participante.EstadoDeuda = "Estas a mano";
+                        }
+
                     }
                     else
                     {

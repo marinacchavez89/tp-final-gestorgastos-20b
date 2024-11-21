@@ -205,6 +205,15 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
                     cargarParticipantesConEstadoDePago(idGastoSeleccionado);
                     // Acá debemos hacer la lógica de saldar deuda.
+                    txtIngresarImporteAPagar.Text = string.Empty;
+                    ddlParticipantes.SelectedIndex = 0;
+                    txtParticipanteFiltrado.Text = string.Empty;
+
+                    lblParticipantesFiltrado.Visible = false;
+                    txtParticipanteFiltrado.Visible = false;
+                    lblImporteAPagar.Visible = false;
+                    txtIngresarImporteAPagar.Visible = false;
+                    btnConfirmarPago.Visible = false;
                 }
                 else
                 {
