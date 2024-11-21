@@ -67,240 +67,201 @@ namespace TpFinal_WebForms_20B_GestorGastos
 
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(txtFechaGasto.Text))
+            // Validaciones iniciales
+            if (!ValidarCampos()) return;
+
+            Gasto nuevoGasto = CrearNuevoGasto();
+            GastoNegocio gastoNegocio = new GastoNegocio();
+
+            // Modificación o creación del gasto
+            if (Request.QueryString["id"] != null)
+                gastoNegocio.modificar(nuevoGasto);
+            else
+                nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
+
+            // División según opción seleccionada
+            switch (rblDivision.SelectedValue)
+            {
+                case "1": // Equitativa
+                    ManejarDivisionEquitativa(nuevoGasto);
+                    break;
+
+                case "2": // Montos exactos
+                    ManejarDivisionMontosExactos(nuevoGasto);
+                    break;
+
+                case "3": // Porcentaje
+                    if (ManejarDivisionPorcentajes(nuevoGasto))
+                        return;
+                    break;
+
+                default:
+                    lblErrorMontoExacto.Visible = true;
+                    return;
+            }
+
+            // Redirigir tras éxito
+            Response.Redirect("Exito.aspx", false);
+        }
+
+        private bool ValidarCampos()
+        {
+            bool valido = true;
+
+            if (string.IsNullOrEmpty(txtFechaGasto.Text))
             {
                 lblErrorFecha.Visible = true;
-                return;
+                valido = false;
             }
+
             if (string.IsNullOrEmpty(txtConceptoGasto.Text))
             {
                 lblErrorConceptoGasto.Visible = true;
-                return;
+                valido = false;
             }
-            if(int.TryParse(txtMontoGasto.Text, out int montoGasto))
+
+            if (!int.TryParse(txtMontoGasto.Text, out int montoGasto) || montoGasto <= 0)
             {
-                if(montoGasto <= 0)
-                {
-                    lblErrorMontoGasto.Visible = true;
-                    return;
-                }
+                lblErrorMontoGasto.Visible = true;
+                valido = false;
             }
+
             if (string.IsNullOrEmpty(ddlGrupos.SelectedItem.Text) || ddlGrupos.SelectedItem.Text == "Seleccione un grupo")
             {
                 lblErrorddlGrupos.Visible = true;
-                return;
+                valido = false;
             }
-            Gasto nuevoGasto;
-            if (Request.QueryString["id"] != null)
+
+            return valido;
+        }
+
+        private Gasto CrearNuevoGasto()
+        {
+            return new Gasto
             {
-                nuevoGasto = new Gasto
-                {
-                    IdGasto = (int)Session["idGasto"],
-                    IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
-                    Descripcion = txtConceptoGasto.Text,
-                    MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
-                    FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
-                    CreadoPor = (int)Session["UsuarioId"]
-                };
+                IdGasto = Request.QueryString["id"] != null ? (int)Session["idGasto"] : 0,
+                IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
+                Descripcion = txtConceptoGasto.Text,
+                MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
+                FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
+                CreadoPor = (int)Session["UsuarioId"]
+            };
+        }
+
+        private void ManejarDivisionEquitativa(Gasto nuevoGasto)
+        {
+            int participantesSeleccionados = 0;
+
+            foreach (RepeaterItem item in repParticipantes.Items)
+            {
+                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                if (chkParticipante != null && chkParticipante.Checked)
+                    participantesSeleccionados++;
             }
-            else
+
+            if (participantesSeleccionados > 0)
             {
-                nuevoGasto = new Gasto
-                {
-                    IdGrupo = Convert.ToInt32(ddlGrupos.SelectedValue),
-                    Descripcion = txtConceptoGasto.Text,
-                    MontoTotal = Convert.ToDecimal(txtMontoGasto.Text),
-                    FechaGasto = Convert.ToDateTime(txtFechaGasto.Text),
-                    CreadoPor = (int)Session["UsuarioId"]
-                };
-            }
-            GastoNegocio gastoNegocio = new GastoNegocio();
-            if (Request.QueryString["id"] != null)
-                gastoNegocio.modificar(nuevoGasto);
-            else if (rblDivision.SelectedValue == "3") //Si radioButton == 3 es decir porcentaje y la sumatoria supera el 100% que no deje avanzar
-            {
-                int totalPorcentaje = 0;
-                List<ParticipanteGasto> participantesConPorcentaje = new List<ParticipanteGasto>();
+                decimal montoIndividual = nuevoGasto.MontoTotal / participantesSeleccionados;
 
                 foreach (RepeaterItem item in repParticipantes.Items)
                 {
-                    TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
-                    if (txtPorcentaje != null)
+                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                    HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+
+                    ParticipanteGasto nuevoParticipante = new ParticipanteGasto
                     {
-                        int porcentaje;
-                        if (int.TryParse(txtPorcentaje.Text, out porcentaje))
-                        {
-                            totalPorcentaje += porcentaje;
+                        IdGasto = nuevoGasto.IdGasto,
+                        IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                        MontoIndividual = chkParticipante.Checked ? montoIndividual : 0
+                    };
 
-                            HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
-                            if (hdnIdUsuario != null)
-                            {
-                                participantesConPorcentaje.Add(new ParticipanteGasto
-                                {
-                                    IdGasto = nuevoGasto.IdGasto,
-                                    IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                                    MontoIndividual = nuevoGasto.MontoTotal * porcentaje / 100
-                                });
-                            }
-                        }
-                    }
+                    ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                    if (Request.QueryString["id"] != null)
+                        participanteGastoNegocio.modificarParticipante(nuevoParticipante);
+                    else
+                        participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
                 }
+            }
+        }
 
-                if (totalPorcentaje != 100)
+        private void ManejarDivisionMontosExactos(Gasto nuevoGasto)
+        {
+            foreach (RepeaterItem item in repParticipantes.Items)
+            {
+                CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
+                HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
+                TextBox txtMontoIndividual = item.FindControl("txtMontoExacto") as TextBox;
+
+                if (decimal.TryParse(txtMontoIndividual.Text, out decimal montoIndividual) && montoIndividual > 0)
                 {
-                    lblErrorPorcentaje.Visible = true;
-                    return;
+                    ParticipanteGasto nuevoParticipante = new ParticipanteGasto
+                    {
+                        IdGasto = nuevoGasto.IdGasto,
+                        IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                        MontoIndividual = montoIndividual
+                    };
+
+
+                    ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+                    if (Request.QueryString["id"] != null)
+                    {
+                        participanteGastoNegocio.modificarParticipante(nuevoParticipante);
+                    }
+                    else
+                    {
+                        participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
+                    }
                 }
                 else
                 {
-                    nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
+                    lblErrorMontoExacto.Visible = true;
                 }
             }
-            else 
+        }
+
+        private bool ManejarDivisionPorcentajes(Gasto nuevoGasto)
+        {
+            int totalPorcentaje = 0;
+            List<ParticipanteGasto> participantesConPorcentaje = new List<ParticipanteGasto>();
+
+            foreach (RepeaterItem item in repParticipantes.Items)
             {
-                nuevoGasto.IdGasto = gastoNegocio.AgregarGasto(nuevoGasto);
-            }
-
-             
-            if(rblDivision.SelectedValue == "1") //Equitativa
-            {
-                int participantesSeleccionados = 0;
-                foreach (RepeaterItem item in repParticipantes.Items)
+                TextBox txtPorcentaje = item.FindControl("txtPorcentaje") as TextBox;
+                if (int.TryParse(txtPorcentaje.Text, out int porcentaje))
                 {
-                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
-                    if (chkParticipante != null && chkParticipante.Checked)
-                    {
-                        participantesSeleccionados++;
-                    }
-                }
+                    totalPorcentaje += porcentaje;
 
-                if (participantesSeleccionados > 0)
-                {
-                    decimal montoIndividual = nuevoGasto.MontoTotal / participantesSeleccionados;
-
-                    foreach (RepeaterItem item in repParticipantes.Items)
-                    {
-                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
                     HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
-                        if(!chkParticipante.Checked)
-                        {
-                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
-                            {
-                                IdGasto = nuevoGasto.IdGasto,
-                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                                MontoIndividual = 0
-                            };
-                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                            participanteGastoNegocio.modificarParticipante(nuevoParticipante);
-                        }
-
-                        if (chkParticipante != null && chkParticipante.Checked && hdnIdUsuario != null)
-                        {
-                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
-                            {
-                                IdGasto = nuevoGasto.IdGasto,
-                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                                MontoIndividual = montoIndividual
-                            };
-
-                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                            if(Request.QueryString["id"] != null && participanteGastoNegocio.agregarParticipanteAGasto(nuevoParticipante.IdGasto, nuevoParticipante.IdUsuario, nuevoParticipante.MontoIndividual))
-                            {
-                                
-                                participanteGastoNegocio.modificarParticipante(nuevoParticipante);
-                            }                         
-                            else
-                            {
-                                participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
-                            }
-                        }
-                    }
+                    participantesConPorcentaje.Add(new ParticipanteGasto
+                    {
+                        IdGasto = nuevoGasto.IdGasto,
+                        IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
+                        MontoIndividual = nuevoGasto.MontoTotal * porcentaje / 100
+                    });
                 }
-
             }
 
-            if (rblDivision.SelectedValue == "2") //Montos exactos
+            if (totalPorcentaje != 100)
             {
-                int participantesSeleccionados = 0;
-                foreach (RepeaterItem item in repParticipantes.Items)
-                {
-                    CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
-                    if (chkParticipante != null && chkParticipante.Checked)
-                    {
-                        participantesSeleccionados++;
-                    }
-                }
-
-                if (participantesSeleccionados > 0)
-                {
-                    foreach (RepeaterItem item in repParticipantes.Items)
-                    {
-                        CheckBox chkParticipante = item.FindControl("chkParticipante") as CheckBox;
-                        HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
-                        TextBox txtMontoIndividual = item.FindControl("txtMontoExacto") as TextBox;
-                        if (decimal.TryParse(txtMontoIndividual.Text, out decimal montoIndividual) && montoIndividual > 0)
-                        {
-                            ParticipanteGasto nuevoParticipante = new ParticipanteGasto
-                            {
-                                IdGasto = nuevoGasto.IdGasto,
-                                IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                                MontoIndividual = montoIndividual
-                            };
-
-                            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                            participanteGastoNegocio.AgregarParticipante(nuevoParticipante);
-                        }
-                        else
-                        {                            
-                            lblErrorMontoExacto.Text = "Por favor, ingrese un monto válido para cada participante.";
-                            lblErrorMontoExacto.ForeColor = System.Drawing.Color.Red;
-                            lblErrorMontoExacto.Visible = true;
-                        }
-                    }
-                }
-
+                lblErrorPorcentaje.Visible = true;
+                return true;
             }
 
-            if (rblDivision.SelectedValue == "3") //Porcentaje
+            ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
+
+            foreach (var participante in participantesConPorcentaje)
             {
-                int totalPorcentaje = 0;
-                List<ParticipanteGasto> participantesConPorcentaje = new List<ParticipanteGasto>();
-
-                foreach (RepeaterItem item in repParticipantes.Items)
+                if (Request.QueryString["id"] != null)
                 {
-                    TextBox txtPorcentaje = (TextBox)item.FindControl("txtPorcentaje");
-                    if (txtPorcentaje != null)
-                    {
-                        int porcentaje;
-                        if (int.TryParse(txtPorcentaje.Text, out porcentaje))
-                        {
-                            totalPorcentaje += porcentaje;
-
-                            HiddenField hdnIdUsuario = item.FindControl("hdnIdUsuarioGasto") as HiddenField;
-                            if (hdnIdUsuario != null)
-                            {
-                                participantesConPorcentaje.Add(new ParticipanteGasto
-                                {
-                                    IdGasto = nuevoGasto.IdGasto,
-                                    IdUsuario = Convert.ToInt32(hdnIdUsuario.Value),
-                                    MontoIndividual = nuevoGasto.MontoTotal * porcentaje / 100
-                                });
-                            }
-                        }
-                    }
+                    participanteGastoNegocio.modificarParticipante(participante);
                 }
-
-                if (totalPorcentaje == 100)
+                else
                 {
-                    foreach (var participante in participantesConPorcentaje)
-                    {
-                        ParticipanteGastoNegocio participanteGastoNegocio = new ParticipanteGastoNegocio();
-                        participanteGastoNegocio.AgregarParticipante(participante);
-                    }
+                    participanteGastoNegocio.AgregarParticipante(participante);
                 }
             }
 
-            Response.Redirect("Exito.aspx", false);
+            return false;
         }
 
         private void CargarGrupos()
