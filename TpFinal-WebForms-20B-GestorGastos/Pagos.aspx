@@ -18,7 +18,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title"><%# Eval("Descripcion") %></h5>
-                            <p class="card-text">Monto: <%# Eval("MontoTotal") %></p>
+                            <p class="card-text">Monto: $<%# Eval("MontoTotal") %></p>
                             <p class="card-text">Fecha: <%# Eval("FechaGasto", "{0:dd/MM/yyyy}") %></p>
                             <asp:Button ID="btnSeleccionarGasto" runat="server" CommandName="SeleccionarGasto" CommandArgument='<%# Eval("IdGasto") %>' Text="Seleccionar" CssClass="btn btn-secondary" />
                         </div>

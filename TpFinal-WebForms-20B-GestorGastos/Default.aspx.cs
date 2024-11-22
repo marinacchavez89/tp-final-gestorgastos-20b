@@ -27,8 +27,7 @@ namespace TpFinal_WebForms_20B_GestorGastos
                 ListaGastos = negocio.listarGastosPorUsuario(idUsuario);
                 foreach (var gasto in ListaGastos)
                 {
-                    string nombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
-                    gasto.Descripcion += $" (Grupo: {nombreGrupo})";
+                    gasto.NombreGrupo = grupoNegocio.ObtenerNombreGrupoPorId(gasto.IdGrupo);
                 }
                 repRepetidor.DataSource = ListaGastos;
                 repRepetidor.DataBind();

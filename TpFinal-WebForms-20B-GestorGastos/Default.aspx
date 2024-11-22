@@ -15,15 +15,10 @@
                                     <img src="/Images/logoGasto.png" class="card-img-top d-block mx-auto" alt="img-gasto" style="height: 100px; width: 100px;">
                                     <div class="card-body">
                                         <h5 class="card-title"><%# Eval("Descripcion") %></h5>
+                                        <h6 class="card-title"> Grupo: <%# Eval("NombreGrupo") %></h6>
                                         <p class="card-text"><%# ((DateTime)Eval("FechaGasto")).ToString("dd/MM/yyyy") %></p>
                                         <p class="card-text">$<%# Eval("MontoTotal") %></p>
-                                        <div class="d-flex justify-content-center mt-2">
-                                            <%--<button class="btn btn-danger me-2" onclick="quitarParticipante(<%# Eval("IdGasto") %>)" style="border: none; background: none; padding: 0;">
-                                                <img src="/Images/logoEliminar.png" alt="Eliminar Gasto" title="Eliminar Gasto"style="width: 50px; height: 45px;" />
-                                            </button>
-                                            <button class="btn btn-secondary" onclick="modificarParticipante(<%# Eval("IdGasto") %>)" style="border: none; background: none; padding: 0;">
-                                                <img src="/Images/logoEditar.png" alt="Modificar Gasto" title="Modificar Gasto" style="width: 30px; height: 30px;" />
-                                            </button>--%>
+                                        <div class="d-flex justify-content-center mt-2">                                           
                                             <asp:ImageButton ID="btnEliminarGasto" CssClass="btn btn-danger me-2" runat="server"
                                                 OnClick="btnEliminarGasto_Click" AutoPostBack="true" CommandArgument='<%# Eval("IdGasto") %>'
                                                 ImageUrl="/Images/logoEliminar.png" AlternateText="Eliminar Gasto" ToolTip="Eliminar Gasto"
